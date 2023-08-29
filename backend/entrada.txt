@@ -1,0 +1,29 @@
+/*// comentario simple
+/*
+    comentario compuesto !"#$"#$#&/&)
+*/
+// declaración de variables
+var valor: String? //correcto, declaración sin valor
+// correcto, declaración de una variable tipo Int con valor
+var valor1 = 10
+// var valor1:Int = 10.01 // Error: no se puede asignar un Float a un Int
+var valor2:Float = 10.2 // correcto
+var valor2_1:Float = 10 + 1 // correcto será 11.0
+var valor3 = "esto es una variable"; //correcto variable tipo String
+12
+var char:Character = "A"; //correcto variable tipo Character
+var valor4:Bool = true //correcto
+//debe ser un error ya que los tipos no son compatibles
+//var valor4:String = true
+// debe ser un error ya que existe otra variable valor3 definida previamente
+//var valor3:Int = 10
+//var .58 = 4; // debe ser error porque .58 no es un nombre válido
+//var if = "10" // debe ser un error porque "if" es una palabra reservada
+// ejemplo de asignaciones
+valor1 = 200 // correcto
+valor3 = "otra cadena" //correcto
+//valor4 = 10; //error tipos incompatibles (Iool, Int)
+//valor2 = 200 // error tipos incompatibles (Float, Int)
+//char = "otra cadena" //error tipos incompatibles (Character, String)
+*/
+print("ff" + 5.5+61+(89+6)*58)
