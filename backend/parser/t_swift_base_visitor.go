@@ -123,6 +123,18 @@ func (v *BaseT_swiftVisitor) VisitFuncion_print(ctx *Funcion_printContext) inter
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseT_swiftVisitor) VisitAsignacion_normal(ctx *Asignacion_normalContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitAsignacion_incremento(ctx *Asignacion_incrementoContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitAsignacion_decremento(ctx *Asignacion_decrementoContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseT_swiftVisitor) VisitExpresion_id(ctx *Expresion_idContext) interface{} {
 	return v.VisitChildren(ctx)
 }

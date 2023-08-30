@@ -94,6 +94,15 @@ type T_swiftVisitor interface {
 	// Visit a parse tree produced by T_swiftParser#funcion_print.
 	VisitFuncion_print(ctx *Funcion_printContext) interface{}
 
+	// Visit a parse tree produced by T_swiftParser#asignacion_normal.
+	VisitAsignacion_normal(ctx *Asignacion_normalContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#asignacion_incremento.
+	VisitAsignacion_incremento(ctx *Asignacion_incrementoContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#asignacion_decremento.
+	VisitAsignacion_decremento(ctx *Asignacion_decrementoContext) interface{}
+
 	// Visit a parse tree produced by T_swiftParser#expresion_id.
 	VisitExpresion_id(ctx *Expresion_idContext) interface{}
 

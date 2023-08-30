@@ -21,6 +21,7 @@ instruccion
    | branch_statement ';'?
    | control_transfer_statement ';'?
    | funcion_print ';'?
+   | asignacion ';'?
    ;
 
 loop_statement 
@@ -92,7 +93,7 @@ declaracion
    | array_declaracion
    ;
 
-constant_declaracion : 'let ' Identificador anotacion_tipo? '=' expresion
+constant_declaracion : 'let' Identificador anotacion_tipo? '=' expresion
     ;
 
 variable_declaracion : 'var' Identificador anotacion_tipo '?'
@@ -106,6 +107,7 @@ tipos
     | 'Int'
     | 'Float'
     | 'Bool'
+    | 'Character'
     ;
 
 //declaracin de vectores
@@ -125,6 +127,14 @@ lista_expresiones : expresion (',' expresion)*
 
 // funcion print
 funcion_print : 'print' '(' expresion ')';
+
+// gramatica de asignacion
+
+asignacion
+    : Identificador '=' expresion #asignacion_normal
+    | Identificador '+=' expresion #asignacion_incremento
+    | Identificador '-=' expresion #asignacion_decremento
+    ;
 
 expresion //agregar llamada de una funcion, de struct, vector y atributos
     : primitivos #valor_primitivo
