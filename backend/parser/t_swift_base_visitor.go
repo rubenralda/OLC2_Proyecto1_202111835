@@ -35,15 +35,27 @@ func (v *BaseT_swiftVisitor) VisitWhile_statement(ctx *While_statementContext) i
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseT_swiftVisitor) VisitBranch_statement(ctx *Branch_statementContext) interface{} {
+func (v *BaseT_swiftVisitor) VisitDeclarar_if(ctx *Declarar_ifContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseT_swiftVisitor) VisitIf_statement(ctx *If_statementContext) interface{} {
+func (v *BaseT_swiftVisitor) VisitDeclarar_guard(ctx *Declarar_guardContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseT_swiftVisitor) VisitElse_clause(ctx *Else_clauseContext) interface{} {
+func (v *BaseT_swiftVisitor) VisitDeclarar_switch(ctx *Declarar_switchContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitIf_simple(ctx *If_simpleContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitElse_final(ctx *Else_finalContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitSiguiente_if(ctx *Siguiente_ifContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -55,19 +67,11 @@ func (v *BaseT_swiftVisitor) VisitSwitch_statement(ctx *Switch_statementContext)
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseT_swiftVisitor) VisitSwitch_cases(ctx *Switch_casesContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
 func (v *BaseT_swiftVisitor) VisitSwitch_case(ctx *Switch_caseContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseT_swiftVisitor) VisitCase_label(ctx *Case_labelContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseT_swiftVisitor) VisitDefault_label(ctx *Default_labelContext) interface{} {
+func (v *BaseT_swiftVisitor) VisitDefault_case(ctx *Default_caseContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

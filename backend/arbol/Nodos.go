@@ -41,6 +41,18 @@ func (p Primitivos) Ejecutar(ambito *ambito.Ambito) interface{} {
 	}
 }
 
+type Id_expresion struct {
+	Id string
+}
+
+func (i Id_expresion) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
+	id_buscado := ambito_padre.BuscarID(i.Id)
+	if id_buscado == nil {
+		panic("Error el identificador no existe: " + i.Id)
+	}
+	return id_buscado.Valor
+}
+
 type Expresion struct {
 	Valor1    BaseNodo
 	Valor2    BaseNodo
@@ -442,6 +454,8 @@ func (e Expresion) Ejecutar(ambito *ambito.Ambito) interface{} {
 		}
 	case "primitivo":
 		return e.Valor1.Ejecutar(ambito)
+	case "identificador":
+		return e.Valor1.Ejecutar(ambito)
 	default:
 		return nil
 	}
@@ -453,9 +467,7 @@ type Imprimir struct {
 
 func (i Imprimir) Ejecutar(ambito *ambito.Ambito) interface{} {
 	fmt.Println("funcion imprimir:", i.Valor.Ejecutar(ambito))
-	//fmt.Println(ambito)
-	ambito.NombreAmbito = "cambiado"
-	return i.Valor.Ejecutar(ambito)
+	return nil
 }
 
 // nodo declarar variable
@@ -680,6 +692,167 @@ func (d Declarar_constante) Ejecutar(ambito_local *ambito.Ambito) interface{} {
 		}
 	case nil: //cambiar
 
+	}
+	return nil
+}
+
+type Sentencia_if struct {
+	Expresion       BaseNodo
+	Sentencias      []BaseNodo
+	Sentencias_else []BaseNodo
+	Siguiente       BaseNodo
+}
+
+func (s Sentencia_if) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
+	resultado := s.Expresion.Ejecutar(ambito_padre)
+	ambito_local := &ambito.Ambito{NombreAmbito: "sentencia if", Padre: ambito_padre}
+	ambito_padre.AgregarHijo(ambito_local)
+	switch rr := resultado.(type) {
+	case bool:
+		if rr {
+			for _, linea := range s.Sentencias {
+				linea.Ejecutar(ambito_local)
+			}
+		} else if s.Siguiente != nil {
+			s.Siguiente.Ejecutar(ambito_local)
+		} else {
+			for _, linea := range s.Sentencias_else {
+				linea.Ejecutar(ambito_local)
+			}
+		}
+	default:
+		panic("Error la expresion no es un bool ")
+	}
+	return nil
+}
+
+type Sentencia_switch struct {
+	Expresion    BaseNodo
+	Lista_case   []Sentencia_case
+	Default_case BaseNodo
+}
+
+func (s Sentencia_switch) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
+	resultado := s.Expresion.Ejecutar(ambito_padre)
+	ambito_local := &ambito.Ambito{NombreAmbito: "sentencia switch", Padre: ambito_padre}
+	ambito_padre.AgregarHijo(ambito_local)
+	switch rr := resultado.(type) {
+	case float64:
+		for _, sentencia_case := range s.Lista_case {
+			resultado_case := sentencia_case.Expresion.Ejecutar(ambito_local)
+			switch r1 := resultado_case.(type) {
+			case float64:
+				if rr == r1 {
+					sentencia_case.Ejecutar(ambito_local)
+					return nil
+				}
+			default:
+				panic("La expresion del case no es un float")
+			}
+		}
+	case string:
+		for _, sentencia_case := range s.Lista_case {
+			resultado_case := sentencia_case.Expresion.Ejecutar(ambito_local)
+			switch r1 := resultado_case.(type) {
+			case string:
+				if rr == r1 {
+					sentencia_case.Ejecutar(ambito_local)
+					return nil
+				}
+			default:
+				panic("La expresion del case no es un string")
+			}
+		}
+	case int:
+		for _, sentencia_case := range s.Lista_case {
+			resultado_case := sentencia_case.Expresion.Ejecutar(ambito_local)
+			switch r1 := resultado_case.(type) {
+			case int:
+				if rr == r1 {
+					sentencia_case.Ejecutar(ambito_local)
+					return nil
+				}
+			default:
+				panic("La expresion del case no es un int")
+			}
+		}
+	case bool:
+		for _, sentencia_case := range s.Lista_case {
+			resultado_case := sentencia_case.Expresion.Ejecutar(ambito_local)
+			switch r1 := resultado_case.(type) {
+			case bool:
+				if rr == r1 {
+					sentencia_case.Ejecutar(ambito_local)
+					return nil
+				}
+			default:
+				panic("La expresion del case no es un bool")
+			}
+		}
+	case rune:
+		for _, sentencia_case := range s.Lista_case {
+			resultado_case := sentencia_case.Expresion.Ejecutar(ambito_local)
+			switch r1 := resultado_case.(type) {
+			case rune:
+				if rr == r1 {
+					sentencia_case.Ejecutar(ambito_local)
+					return nil
+				}
+			default:
+				panic("La expresion del case no es un bool")
+			}
+		}
+	default:
+		panic("Error la expresion no es un bool ")
+	}
+	s.Default_case.Ejecutar(ambito_local)
+	return nil
+}
+
+type Sentencia_case struct {
+	Expresion  BaseNodo
+	Sentencias []BaseNodo
+}
+
+func (s Sentencia_case) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
+	for _, linea := range s.Sentencias {
+		linea.Ejecutar(ambito_padre)
+	}
+	return nil
+}
+
+type Default_case struct {
+	Sentencias []BaseNodo
+}
+
+func (d Default_case) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
+	for _, linea := range d.Sentencias {
+		linea.Ejecutar(ambito_padre)
+	}
+	return nil
+}
+
+type Loop_while struct {
+	Expresion  BaseNodo
+	Sentencias []BaseNodo
+}
+
+func (l Loop_while) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
+	ambito_local := &ambito.Ambito{NombreAmbito: "Ciclo while", Padre: ambito_padre}
+	ambito_padre.AgregarHijo(ambito_local)
+	resultado := l.Expresion.Ejecutar(ambito_padre)
+	switch rr := resultado.(type) {
+	case bool:
+		for rr {
+			for _, linea := range l.Sentencias {
+				linea.Ejecutar(ambito_local)
+			}
+			ambito_local = &ambito.Ambito{NombreAmbito: "Ciclo while", Padre: ambito_padre}
+			ambito_padre.AgregarHijo(ambito_local)
+			rr = l.Expresion.Ejecutar(ambito_padre).(bool) // Si falla es porque de algun modo se cambio la expresion pero en teoria no se puede
+		}
+	default:
+		panic("La expresion no es un bool")
 	}
 	return nil
 }

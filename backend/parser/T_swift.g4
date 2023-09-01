@@ -43,15 +43,18 @@ while_statement : 'while' expresion code_block ;
 
 // GRAMMAR OF A BRANCH STATEMENT
 
-branch_statement : if_statement
- | guard_statement
- | switch_statement
+branch_statement : if_statement #declarar_if
+ | guard_statement #declarar_guard
+ | switch_statement #declarar_switch
  ;
 
 // GRAMMAR OF AN IF STATEMENT
 
-if_statement : 'if' expresion code_block else_clause? ;
-else_clause : 'else' code_block | 'else' if_statement  ;
+if_statement 
+    : 'if' expresion code_block #if_simple
+    | 'if' expresion code_block 'else' code_block #else_final
+    | 'if' expresion code_block 'else' if_statement #siguiente_if
+    ;
 
 // GRAMMAR OF A GUARD STATEMENT
 
@@ -59,11 +62,17 @@ guard_statement : 'guard' expresion 'else' code_block ;
 
 // GRAMMAR OF A SWITCH STATEMENT
 
-switch_statement : 'switch' expresion '{' switch_cases? '}'  ;
-switch_cases : switch_case switch_cases? ;
-switch_case : case_label instrucciones | default_label instrucciones  ;
-case_label : 'case' expresion ':' ;
-default_label : 'default' ':' ;
+switch_statement 
+    : 'switch' expresion '{' switch_case* default_case? '}'  
+    ;
+
+switch_case 
+    : 'case' expresion ':' instrucciones 'break'?
+    ;
+
+default_case
+    : 'default' ':' instrucciones 'break'?
+    ;
 
 // GRAMMAR OF A CONTROL TRANSFER STATEMENT
 
@@ -141,11 +150,11 @@ expresion //agregar llamada de una funcion, de struct, vector y atributos
     | Identificador #expresion_id
     | '-' expresion #expresion_unario
     | '(' expresion ')' #expresion_paren
-    | right=expresion op=('*'|'/'|'%') left=expresion #expresion_arit
-    | right=expresion op=('+'|'-') left=expresion #expresion_arit
-    | right=expresion op=('=='|'!='|'>'|'<'|'<='|'>=') left=expresion #expresion_compa
-    | op='!' left=expresion #expresion_nega
-    | right=expresion op=('&&'|'||') left=expresion #expresion_rela
+    | expresion op=('*'|'/'|'%') expresion #expresion_arit
+    | expresion op=('+'|'-') expresion #expresion_arit
+    | expresion op=('=='|'!='|'>'|'<'|'<='|'>=') expresion #expresion_compa
+    | op='!' expresion #expresion_nega
+    | expresion op=('&&'|'||') expresion #expresion_rela
     ;
 
 primitivos 

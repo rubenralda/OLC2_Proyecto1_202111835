@@ -28,14 +28,23 @@ type T_swiftVisitor interface {
 	// Visit a parse tree produced by T_swiftParser#while_statement.
 	VisitWhile_statement(ctx *While_statementContext) interface{}
 
-	// Visit a parse tree produced by T_swiftParser#branch_statement.
-	VisitBranch_statement(ctx *Branch_statementContext) interface{}
+	// Visit a parse tree produced by T_swiftParser#declarar_if.
+	VisitDeclarar_if(ctx *Declarar_ifContext) interface{}
 
-	// Visit a parse tree produced by T_swiftParser#if_statement.
-	VisitIf_statement(ctx *If_statementContext) interface{}
+	// Visit a parse tree produced by T_swiftParser#declarar_guard.
+	VisitDeclarar_guard(ctx *Declarar_guardContext) interface{}
 
-	// Visit a parse tree produced by T_swiftParser#else_clause.
-	VisitElse_clause(ctx *Else_clauseContext) interface{}
+	// Visit a parse tree produced by T_swiftParser#declarar_switch.
+	VisitDeclarar_switch(ctx *Declarar_switchContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#if_simple.
+	VisitIf_simple(ctx *If_simpleContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#else_final.
+	VisitElse_final(ctx *Else_finalContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#siguiente_if.
+	VisitSiguiente_if(ctx *Siguiente_ifContext) interface{}
 
 	// Visit a parse tree produced by T_swiftParser#guard_statement.
 	VisitGuard_statement(ctx *Guard_statementContext) interface{}
@@ -43,17 +52,11 @@ type T_swiftVisitor interface {
 	// Visit a parse tree produced by T_swiftParser#switch_statement.
 	VisitSwitch_statement(ctx *Switch_statementContext) interface{}
 
-	// Visit a parse tree produced by T_swiftParser#switch_cases.
-	VisitSwitch_cases(ctx *Switch_casesContext) interface{}
-
 	// Visit a parse tree produced by T_swiftParser#switch_case.
 	VisitSwitch_case(ctx *Switch_caseContext) interface{}
 
-	// Visit a parse tree produced by T_swiftParser#case_label.
-	VisitCase_label(ctx *Case_labelContext) interface{}
-
-	// Visit a parse tree produced by T_swiftParser#default_label.
-	VisitDefault_label(ctx *Default_labelContext) interface{}
+	// Visit a parse tree produced by T_swiftParser#default_case.
+	VisitDefault_case(ctx *Default_caseContext) interface{}
 
 	// Visit a parse tree produced by T_swiftParser#control_transfer_statement.
 	VisitControl_transfer_statement(ctx *Control_transfer_statementContext) interface{}

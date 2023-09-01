@@ -20,8 +20,8 @@ func (a *Ambito) AgregarIde(ide Identificadores) bool {
 	return true
 }
 
-func (a *Ambito) AgregarHijo(ambito Ambito) bool {
-	a.AmbitosHijos = append(a.AmbitosHijos, &ambito)
+func (a *Ambito) AgregarHijo(ambito *Ambito) bool {
+	a.AmbitosHijos = append(a.AmbitosHijos, ambito)
 	return true
 }
 
