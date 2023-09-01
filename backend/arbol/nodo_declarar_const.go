@@ -48,8 +48,9 @@ func (d Declarar_constante) Ejecutar(ambito_local *ambito.Ambito) interface{} {
 		} else {
 			panic("Error el valor no coincide con el tipo " + d.Id)
 		}
-	case nil: //cambiar
-
+	case nil: //para una llamada o mejor un tipo de struct
+	default:
+		panic("Tipo no reconocido")
 	}
 	return nil
 }

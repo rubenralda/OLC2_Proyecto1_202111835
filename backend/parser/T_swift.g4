@@ -61,7 +61,7 @@ if_statement
 
 // GRAMMAR OF A GUARD STATEMENT
 
-guard_statement : 'guard' expresion 'else' code_block ;
+guard_statement : 'guard' expresion 'else' '{' instrucciones ('continue'|'break'|'return') '}';
 
 // GRAMMAR OF A SWITCH STATEMENT
 

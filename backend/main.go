@@ -42,6 +42,8 @@ func (v *parser_visitor) VisitInstruccion(ctx *parser.InstruccionContext) interf
 		return ctx.Funcion_print().Accept(v).(arbol.BaseNodo)
 	} else if ctx.Asignacion() != nil {
 		return ctx.Asignacion().Accept(v).(arbol.BaseNodo)
+	} else if ctx.Control_transfer_statement() != nil {
+		return ctx.Control_transfer_statement().Accept(v).(arbol.BaseNodo)
 	}
 	return nil
 }
@@ -268,6 +270,30 @@ func (v *parser_visitor) VisitFor_in_statement(ctx *parser.For_in_statementConte
 	}
 	return arbol.Loop_for_in{Expresion: expresion, Inicio: rango_inicio, Final: rango_final,
 		Sentencias: ctx.Code_block().Accept(v).([]arbol.BaseNodo), Id: ctx.Identificador().GetText()}
+}
+
+// METODOS PARA CONTROL DE TRANSFERENCIA
+func (v *parser_visitor) VisitControl_transfer_statement(ctx *parser.Control_transfer_statementContext) interface{} {
+	var sentencia arbol.Control_transfer
+	if ctx.Break_statement() != nil {
+		sentencia = arbol.Control_transfer{Sentencia_break: true, Sentencia_continue: false, Sentencia_return: false}
+	} else if ctx.Continue_statement() != nil {
+		sentencia = arbol.Control_transfer{Sentencia_break: false, Sentencia_continue: true, Sentencia_return: false}
+	} else {
+		sentencia = arbol.Control_transfer{Sentencia_break: false, Sentencia_continue: false, Sentencia_return: true,
+			Retorno: ctx.Return_statement().Accept(v).(arbol.BaseNodo)}
+	}
+	return sentencia
+}
+
+func (v *parser_visitor) VisitReturn_statement(ctx *parser.Return_statementContext) interface{} {
+	var expresion arbol.BaseNodo
+	tipo := false
+	if ctx.Expresion() != nil {
+		expresion = ctx.Expresion().Accept(v).(arbol.BaseNodo)
+		tipo = true
+	}
+	return arbol.Sentencia_return{Expresion: expresion, Tipo_retorno: tipo}
 }
 
 func main() {

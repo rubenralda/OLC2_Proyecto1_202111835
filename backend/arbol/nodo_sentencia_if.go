@@ -17,13 +17,22 @@ func (s Sentencia_if) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 	case bool:
 		if rr {
 			for _, linea := range s.Sentencias {
-				linea.Ejecutar(ambito_local)
+				ejecutada := linea.Ejecutar(ambito_local)
+				if ejecutada != nil {
+					return ejecutada //puede ser una sentenica de transferencia
+				}
 			}
 		} else if s.Siguiente != nil {
-			s.Siguiente.Ejecutar(ambito_local)
+			ejecutada := s.Siguiente.Ejecutar(ambito_local)
+			if ejecutada != nil {
+				return ejecutada //puede ser una sentenica de transferencia
+			}
 		} else {
 			for _, linea := range s.Sentencias_else {
-				linea.Ejecutar(ambito_local)
+				ejecutada := linea.Ejecutar(ambito_local)
+				if ejecutada != nil {
+					return ejecutada //puede ser una sentenica de transferencia
+				}
 			}
 		}
 	default:

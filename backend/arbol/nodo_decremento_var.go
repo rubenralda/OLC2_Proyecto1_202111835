@@ -30,5 +30,5 @@ func (d Decremento_variable) Ejecutar(ambito *ambito.Ambito) interface{} {
 			panic("Operacion invalida -= " + d.Id)
 		}
 	}
-	panic("Error no se puede asignar " + d.Id)
+	panic("Error no se puede asignar, ID no existe " + d.Id)
 }

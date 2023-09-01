@@ -19,7 +19,10 @@ func (s Sentencia_switch) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 			switch r1 := resultado_case.(type) {
 			case float64:
 				if rr == r1 {
-					sentencia_case.Ejecutar(ambito_local)
+					ejecutada := sentencia_case.Ejecutar(ambito_local)
+					if ejecutada != nil {
+						return ejecutada //puede ser una sentenica de transferencia
+					}
 					return nil
 				}
 			default:
@@ -32,7 +35,10 @@ func (s Sentencia_switch) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 			switch r1 := resultado_case.(type) {
 			case string:
 				if rr == r1 {
-					sentencia_case.Ejecutar(ambito_local)
+					ejecutada := sentencia_case.Ejecutar(ambito_local)
+					if ejecutada != nil {
+						return ejecutada //puede ser una sentenica de transferencia
+					}
 					return nil
 				}
 			default:
@@ -45,7 +51,10 @@ func (s Sentencia_switch) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 			switch r1 := resultado_case.(type) {
 			case int:
 				if rr == r1 {
-					sentencia_case.Ejecutar(ambito_local)
+					ejecutada := sentencia_case.Ejecutar(ambito_local)
+					if ejecutada != nil {
+						return ejecutada //puede ser una sentenica de transferencia
+					}
 					return nil
 				}
 			default:
@@ -58,7 +67,10 @@ func (s Sentencia_switch) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 			switch r1 := resultado_case.(type) {
 			case bool:
 				if rr == r1 {
-					sentencia_case.Ejecutar(ambito_local)
+					ejecutada := sentencia_case.Ejecutar(ambito_local)
+					if ejecutada != nil {
+						return ejecutada //puede ser una sentenica de transferencia
+					}
 					return nil
 				}
 			default:
@@ -71,7 +83,10 @@ func (s Sentencia_switch) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 			switch r1 := resultado_case.(type) {
 			case rune:
 				if rr == r1 {
-					sentencia_case.Ejecutar(ambito_local)
+					ejecutada := sentencia_case.Ejecutar(ambito_local)
+					if ejecutada != nil {
+						return ejecutada //puede ser una sentenica de transferencia
+					}
 					return nil
 				}
 			default:
@@ -92,7 +107,10 @@ type Sentencia_case struct {
 
 func (s Sentencia_case) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 	for _, linea := range s.Sentencias {
-		linea.Ejecutar(ambito_padre)
+		ejecutada := linea.Ejecutar(ambito_padre)
+		if ejecutada != nil {
+			return ejecutada //puede ser una sentenica de transferencia
+		}
 	}
 	return nil
 }
@@ -103,7 +121,10 @@ type Default_case struct {
 
 func (d Default_case) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 	for _, linea := range d.Sentencias {
-		linea.Ejecutar(ambito_padre)
+		ejecutada := linea.Ejecutar(ambito_padre)
+		if ejecutada != nil {
+			return ejecutada //puede ser una sentenica de transferencia
+		}
 	}
 	return nil
 }

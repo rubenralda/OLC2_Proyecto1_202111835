@@ -87,6 +87,18 @@ for c in "hola" {
     //c = "b"
 }
 
+var i = 0;
+var j = i;
+while i < 2 {
+    if j == 0{
+        i = 1;
+        i += 1
+        continue;
+    }
+    i += 1
+}
+print(i)
+// i posee el valor de 2 al finalizar el ciclo
 
 
 //print(5+-(-5.5)+10+5)

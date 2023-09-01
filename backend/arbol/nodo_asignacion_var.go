@@ -44,7 +44,9 @@ func (a Asignacion_variable) Ejecutar(ambito *ambito.Ambito) interface{} {
 				encontrado.Valor = rr
 				return nil
 			}
+		default:
+			panic("Tipo no reconocido")
 		}
 	}
-	panic("Error no se puede asignar " + a.Id)
+	panic("Error el ID no existe " + a.Id)
 }

@@ -59,8 +59,9 @@ func (d Declarar_variable) Ejecutar(ambito_local *ambito.Ambito) interface{} {
 		} else {
 			panic("Error el valor no coincide con el tipo " + d.Id)
 		}
-	case nil: //cambiar
-
+	case nil: //cambiar por el valor de un struc llamada o algo asi
+	default:
+		panic("Tipo no reconocido")
 	}
 	return nil
 }
