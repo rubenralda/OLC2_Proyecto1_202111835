@@ -31,6 +31,10 @@ func (v *BaseT_swiftVisitor) VisitFor_in_statement(ctx *For_in_statementContext)
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseT_swiftVisitor) VisitRango(ctx *RangoContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseT_swiftVisitor) VisitWhile_statement(ctx *While_statementContext) interface{} {
 	return v.VisitChildren(ctx)
 }

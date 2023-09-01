@@ -76,5 +76,17 @@ while num != 0 {
 0
 */
 
+// for que recorre un rango
+for i in 1...5 {
+    print(i)
+}
+
+// for que recorre una cadena
+for c in "hola" {
+    print(c)
+    //c = "b"
+}
+
+
 
 //print(5+-(-5.5)+10+5)

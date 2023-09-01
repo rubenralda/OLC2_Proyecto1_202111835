@@ -35,8 +35,11 @@ code_block
 
 // GRAMMAR OF A FOR_IN STATEMENT
 
-for_in_statement : 'for' Identificador 'in' expresion code_block ; //cambiar pattern a ID y falta rango
+for_in_statement : 'for' Identificador 'in' (expresion|rango) code_block ; //cambiar pattern a ID y falta rango
 
+rango
+    : Int '...' Int
+    ;
 // GRAMMAR OF A WHILE STATEMENT
 
 while_statement : 'while' expresion code_block ;
@@ -148,12 +151,12 @@ asignacion
 expresion //agregar llamada de una funcion, de struct, vector y atributos
     : primitivos #valor_primitivo
     | Identificador #expresion_id
-    | '-' expresion #expresion_unario
     | '(' expresion ')' #expresion_paren
-    | expresion op=('*'|'/'|'%') expresion #expresion_arit
-    | expresion op=('+'|'-') expresion #expresion_arit
-    | expresion op=('=='|'!='|'>'|'<'|'<='|'>=') expresion #expresion_compa
     | op='!' expresion #expresion_nega
+    | '-' expresion #expresion_unario
+    | expresion op=('/'|'%'|'*') expresion #expresion_arit
+    | expresion op=('+'|'-') expresion #expresion_arit
+    | expresion op=('<'|'<='|'>='|'>'|'=='|'!=') expresion #expresion_compa
     | expresion op=('&&'|'||') expresion #expresion_rela
     ;
 

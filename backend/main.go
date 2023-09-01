@@ -246,9 +246,28 @@ func (v *parser_visitor) VisitLoop_statement(ctx *parser.Loop_statementContext) 
 	return nil
 }
 
+// METODO PARA EL WHILE
+
 func (v *parser_visitor) VisitWhile_statement(ctx *parser.While_statementContext) interface{} {
 	return arbol.Loop_while{Expresion: ctx.Expresion().Accept(v).(arbol.BaseNodo),
 		Sentencias: ctx.Code_block().Accept(v).([]arbol.BaseNodo)}
+}
+
+// METODOS PARA EL FOR IN
+
+func (v *parser_visitor) VisitFor_in_statement(ctx *parser.For_in_statementContext) interface{} {
+	var expresion arbol.BaseNodo
+	if ctx.Expresion() != nil {
+		expresion = ctx.Expresion().Accept(v).(arbol.BaseNodo)
+	}
+	rango_inicio := ""
+	rango_final := ""
+	if ctx.Rango() != nil {
+		rango_inicio = ctx.Rango().Int(0).GetText()
+		rango_final = ctx.Rango().Int(1).GetText()
+	}
+	return arbol.Loop_for_in{Expresion: expresion, Inicio: rango_inicio, Final: rango_final,
+		Sentencias: ctx.Code_block().Accept(v).([]arbol.BaseNodo), Id: ctx.Identificador().GetText()}
 }
 
 func main() {

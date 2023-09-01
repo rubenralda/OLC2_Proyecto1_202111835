@@ -25,6 +25,9 @@ type T_swiftVisitor interface {
 	// Visit a parse tree produced by T_swiftParser#for_in_statement.
 	VisitFor_in_statement(ctx *For_in_statementContext) interface{}
 
+	// Visit a parse tree produced by T_swiftParser#rango.
+	VisitRango(ctx *RangoContext) interface{}
+
 	// Visit a parse tree produced by T_swiftParser#while_statement.
 	VisitWhile_statement(ctx *While_statementContext) interface{}
 
