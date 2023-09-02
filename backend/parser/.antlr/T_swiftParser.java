@@ -1452,7 +1452,7 @@ public class T_swiftParser extends Parser {
 		Definicion_vectorContext _localctx = new Definicion_vectorContext(_ctx, getState());
 		enterRule(_localctx, 48, RULE_definicion_vector);
 		try {
-			setState(240);
+			setState(241);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,22,_ctx) ) {
 			case 1:
@@ -1483,6 +1483,8 @@ public class T_swiftParser extends Parser {
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(239);
+				match(T__18);
+				setState(240);
 				match(Identificador);
 				}
 				break;
@@ -1519,21 +1521,21 @@ public class T_swiftParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(242);
+			setState(243);
 			expresion(0);
-			setState(247);
+			setState(248);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__28) {
 				{
 				{
-				setState(243);
-				match(T__28);
 				setState(244);
+				match(T__28);
+				setState(245);
 				expresion(0);
 				}
 				}
-				setState(249);
+				setState(250);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -1566,13 +1568,13 @@ public class T_swiftParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(250);
-			match(T__29);
 			setState(251);
-			match(T__30);
+			match(T__29);
 			setState(252);
-			expresion(0);
+			match(T__30);
 			setState(253);
+			expresion(0);
+			setState(254);
 			match(T__31);
 			}
 		}
@@ -1612,6 +1614,26 @@ public class T_swiftParser extends Parser {
 		}
 		public Asignacion_decrementoContext(AsignacionContext ctx) { copyFrom(ctx); }
 	}
+	public static class Asignacion_vectorContext extends AsignacionContext {
+		public TerminalNode Identificador() { return getToken(T_swiftParser.Identificador, 0); }
+		public List<ExpresionContext> expresion() {
+			return getRuleContexts(ExpresionContext.class);
+		}
+		public ExpresionContext expresion(int i) {
+			return getRuleContext(ExpresionContext.class,i);
+		}
+		public Asignacion_vectorContext(AsignacionContext ctx) { copyFrom(ctx); }
+	}
+	public static class Asignacion_incremento_vectorContext extends AsignacionContext {
+		public TerminalNode Identificador() { return getToken(T_swiftParser.Identificador, 0); }
+		public List<ExpresionContext> expresion() {
+			return getRuleContexts(ExpresionContext.class);
+		}
+		public ExpresionContext expresion(int i) {
+			return getRuleContext(ExpresionContext.class,i);
+		}
+		public Asignacion_incremento_vectorContext(AsignacionContext ctx) { copyFrom(ctx); }
+	}
 	public static class Asignacion_incrementoContext extends AsignacionContext {
 		public TerminalNode Identificador() { return getToken(T_swiftParser.Identificador, 0); }
 		public ExpresionContext expresion() {
@@ -1619,23 +1641,33 @@ public class T_swiftParser extends Parser {
 		}
 		public Asignacion_incrementoContext(AsignacionContext ctx) { copyFrom(ctx); }
 	}
+	public static class Asignacion_decremento_vectorContext extends AsignacionContext {
+		public TerminalNode Identificador() { return getToken(T_swiftParser.Identificador, 0); }
+		public List<ExpresionContext> expresion() {
+			return getRuleContexts(ExpresionContext.class);
+		}
+		public ExpresionContext expresion(int i) {
+			return getRuleContext(ExpresionContext.class,i);
+		}
+		public Asignacion_decremento_vectorContext(AsignacionContext ctx) { copyFrom(ctx); }
+	}
 
 	public final AsignacionContext asignacion() throws RecognitionException {
 		AsignacionContext _localctx = new AsignacionContext(_ctx, getState());
 		enterRule(_localctx, 54, RULE_asignacion);
 		try {
-			setState(264);
+			setState(286);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,24,_ctx) ) {
 			case 1:
 				_localctx = new Asignacion_normalContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(255);
-				match(Identificador);
 				setState(256);
-				match(T__18);
+				match(Identificador);
 				setState(257);
+				match(T__18);
+				setState(258);
 				expresion(0);
 				}
 				break;
@@ -1643,11 +1675,11 @@ public class T_swiftParser extends Parser {
 				_localctx = new Asignacion_incrementoContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(258);
-				match(Identificador);
 				setState(259);
-				match(T__32);
+				match(Identificador);
 				setState(260);
+				match(T__32);
+				setState(261);
 				expresion(0);
 				}
 				break;
@@ -1655,11 +1687,65 @@ public class T_swiftParser extends Parser {
 				_localctx = new Asignacion_decrementoContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(261);
-				match(Identificador);
 				setState(262);
-				match(T__33);
+				match(Identificador);
 				setState(263);
+				match(T__33);
+				setState(264);
+				expresion(0);
+				}
+				break;
+			case 4:
+				_localctx = new Asignacion_vectorContext(_localctx);
+				enterOuterAlt(_localctx, 4);
+				{
+				setState(265);
+				match(Identificador);
+				setState(266);
+				match(T__26);
+				setState(267);
+				expresion(0);
+				setState(268);
+				match(T__27);
+				setState(269);
+				match(T__18);
+				setState(270);
+				expresion(0);
+				}
+				break;
+			case 5:
+				_localctx = new Asignacion_incremento_vectorContext(_localctx);
+				enterOuterAlt(_localctx, 5);
+				{
+				setState(272);
+				match(Identificador);
+				setState(273);
+				match(T__26);
+				setState(274);
+				expresion(0);
+				setState(275);
+				match(T__27);
+				setState(276);
+				match(T__32);
+				setState(277);
+				expresion(0);
+				}
+				break;
+			case 6:
+				_localctx = new Asignacion_decremento_vectorContext(_localctx);
+				enterOuterAlt(_localctx, 6);
+				{
+				setState(279);
+				match(Identificador);
+				setState(280);
+				match(T__26);
+				setState(281);
+				expresion(0);
+				setState(282);
+				match(T__27);
+				setState(283);
+				match(T__33);
+				setState(284);
 				expresion(0);
 				}
 				break;
@@ -1739,6 +1825,13 @@ public class T_swiftParser extends Parser {
 		}
 		public Expresion_compaContext(ExpresionContext ctx) { copyFrom(ctx); }
 	}
+	public static class Expresion_vectorContext extends ExpresionContext {
+		public TerminalNode Identificador() { return getToken(T_swiftParser.Identificador, 0); }
+		public ExpresionContext expresion() {
+			return getRuleContext(ExpresionContext.class,0);
+		}
+		public Expresion_vectorContext(ExpresionContext ctx) { copyFrom(ctx); }
+	}
 	public static class Expresion_negaContext extends ExpresionContext {
 		public Token op;
 		public ExpresionContext expresion() {
@@ -1763,72 +1856,81 @@ public class T_swiftParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(277);
+			setState(304);
 			_errHandler.sync(this);
-			switch (_input.LA(1)) {
-			case Int:
-			case Float:
-			case Caracter:
-			case String:
-			case Bool:
+			switch ( getInterpreter().adaptivePredict(_input,25,_ctx) ) {
+			case 1:
 				{
 				_localctx = new Valor_primitivoContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 
-				setState(267);
+				setState(289);
 				primitivos();
 				}
 				break;
-			case Identificador:
+			case 2:
+				{
+				_localctx = new Expresion_vectorContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(290);
+				match(Identificador);
+				setState(291);
+				match(T__26);
+				setState(292);
+				expresion(0);
+				setState(293);
+				match(T__27);
+				}
+				break;
+			case 3:
 				{
 				_localctx = new Expresion_idContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(268);
+				setState(295);
 				match(Identificador);
 				}
 				break;
-			case T__30:
+			case 4:
 				{
 				_localctx = new Expresion_parenContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(269);
+				setState(296);
 				match(T__30);
-				setState(270);
+				setState(297);
 				expresion(0);
-				setState(271);
+				setState(298);
 				match(T__31);
 				}
 				break;
-			case T__34:
+			case 5:
 				{
 				_localctx = new Expresion_negaContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(273);
+				setState(300);
 				((Expresion_negaContext)_localctx).op = match(T__34);
-				setState(274);
+				setState(301);
 				expresion(6);
 				}
 				break;
-			case T__35:
+			case 6:
 				{
 				_localctx = new Expresion_unarioContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(275);
+				setState(302);
 				match(T__35);
-				setState(276);
+				setState(303);
 				expresion(5);
 				}
 				break;
-			default:
-				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(293);
+			setState(320);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,27,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -1836,16 +1938,16 @@ public class T_swiftParser extends Parser {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(291);
+					setState(318);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,26,_ctx) ) {
 					case 1:
 						{
 						_localctx = new Expresion_aritContext(new ExpresionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expresion);
-						setState(279);
+						setState(306);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
-						setState(280);
+						setState(307);
 						((Expresion_aritContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__36) | (1L << T__37) | (1L << T__38))) != 0)) ) {
@@ -1856,7 +1958,7 @@ public class T_swiftParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(281);
+						setState(308);
 						expresion(5);
 						}
 						break;
@@ -1864,9 +1966,9 @@ public class T_swiftParser extends Parser {
 						{
 						_localctx = new Expresion_aritContext(new ExpresionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expresion);
-						setState(282);
+						setState(309);
 						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
-						setState(283);
+						setState(310);
 						((Expresion_aritContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==T__35 || _la==T__39) ) {
@@ -1877,7 +1979,7 @@ public class T_swiftParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(284);
+						setState(311);
 						expresion(4);
 						}
 						break;
@@ -1885,9 +1987,9 @@ public class T_swiftParser extends Parser {
 						{
 						_localctx = new Expresion_compaContext(new ExpresionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expresion);
-						setState(285);
+						setState(312);
 						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
-						setState(286);
+						setState(313);
 						((Expresion_compaContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__40) | (1L << T__41) | (1L << T__42) | (1L << T__43) | (1L << T__44) | (1L << T__45))) != 0)) ) {
@@ -1898,7 +2000,7 @@ public class T_swiftParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(287);
+						setState(314);
 						expresion(3);
 						}
 						break;
@@ -1906,9 +2008,9 @@ public class T_swiftParser extends Parser {
 						{
 						_localctx = new Expresion_relaContext(new ExpresionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expresion);
-						setState(288);
+						setState(315);
 						if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
-						setState(289);
+						setState(316);
 						((Expresion_relaContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==T__46 || _la==T__47) ) {
@@ -1919,14 +2021,14 @@ public class T_swiftParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(290);
+						setState(317);
 						expresion(2);
 						}
 						break;
 					}
 					} 
 				}
-				setState(295);
+				setState(322);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,27,_ctx);
 			}
@@ -1979,14 +2081,14 @@ public class T_swiftParser extends Parser {
 		PrimitivosContext _localctx = new PrimitivosContext(_ctx, getState());
 		enterRule(_localctx, 58, RULE_primitivos);
 		try {
-			setState(301);
+			setState(328);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case Caracter:
 				_localctx = new Primitivo_caracterContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(296);
+				setState(323);
 				match(Caracter);
 				}
 				break;
@@ -1994,7 +2096,7 @@ public class T_swiftParser extends Parser {
 				_localctx = new Primitivo_intContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(297);
+				setState(324);
 				match(Int);
 				}
 				break;
@@ -2002,7 +2104,7 @@ public class T_swiftParser extends Parser {
 				_localctx = new Primitivo_floatContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(298);
+				setState(325);
 				match(Float);
 				}
 				break;
@@ -2010,7 +2112,7 @@ public class T_swiftParser extends Parser {
 				_localctx = new Primitivo_stringContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(299);
+				setState(326);
 				match(String);
 				}
 				break;
@@ -2018,7 +2120,7 @@ public class T_swiftParser extends Parser {
 				_localctx = new Primitivo_boolContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(300);
+				setState(327);
 				match(Bool);
 				}
 				break;
@@ -2059,7 +2161,7 @@ public class T_swiftParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3;\u0132\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3;\u014d\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
@@ -2076,20 +2178,22 @@ public class T_swiftParser extends Parser {
 		"\3\24\3\24\5\24\u00c5\n\24\3\25\3\25\3\25\5\25\u00ca\n\25\3\25\3\25\3"+
 		"\25\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\5\26\u00d7\n\26\3\26\3\26"+
 		"\5\26\u00db\n\26\3\27\3\27\3\27\3\30\3\30\3\31\3\31\3\31\3\31\3\31\3\31"+
-		"\3\31\3\31\3\32\3\32\3\32\3\32\3\32\3\32\3\32\3\32\3\32\5\32\u00f3\n\32"+
-		"\3\33\3\33\3\33\7\33\u00f8\n\33\f\33\16\33\u00fb\13\33\3\34\3\34\3\34"+
-		"\3\34\3\34\3\35\3\35\3\35\3\35\3\35\3\35\3\35\3\35\3\35\5\35\u010b\n\35"+
-		"\3\36\3\36\3\36\3\36\3\36\3\36\3\36\3\36\3\36\3\36\3\36\5\36\u0118\n\36"+
-		"\3\36\3\36\3\36\3\36\3\36\3\36\3\36\3\36\3\36\3\36\3\36\3\36\7\36\u0126"+
-		"\n\36\f\36\16\36\u0129\13\36\3\37\3\37\3\37\3\37\3\37\5\37\u0130\n\37"+
-		"\3\37\2\3: \2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62\64\66"+
-		"8:<\2\b\3\2\r\17\3\2\30\34\3\2\')\4\2&&**\3\2+\60\3\2\61\62\2\u0142\2"+
-		">\3\2\2\2\4D\3\2\2\2\6_\3\2\2\2\bc\3\2\2\2\ne\3\2\2\2\fi\3\2\2\2\16r\3"+
-		"\2\2\2\20v\3\2\2\2\22}\3\2\2\2\24\u008f\3\2\2\2\26\u0091\3\2\2\2\30\u0099"+
+		"\3\31\3\31\3\32\3\32\3\32\3\32\3\32\3\32\3\32\3\32\3\32\3\32\5\32\u00f4"+
+		"\n\32\3\33\3\33\3\33\7\33\u00f9\n\33\f\33\16\33\u00fc\13\33\3\34\3\34"+
+		"\3\34\3\34\3\34\3\35\3\35\3\35\3\35\3\35\3\35\3\35\3\35\3\35\3\35\3\35"+
+		"\3\35\3\35\3\35\3\35\3\35\3\35\3\35\3\35\3\35\3\35\3\35\3\35\3\35\3\35"+
+		"\3\35\3\35\3\35\3\35\3\35\5\35\u0121\n\35\3\36\3\36\3\36\3\36\3\36\3\36"+
+		"\3\36\3\36\3\36\3\36\3\36\3\36\3\36\3\36\3\36\3\36\5\36\u0133\n\36\3\36"+
+		"\3\36\3\36\3\36\3\36\3\36\3\36\3\36\3\36\3\36\3\36\3\36\7\36\u0141\n\36"+
+		"\f\36\16\36\u0144\13\36\3\37\3\37\3\37\3\37\3\37\5\37\u014b\n\37\3\37"+
+		"\2\3: \2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62\64\668:<"+
+		"\2\b\3\2\r\17\3\2\30\34\3\2\')\4\2&&**\3\2+\60\3\2\61\62\2\u0161\2>\3"+
+		"\2\2\2\4D\3\2\2\2\6_\3\2\2\2\bc\3\2\2\2\ne\3\2\2\2\fi\3\2\2\2\16r\3\2"+
+		"\2\2\20v\3\2\2\2\22}\3\2\2\2\24\u008f\3\2\2\2\26\u0091\3\2\2\2\30\u0099"+
 		"\3\2\2\2\32\u00a7\3\2\2\2\34\u00ae\3\2\2\2\36\u00b7\3\2\2\2 \u00b9\3\2"+
 		"\2\2\"\u00bb\3\2\2\2$\u00bd\3\2\2\2&\u00c4\3\2\2\2(\u00c6\3\2\2\2*\u00da"+
-		"\3\2\2\2,\u00dc\3\2\2\2.\u00df\3\2\2\2\60\u00e1\3\2\2\2\62\u00f2\3\2\2"+
-		"\2\64\u00f4\3\2\2\2\66\u00fc\3\2\2\28\u010a\3\2\2\2:\u0117\3\2\2\2<\u012f"+
+		"\3\2\2\2,\u00dc\3\2\2\2.\u00df\3\2\2\2\60\u00e1\3\2\2\2\62\u00f3\3\2\2"+
+		"\2\64\u00f5\3\2\2\2\66\u00fd\3\2\2\28\u0120\3\2\2\2:\u0132\3\2\2\2<\u014a"+
 		"\3\2\2\2>?\5\4\3\2?@\7\2\2\3@\3\3\2\2\2AC\5\6\4\2BA\3\2\2\2CF\3\2\2\2"+
 		"DB\3\2\2\2DE\3\2\2\2E\5\3\2\2\2FD\3\2\2\2GI\5&\24\2HJ\7\3\2\2IH\3\2\2"+
 		"\2IJ\3\2\2\2J`\3\2\2\2KM\5\b\5\2LN\7\3\2\2ML\3\2\2\2MN\3\2\2\2N`\3\2\2"+
@@ -2137,32 +2241,41 @@ public class T_swiftParser extends Parser {
 		"\u00e3\u00e4\7\22\2\2\u00e4\u00e5\7\35\2\2\u00e5\u00e6\5.\30\2\u00e6\u00e7"+
 		"\7\36\2\2\u00e7\u00e8\5\62\32\2\u00e8\61\3\2\2\2\u00e9\u00ea\7\25\2\2"+
 		"\u00ea\u00eb\7\35\2\2\u00eb\u00ec\5\64\33\2\u00ec\u00ed\7\36\2\2\u00ed"+
-		"\u00f3\3\2\2\2\u00ee\u00ef\7\25\2\2\u00ef\u00f0\7\35\2\2\u00f0\u00f3\7"+
-		"\36\2\2\u00f1\u00f3\7;\2\2\u00f2\u00e9\3\2\2\2\u00f2\u00ee\3\2\2\2\u00f2"+
-		"\u00f1\3\2\2\2\u00f3\63\3\2\2\2\u00f4\u00f9\5:\36\2\u00f5\u00f6\7\37\2"+
-		"\2\u00f6\u00f8\5:\36\2\u00f7\u00f5\3\2\2\2\u00f8\u00fb\3\2\2\2\u00f9\u00f7"+
-		"\3\2\2\2\u00f9\u00fa\3\2\2\2\u00fa\65\3\2\2\2\u00fb\u00f9\3\2\2\2\u00fc"+
-		"\u00fd\7 \2\2\u00fd\u00fe\7!\2\2\u00fe\u00ff\5:\36\2\u00ff\u0100\7\"\2"+
-		"\2\u0100\67\3\2\2\2\u0101\u0102\7;\2\2\u0102\u0103\7\25\2\2\u0103\u010b"+
-		"\5:\36\2\u0104\u0105\7;\2\2\u0105\u0106\7#\2\2\u0106\u010b\5:\36\2\u0107"+
-		"\u0108\7;\2\2\u0108\u0109\7$\2\2\u0109\u010b\5:\36\2\u010a\u0101\3\2\2"+
-		"\2\u010a\u0104\3\2\2\2\u010a\u0107\3\2\2\2\u010b9\3\2\2\2\u010c\u010d"+
-		"\b\36\1\2\u010d\u0118\5<\37\2\u010e\u0118\7;\2\2\u010f\u0110\7!\2\2\u0110"+
-		"\u0111\5:\36\2\u0111\u0112\7\"\2\2\u0112\u0118\3\2\2\2\u0113\u0114\7%"+
-		"\2\2\u0114\u0118\5:\36\b\u0115\u0116\7&\2\2\u0116\u0118\5:\36\7\u0117"+
-		"\u010c\3\2\2\2\u0117\u010e\3\2\2\2\u0117\u010f\3\2\2\2\u0117\u0113\3\2"+
-		"\2\2\u0117\u0115\3\2\2\2\u0118\u0127\3\2\2\2\u0119\u011a\f\6\2\2\u011a"+
-		"\u011b\t\4\2\2\u011b\u0126\5:\36\7\u011c\u011d\f\5\2\2\u011d\u011e\t\5"+
-		"\2\2\u011e\u0126\5:\36\6\u011f\u0120\f\4\2\2\u0120\u0121\t\6\2\2\u0121"+
-		"\u0126\5:\36\5\u0122\u0123\f\3\2\2\u0123\u0124\t\7\2\2\u0124\u0126\5:"+
-		"\36\4\u0125\u0119\3\2\2\2\u0125\u011c\3\2\2\2\u0125\u011f\3\2\2\2\u0125"+
-		"\u0122\3\2\2\2\u0126\u0129\3\2\2\2\u0127\u0125\3\2\2\2\u0127\u0128\3\2"+
-		"\2\2\u0128;\3\2\2\2\u0129\u0127\3\2\2\2\u012a\u0130\78\2\2\u012b\u0130"+
-		"\7\66\2\2\u012c\u0130\7\67\2\2\u012d\u0130\79\2\2\u012e\u0130\7:\2\2\u012f"+
-		"\u012a\3\2\2\2\u012f\u012b\3\2\2\2\u012f\u012c\3\2\2\2\u012f\u012d\3\2"+
-		"\2\2\u012f\u012e\3\2\2\2\u0130=\3\2\2\2\37DIMQUY]_cn}\u008f\u009f\u00a3"+
-		"\u00ac\u00b2\u00b7\u00bf\u00c4\u00c9\u00d6\u00da\u00f2\u00f9\u010a\u0117"+
-		"\u0125\u0127\u012f";
+		"\u00f4\3\2\2\2\u00ee\u00ef\7\25\2\2\u00ef\u00f0\7\35\2\2\u00f0\u00f4\7"+
+		"\36\2\2\u00f1\u00f2\7\25\2\2\u00f2\u00f4\7;\2\2\u00f3\u00e9\3\2\2\2\u00f3"+
+		"\u00ee\3\2\2\2\u00f3\u00f1\3\2\2\2\u00f4\63\3\2\2\2\u00f5\u00fa\5:\36"+
+		"\2\u00f6\u00f7\7\37\2\2\u00f7\u00f9\5:\36\2\u00f8\u00f6\3\2\2\2\u00f9"+
+		"\u00fc\3\2\2\2\u00fa\u00f8\3\2\2\2\u00fa\u00fb\3\2\2\2\u00fb\65\3\2\2"+
+		"\2\u00fc\u00fa\3\2\2\2\u00fd\u00fe\7 \2\2\u00fe\u00ff\7!\2\2\u00ff\u0100"+
+		"\5:\36\2\u0100\u0101\7\"\2\2\u0101\67\3\2\2\2\u0102\u0103\7;\2\2\u0103"+
+		"\u0104\7\25\2\2\u0104\u0121\5:\36\2\u0105\u0106\7;\2\2\u0106\u0107\7#"+
+		"\2\2\u0107\u0121\5:\36\2\u0108\u0109\7;\2\2\u0109\u010a\7$\2\2\u010a\u0121"+
+		"\5:\36\2\u010b\u010c\7;\2\2\u010c\u010d\7\35\2\2\u010d\u010e\5:\36\2\u010e"+
+		"\u010f\7\36\2\2\u010f\u0110\7\25\2\2\u0110\u0111\5:\36\2\u0111\u0121\3"+
+		"\2\2\2\u0112\u0113\7;\2\2\u0113\u0114\7\35\2\2\u0114\u0115\5:\36\2\u0115"+
+		"\u0116\7\36\2\2\u0116\u0117\7#\2\2\u0117\u0118\5:\36\2\u0118\u0121\3\2"+
+		"\2\2\u0119\u011a\7;\2\2\u011a\u011b\7\35\2\2\u011b\u011c\5:\36\2\u011c"+
+		"\u011d\7\36\2\2\u011d\u011e\7$\2\2\u011e\u011f\5:\36\2\u011f\u0121\3\2"+
+		"\2\2\u0120\u0102\3\2\2\2\u0120\u0105\3\2\2\2\u0120\u0108\3\2\2\2\u0120"+
+		"\u010b\3\2\2\2\u0120\u0112\3\2\2\2\u0120\u0119\3\2\2\2\u01219\3\2\2\2"+
+		"\u0122\u0123\b\36\1\2\u0123\u0133\5<\37\2\u0124\u0125\7;\2\2\u0125\u0126"+
+		"\7\35\2\2\u0126\u0127\5:\36\2\u0127\u0128\7\36\2\2\u0128\u0133\3\2\2\2"+
+		"\u0129\u0133\7;\2\2\u012a\u012b\7!\2\2\u012b\u012c\5:\36\2\u012c\u012d"+
+		"\7\"\2\2\u012d\u0133\3\2\2\2\u012e\u012f\7%\2\2\u012f\u0133\5:\36\b\u0130"+
+		"\u0131\7&\2\2\u0131\u0133\5:\36\7\u0132\u0122\3\2\2\2\u0132\u0124\3\2"+
+		"\2\2\u0132\u0129\3\2\2\2\u0132\u012a\3\2\2\2\u0132\u012e\3\2\2\2\u0132"+
+		"\u0130\3\2\2\2\u0133\u0142\3\2\2\2\u0134\u0135\f\6\2\2\u0135\u0136\t\4"+
+		"\2\2\u0136\u0141\5:\36\7\u0137\u0138\f\5\2\2\u0138\u0139\t\5\2\2\u0139"+
+		"\u0141\5:\36\6\u013a\u013b\f\4\2\2\u013b\u013c\t\6\2\2\u013c\u0141\5:"+
+		"\36\5\u013d\u013e\f\3\2\2\u013e\u013f\t\7\2\2\u013f\u0141\5:\36\4\u0140"+
+		"\u0134\3\2\2\2\u0140\u0137\3\2\2\2\u0140\u013a\3\2\2\2\u0140\u013d\3\2"+
+		"\2\2\u0141\u0144\3\2\2\2\u0142\u0140\3\2\2\2\u0142\u0143\3\2\2\2\u0143"+
+		";\3\2\2\2\u0144\u0142\3\2\2\2\u0145\u014b\78\2\2\u0146\u014b\7\66\2\2"+
+		"\u0147\u014b\7\67\2\2\u0148\u014b\79\2\2\u0149\u014b\7:\2\2\u014a\u0145"+
+		"\3\2\2\2\u014a\u0146\3\2\2\2\u014a\u0147\3\2\2\2\u014a\u0148\3\2\2\2\u014a"+
+		"\u0149\3\2\2\2\u014b=\3\2\2\2\37DIMQUY]_cn}\u008f\u009f\u00a3\u00ac\u00b2"+
+		"\u00b7\u00bf\u00c4\u00c9\u00d6\u00da\u00f3\u00fa\u0120\u0132\u0140\u0142"+
+		"\u014a";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

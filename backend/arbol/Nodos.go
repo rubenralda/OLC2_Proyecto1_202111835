@@ -48,5 +48,38 @@ func (i Id_expresion) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 	if id_buscado == nil {
 		panic("Error el identificador no existe: " + i.Id)
 	}
+	if id_buscado.Tipo == "vector" { //agregar funciones y structs
+		panic("El Id no corresponde a una variable o constante " + i.Id)
+	}
 	return id_buscado.Valor
+}
+
+type Id_vector struct {
+	Id     string
+	Indice BaseNodo
+}
+
+func (i Id_vector) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
+	resul_indice := i.Indice.Ejecutar(ambito_padre)
+	indice := 0
+	switch rr := resul_indice.(type) {
+	case int:
+		indice = rr
+	default:
+		panic("El indice no es un entero")
+	}
+	id_buscado := ambito_padre.BuscarID(i.Id)
+	if id_buscado == nil {
+		panic("Error el vector no existe: " + i.Id)
+	}
+	if id_buscado.Tipo != "vector" { //agregar funciones y structs
+		panic("El Id no corresponde a una variable o constante " + i.Id)
+	}
+	if indice >= 0 && indice < len(id_buscado.Lista_vector) {
+		return id_buscado.Lista_vector[indice]
+	} else {
+		panic("El indice no existe")
+		//return nil // esto para errores
+	}
+
 }

@@ -131,4 +131,19 @@ while(p <= 10) {
     print("ni tampoco aqui")
 }
 
+//vector con valores
+var vec1: [Int] = [10,20,30,40,50]
+//vector vacío
+var vec2: [Float] = []
+//vector vacío
+var vec3: [String] = [ ];
+//se realiza una copia completa de vector
+var copiaVec: [Int] = vec1
 //print(5+-(-5.5)+10+5)
+//Aceso a un elemento
+let val: Int = vec1[3] + num1 - copiaVec[0] // val = 40
+
+//asignación con []
+vec1[1] = vec1[0]; //[10,10,30,40,50]
+vec1[1] += vec1[0]; //[10,20,30,40,50]
+vec1[1] -= vec1[0] + 5; //[10,5,30,40,50]

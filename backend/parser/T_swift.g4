@@ -102,6 +102,7 @@ declaracion
    | variable_declaracion
    //| function_declaracion
    //| struct_declaracion
+   //| matriz_declaracion
    | array_declaracion
    ;
 
@@ -131,7 +132,7 @@ array_declaracion
 definicion_vector
     : '=' '[' lista_expresiones ']'
     | '=' '[' ']'
-    | Identificador
+    | '=' Identificador
     ;
 
 lista_expresiones : expresion (',' expresion)*
@@ -146,10 +147,14 @@ asignacion
     : Identificador '=' expresion #asignacion_normal
     | Identificador '+=' expresion #asignacion_incremento
     | Identificador '-=' expresion #asignacion_decremento
+    | Identificador '[' expresion ']' '=' expresion #asignacion_vector
+    | Identificador '[' expresion ']' '+=' expresion #asignacion_incremento_vector
+    | Identificador '[' expresion ']' '-=' expresion #asignacion_decremento_vector
     ;
 
 expresion //agregar llamada de una funcion, de struct, vector y atributos
     : primitivos #valor_primitivo
+    | Identificador '[' expresion ']' #expresion_vector
     | Identificador #expresion_id
     | '(' expresion ')' #expresion_paren
     | op='!' expresion #expresion_nega

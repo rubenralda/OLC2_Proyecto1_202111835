@@ -1,11 +1,13 @@
 package ambito
 
 type Identificadores struct {
-	Id        string
-	Primitivo string
-	Valor     interface{}  // int, string ...
-	Tipo      string       //variable o funcion o constante o struct
-	Objeto    *interface{} // el objeto para darle ejecutar
+	Id           string
+	Primitivo    string        // String, Int, Bool, Float ...
+	Valor        interface{}   // 10, 20.5, "hola", true
+	Tipo         string        //variable, funcion, constante, struct, vector
+	Objeto       *interface{}  // el objeto para darle ejecutar (por el momento no se usa)
+	Lista_vector []interface{} //[1,2,3] ...
+	//Largo_vector int           //Tamaño del vector si es tipo vector
 }
 
 type Ambito struct {

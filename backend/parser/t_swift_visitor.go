@@ -109,6 +109,15 @@ type T_swiftVisitor interface {
 	// Visit a parse tree produced by T_swiftParser#asignacion_decremento.
 	VisitAsignacion_decremento(ctx *Asignacion_decrementoContext) interface{}
 
+	// Visit a parse tree produced by T_swiftParser#asignacion_vector.
+	VisitAsignacion_vector(ctx *Asignacion_vectorContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#asignacion_incremento_vector.
+	VisitAsignacion_incremento_vector(ctx *Asignacion_incremento_vectorContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#asignacion_decremento_vector.
+	VisitAsignacion_decremento_vector(ctx *Asignacion_decremento_vectorContext) interface{}
+
 	// Visit a parse tree produced by T_swiftParser#expresion_id.
 	VisitExpresion_id(ctx *Expresion_idContext) interface{}
 
@@ -129,6 +138,9 @@ type T_swiftVisitor interface {
 
 	// Visit a parse tree produced by T_swiftParser#expresion_compa.
 	VisitExpresion_compa(ctx *Expresion_compaContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#expresion_vector.
+	VisitExpresion_vector(ctx *Expresion_vectorContext) interface{}
 
 	// Visit a parse tree produced by T_swiftParser#expresion_nega.
 	VisitExpresion_nega(ctx *Expresion_negaContext) interface{}

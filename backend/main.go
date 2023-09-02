@@ -64,6 +64,11 @@ func (v *parser_visitor) VisitExpresion_id(ctx *parser.Expresion_idContext) inte
 	return arbol.Expresion{Valor1: ide, Operacion: "identificador"}
 }
 
+func (v *parser_visitor) VisitExpresion_vector(ctx *parser.Expresion_vectorContext) interface{} {
+	ide := arbol.Id_vector{Id: ctx.Identificador().GetText(), Indice: ctx.Expresion().Accept(v).(arbol.BaseNodo)}
+	return arbol.Expresion{Valor1: ide, Operacion: "identificador"}
+}
+
 func (v *parser_visitor) VisitExpresion_arit(ctx *parser.Expresion_aritContext) interface{} {
 	aa := arbol.Expresion{Valor1: ctx.Expresion(0).Accept(v).(arbol.BaseNodo),
 		Valor2: ctx.Expresion(1).Accept(v).(arbol.BaseNodo), Operacion: ctx.GetOp().GetText()}
@@ -178,6 +183,24 @@ func (v *parser_visitor) VisitAsignacion_incremento(ctx *parser.Asignacion_incre
 
 func (v *parser_visitor) VisitAsignacion_normal(ctx *parser.Asignacion_normalContext) interface{} {
 	return arbol.Asignacion_variable{Id: ctx.Identificador().GetText(), Expresion: ctx.Expresion().Accept(v).(arbol.BaseNodo)}
+}
+
+func (v *parser_visitor) VisitAsignacion_vector(ctx *parser.Asignacion_vectorContext) interface{} {
+	return arbol.Asignacion_vector{Id: ctx.Identificador().GetText(),
+		Expresion: ctx.Expresion(1).Accept(v).(arbol.BaseNodo),
+		Indice:    ctx.Expresion(0).Accept(v).(arbol.BaseNodo)}
+}
+
+func (v *parser_visitor) VisitAsignacion_incremento_vector(ctx *parser.Asignacion_incremento_vectorContext) interface{} {
+	return arbol.Incremento_vector{Id: ctx.Identificador().GetText(),
+		Expresion: ctx.Expresion(1).Accept(v).(arbol.BaseNodo),
+		Indice:    ctx.Expresion(0).Accept(v).(arbol.BaseNodo)}
+}
+
+func (v *parser_visitor) VisitAsignacion_decremento_vector(ctx *parser.Asignacion_decremento_vectorContext) interface{} {
+	return arbol.Decremento_vector{Id: ctx.Identificador().GetText(),
+		Expresion: ctx.Expresion(1).Accept(v).(arbol.BaseNodo),
+		Indice:    ctx.Expresion(0).Accept(v).(arbol.BaseNodo)}
 }
 
 // metodos para la sentencia if else
@@ -305,6 +328,29 @@ func (v *parser_visitor) VisitDeclarar_guard(ctx *parser.Declarar_guardContext) 
 func (v *parser_visitor) VisitGuard_statement(ctx *parser.Guard_statementContext) interface{} {
 	return arbol.Sentencia_guard{Expresion: ctx.Expresion().Accept(v).(arbol.BaseNodo),
 		Sentencias: ctx.Instrucciones().Accept(v).([]arbol.BaseNodo)}
+}
+
+// METODOS DECLARACION DE VECTOR
+
+func (v *parser_visitor) VisitArray_declaracion(ctx *parser.Array_declaracionContext) interface{} {
+	var lista_valores []arbol.BaseNodo
+	otro_id := ""
+	if ctx.Definicion_vector().Lista_expresiones() != nil {
+		lista_valores = ctx.Definicion_vector().Lista_expresiones().Accept(v).([]arbol.BaseNodo)
+	}
+	if ctx.Definicion_vector().Identificador() != nil {
+		otro_id = ctx.Definicion_vector().Identificador().GetText()
+	}
+	return arbol.Declarar_vector{Tipo: ctx.Tipos().GetText(), ID: ctx.Identificador().GetText(),
+		Lista_expresion: lista_valores, ID_otro_vector: otro_id}
+}
+
+func (v *parser_visitor) VisitLista_expresiones(ctx *parser.Lista_expresionesContext) interface{} {
+	var expresiones []arbol.BaseNodo
+	for _, item := range ctx.AllExpresion() {
+		expresiones = append(expresiones, item.Accept(v).(arbol.BaseNodo))
+	}
+	return expresiones
 }
 
 func main() {

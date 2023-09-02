@@ -143,6 +143,18 @@ func (v *BaseT_swiftVisitor) VisitAsignacion_decremento(ctx *Asignacion_decremen
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseT_swiftVisitor) VisitAsignacion_vector(ctx *Asignacion_vectorContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitAsignacion_incremento_vector(ctx *Asignacion_incremento_vectorContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitAsignacion_decremento_vector(ctx *Asignacion_decremento_vectorContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseT_swiftVisitor) VisitExpresion_id(ctx *Expresion_idContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -168,6 +180,10 @@ func (v *BaseT_swiftVisitor) VisitExpresion_arit(ctx *Expresion_aritContext) int
 }
 
 func (v *BaseT_swiftVisitor) VisitExpresion_compa(ctx *Expresion_compaContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitExpresion_vector(ctx *Expresion_vectorContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
