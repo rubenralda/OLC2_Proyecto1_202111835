@@ -100,5 +100,35 @@ while i < 2 {
 print(i)
 // i posee el valor de 2 al finalizar el ciclo
 
+var m = 2
+while (m <= 10) {
+// la sentencia guard verifica si i es impar
+    guard m % 2 == 0 else {
+        m = m + 1
+        continue
+    }
+    print(m)
+    m = m + 1
+}
+/* Salida
+2
+4
+6
+8
+10
+*/
+
+
+var p = 2
+while(p <= 10) {
+    guard p%3 == 0 else {
+        if true {
+            break; // salimos del while o del guard? en este caso se sale del while
+        }
+        print("no debe llega aqui")
+        break //en este caso este sería el break que exige el guard
+    }
+    print("ni tampoco aqui")
+}
 
 //print(5+-(-5.5)+10+5)

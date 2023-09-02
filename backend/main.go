@@ -296,6 +296,17 @@ func (v *parser_visitor) VisitReturn_statement(ctx *parser.Return_statementConte
 	return arbol.Sentencia_return{Expresion: expresion, Tipo_retorno: tipo}
 }
 
+// METODOS DE SENTENCIA GUARD
+
+func (v *parser_visitor) VisitDeclarar_guard(ctx *parser.Declarar_guardContext) interface{} {
+	return ctx.Guard_statement().Accept(v).(arbol.BaseNodo)
+}
+
+func (v *parser_visitor) VisitGuard_statement(ctx *parser.Guard_statementContext) interface{} {
+	return arbol.Sentencia_guard{Expresion: ctx.Expresion().Accept(v).(arbol.BaseNodo),
+		Sentencias: ctx.Instrucciones().Accept(v).([]arbol.BaseNodo)}
+}
+
 func main() {
 	fichero, err := antlr.NewFileStream("entrada.txt")
 	if err != nil {
@@ -309,7 +320,16 @@ func main() {
 	resultado := visitor.Visit(p.Inicio()).([]arbol.BaseNodo)
 	ambito_global := &ambito.Ambito{NombreAmbito: "global"}
 	for _, linea := range resultado {
-		linea.Ejecutar(ambito_global)
+		ejecutada := linea.Ejecutar(ambito_global)
+		switch ejecutada.(type) {
+		case arbol.Control_transfer:
+			panic("Error controles de tranferencia no pueden ir aqui")
+		case arbol.Sentencia_return:
+			panic("Error el return no esta dentro de una funcion")
+		case nil: // si es nil no hace nada
+		default:
+			panic("No deberia pasar")
+		}
 	}
 	for _, local := range ambito_global.Locales {
 		fmt.Println(local)
