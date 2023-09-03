@@ -19,8 +19,36 @@ func (v *parser_visitor) Visit(raiz antlr.ParseTree) interface{} {
 }
 
 func (v *parser_visitor) VisitInicio(ctx *parser.InicioContext) interface{} {
-	return ctx.Instrucciones().Accept(v)
+	return ctx.Instrucciones_globales().Accept(v)
 }
+
+func (v *parser_visitor) VisitInstrucciones_globales(ctx *parser.Instrucciones_globalesContext) interface{} {
+	var instrucciones []arbol.BaseNodo
+	for _, instruccion := range ctx.AllIntruccion_global() {
+		fdf := instruccion.Accept(v).(arbol.BaseNodo)
+		instrucciones = append(instrucciones, fdf)
+	}
+	return instrucciones
+}
+
+func (v *parser_visitor) VisitIntruccion_global(ctx *parser.Intruccion_globalContext) interface{} {
+	if ctx.Declaracion() != nil {
+		return ctx.Declaracion().Accept(v).(arbol.BaseNodo)
+	} else if ctx.Loop_statement() != nil {
+		return ctx.Loop_statement().Accept(v).(arbol.BaseNodo)
+	} else if ctx.Branch_statement() != nil {
+		return ctx.Branch_statement().Accept(v).(arbol.BaseNodo)
+	} else if ctx.Llamadas_funciones() != nil {
+		return ctx.Llamadas_funciones().Accept(v).(arbol.BaseNodo)
+	} else if ctx.Asignacion() != nil {
+		return ctx.Asignacion().Accept(v).(arbol.BaseNodo)
+	} else if ctx.Function_declaracion() != nil {
+		return ctx.Function_declaracion().Accept(v).(arbol.BaseNodo)
+	}
+	return nil
+}
+
+// METODOS PARA INSTRUCCIONES DE FUNCIONES
 
 func (v *parser_visitor) VisitInstrucciones(ctx *parser.InstruccionesContext) interface{} {
 	var instrucciones []arbol.BaseNodo
@@ -38,8 +66,8 @@ func (v *parser_visitor) VisitInstruccion(ctx *parser.InstruccionContext) interf
 		return ctx.Loop_statement().Accept(v).(arbol.BaseNodo)
 	} else if ctx.Branch_statement() != nil {
 		return ctx.Branch_statement().Accept(v).(arbol.BaseNodo)
-	} else if ctx.Funcion_print() != nil {
-		return ctx.Funcion_print().Accept(v).(arbol.BaseNodo)
+	} else if ctx.Llamadas_funciones() != nil {
+		return ctx.Llamadas_funciones().Accept(v).(arbol.BaseNodo)
 	} else if ctx.Asignacion() != nil {
 		return ctx.Asignacion().Accept(v).(arbol.BaseNodo)
 	} else if ctx.Control_transfer_statement() != nil {
@@ -351,6 +379,12 @@ func (v *parser_visitor) VisitLista_expresiones(ctx *parser.Lista_expresionesCon
 		expresiones = append(expresiones, item.Accept(v).(arbol.BaseNodo))
 	}
 	return expresiones
+}
+
+// METODOS PARA LLAMADAS DE FUNCIONES
+
+func (v *parser_visitor) VisitLlamadas_funciones(ctx *parser.Llamadas_funcionesContext) interface{} {
+	return ctx.Funcion_print().Accept(v).(arbol.BaseNodo)
 }
 
 func main() {

@@ -8,10 +8,43 @@ Block_comment : '/*' (Block_comment|.)*? '*/'	-> channel(HIDDEN) ; // nesting co
 Line_comment : '//' .*? ('\n'|EOF)				-> channel(HIDDEN) ;
 
 inicio
-   : instrucciones EOF
+   : instrucciones_globales EOF
    ;
 
-instrucciones
+// GRAMATICA PARA SENTENCIAS QUE SE DECLARAN SOLO GLOBALES
+
+instrucciones_globales: intruccion_global* ;
+
+intruccion_global
+    : declaracion ';'?
+    | loop_statement ';'?
+    | branch_statement ';'?
+    | asignacion ';'?
+    | llamadas_funciones ';'?
+    | function_declaracion
+     //| struct_declaracion
+    ;
+
+// GRAMATICA PARA UNA FUNCION
+
+function_declaracion 
+    : 'func' Identificador '(' lista_parametros? ')' ( '->' tipos)? code_block
+    ;
+
+lista_parametros
+    : ',' (Identificador | '_')? ':' 'inout'? tipos lista_parametros
+    | (Identificador | '_')? ':' 'inout'? tipos
+    ;
+
+// GRAMATICA BLOQUE DE CODIGO
+
+code_block
+    : '{' instrucciones '}'
+    ;
+
+// GRAMATICA PARA INSTRUCCIONES EN UN BLOQUE DE FUNCION
+
+instrucciones 
    : instruccion*
    ;
 
@@ -20,17 +53,45 @@ instruccion
    | loop_statement ';'?
    | branch_statement ';'?
    | control_transfer_statement ';'?
-   | funcion_print ';'?
    | asignacion ';'?
+   | llamadas_funciones
    ;
+
+// GRAMATICA PARA DECLARAR TIPOS DE VARIBLE
+
+declaracion
+   : constant_declaracion
+   | variable_declaracion
+   //| matriz_declaracion
+   | array_declaracion
+   ;
+
+// GRAMATICA PARA SENTENCIAS DE CICLOS
 
 loop_statement 
    : for_in_statement
    | while_statement
    ;
 
-code_block
-    : '{' instrucciones '}'
+// GRAMMAR OF A BRANCH STATEMENT
+
+branch_statement : if_statement #declarar_if
+ | guard_statement #declarar_guard
+ | switch_statement #declarar_switch
+ ;
+
+// GRAMMAR OF A CONTROL TRANSFER STATEMENT
+
+control_transfer_statement 
+   : break_statement
+   | continue_statement
+   | return_statement
+   ;
+
+// GRAMATICA PARA LAS LLAMADAS DE FUNCIONES NATIVAS Y NUESTRAS
+
+llamadas_funciones
+    : funcion_print
     ;
 
 // GRAMMAR OF A FOR_IN STATEMENT
@@ -40,16 +101,10 @@ for_in_statement : 'for' Identificador 'in' (expresion|rango) code_block ; //cam
 rango
     : Int '...' Int
     ;
+
 // GRAMMAR OF A WHILE STATEMENT
 
 while_statement : 'while' expresion code_block ;
-
-// GRAMMAR OF A BRANCH STATEMENT
-
-branch_statement : if_statement #declarar_if
- | guard_statement #declarar_guard
- | switch_statement #declarar_switch
- ;
 
 // GRAMMAR OF AN IF STATEMENT
 
@@ -77,14 +132,6 @@ default_case
     : 'default' ':' instrucciones 'break'?
     ;
 
-// GRAMMAR OF A CONTROL TRANSFER STATEMENT
-
-control_transfer_statement 
-   : break_statement
-   | continue_statement
-   | return_statement
-   ;
-
 // GRAMMAR OF A BREAK STATEMENT
 
 break_statement : 'break';
@@ -96,15 +143,6 @@ continue_statement : 'continue';
 // GRAMMAR OF A RETURN STATEMENT
 
 return_statement : 'return' expresion? ;
-
-declaracion
-   : constant_declaracion
-   | variable_declaracion
-   //| function_declaracion
-   //| struct_declaracion
-   //| matriz_declaracion
-   | array_declaracion
-   ;
 
 constant_declaracion : 'let' Identificador anotacion_tipo? '=' expresion
     ;
@@ -152,7 +190,7 @@ asignacion
     | Identificador '[' expresion ']' '-=' expresion #asignacion_decremento_vector
     ;
 
-expresion //agregar llamada de una funcion, de struct, vector y atributos
+expresion //agregar llamada de una funcion, de struct, matriz y atributos
     : primitivos #valor_primitivo
     | Identificador '[' expresion ']' #expresion_vector
     | Identificador #expresion_id

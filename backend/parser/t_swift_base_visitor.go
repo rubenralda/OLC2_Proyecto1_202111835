@@ -11,6 +11,26 @@ func (v *BaseT_swiftVisitor) VisitInicio(ctx *InicioContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseT_swiftVisitor) VisitInstrucciones_globales(ctx *Instrucciones_globalesContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitIntruccion_global(ctx *Intruccion_globalContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitFunction_declaracion(ctx *Function_declaracionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitLista_parametros(ctx *Lista_parametrosContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitCode_block(ctx *Code_blockContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseT_swiftVisitor) VisitInstrucciones(ctx *InstruccionesContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -19,23 +39,11 @@ func (v *BaseT_swiftVisitor) VisitInstruccion(ctx *InstruccionContext) interface
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseT_swiftVisitor) VisitDeclaracion(ctx *DeclaracionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseT_swiftVisitor) VisitLoop_statement(ctx *Loop_statementContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseT_swiftVisitor) VisitCode_block(ctx *Code_blockContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseT_swiftVisitor) VisitFor_in_statement(ctx *For_in_statementContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseT_swiftVisitor) VisitRango(ctx *RangoContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseT_swiftVisitor) VisitWhile_statement(ctx *While_statementContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -48,6 +56,26 @@ func (v *BaseT_swiftVisitor) VisitDeclarar_guard(ctx *Declarar_guardContext) int
 }
 
 func (v *BaseT_swiftVisitor) VisitDeclarar_switch(ctx *Declarar_switchContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitControl_transfer_statement(ctx *Control_transfer_statementContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitLlamadas_funciones(ctx *Llamadas_funcionesContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitFor_in_statement(ctx *For_in_statementContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitRango(ctx *RangoContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitWhile_statement(ctx *While_statementContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -79,10 +107,6 @@ func (v *BaseT_swiftVisitor) VisitDefault_case(ctx *Default_caseContext) interfa
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseT_swiftVisitor) VisitControl_transfer_statement(ctx *Control_transfer_statementContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
 func (v *BaseT_swiftVisitor) VisitBreak_statement(ctx *Break_statementContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -92,10 +116,6 @@ func (v *BaseT_swiftVisitor) VisitContinue_statement(ctx *Continue_statementCont
 }
 
 func (v *BaseT_swiftVisitor) VisitReturn_statement(ctx *Return_statementContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseT_swiftVisitor) VisitDeclaracion(ctx *DeclaracionContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

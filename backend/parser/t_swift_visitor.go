@@ -10,26 +10,32 @@ type T_swiftVisitor interface {
 	// Visit a parse tree produced by T_swiftParser#inicio.
 	VisitInicio(ctx *InicioContext) interface{}
 
+	// Visit a parse tree produced by T_swiftParser#instrucciones_globales.
+	VisitInstrucciones_globales(ctx *Instrucciones_globalesContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#intruccion_global.
+	VisitIntruccion_global(ctx *Intruccion_globalContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#function_declaracion.
+	VisitFunction_declaracion(ctx *Function_declaracionContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#lista_parametros.
+	VisitLista_parametros(ctx *Lista_parametrosContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#code_block.
+	VisitCode_block(ctx *Code_blockContext) interface{}
+
 	// Visit a parse tree produced by T_swiftParser#instrucciones.
 	VisitInstrucciones(ctx *InstruccionesContext) interface{}
 
 	// Visit a parse tree produced by T_swiftParser#instruccion.
 	VisitInstruccion(ctx *InstruccionContext) interface{}
 
+	// Visit a parse tree produced by T_swiftParser#declaracion.
+	VisitDeclaracion(ctx *DeclaracionContext) interface{}
+
 	// Visit a parse tree produced by T_swiftParser#loop_statement.
 	VisitLoop_statement(ctx *Loop_statementContext) interface{}
-
-	// Visit a parse tree produced by T_swiftParser#code_block.
-	VisitCode_block(ctx *Code_blockContext) interface{}
-
-	// Visit a parse tree produced by T_swiftParser#for_in_statement.
-	VisitFor_in_statement(ctx *For_in_statementContext) interface{}
-
-	// Visit a parse tree produced by T_swiftParser#rango.
-	VisitRango(ctx *RangoContext) interface{}
-
-	// Visit a parse tree produced by T_swiftParser#while_statement.
-	VisitWhile_statement(ctx *While_statementContext) interface{}
 
 	// Visit a parse tree produced by T_swiftParser#declarar_if.
 	VisitDeclarar_if(ctx *Declarar_ifContext) interface{}
@@ -39,6 +45,21 @@ type T_swiftVisitor interface {
 
 	// Visit a parse tree produced by T_swiftParser#declarar_switch.
 	VisitDeclarar_switch(ctx *Declarar_switchContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#control_transfer_statement.
+	VisitControl_transfer_statement(ctx *Control_transfer_statementContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#llamadas_funciones.
+	VisitLlamadas_funciones(ctx *Llamadas_funcionesContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#for_in_statement.
+	VisitFor_in_statement(ctx *For_in_statementContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#rango.
+	VisitRango(ctx *RangoContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#while_statement.
+	VisitWhile_statement(ctx *While_statementContext) interface{}
 
 	// Visit a parse tree produced by T_swiftParser#if_simple.
 	VisitIf_simple(ctx *If_simpleContext) interface{}
@@ -61,9 +82,6 @@ type T_swiftVisitor interface {
 	// Visit a parse tree produced by T_swiftParser#default_case.
 	VisitDefault_case(ctx *Default_caseContext) interface{}
 
-	// Visit a parse tree produced by T_swiftParser#control_transfer_statement.
-	VisitControl_transfer_statement(ctx *Control_transfer_statementContext) interface{}
-
 	// Visit a parse tree produced by T_swiftParser#break_statement.
 	VisitBreak_statement(ctx *Break_statementContext) interface{}
 
@@ -72,9 +90,6 @@ type T_swiftVisitor interface {
 
 	// Visit a parse tree produced by T_swiftParser#return_statement.
 	VisitReturn_statement(ctx *Return_statementContext) interface{}
-
-	// Visit a parse tree produced by T_swiftParser#declaracion.
-	VisitDeclaracion(ctx *DeclaracionContext) interface{}
 
 	// Visit a parse tree produced by T_swiftParser#constant_declaracion.
 	VisitConstant_declaracion(ctx *Constant_declaracionContext) interface{}
