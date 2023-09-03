@@ -171,6 +171,18 @@ func (v *BaseT_swiftVisitor) VisitFuncion_removeat(ctx *Funcion_removeatContext)
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseT_swiftVisitor) VisitFuncion_int(ctx *Funcion_intContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitFuncion_float(ctx *Funcion_floatContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitFuncion_string(ctx *Funcion_stringContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseT_swiftVisitor) VisitAsignacion_normal(ctx *Asignacion_normalContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -192,6 +204,10 @@ func (v *BaseT_swiftVisitor) VisitAsignacion_incremento_vector(ctx *Asignacion_i
 }
 
 func (v *BaseT_swiftVisitor) VisitAsignacion_decremento_vector(ctx *Asignacion_decremento_vectorContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitExpresion_llamada(ctx *Expresion_llamadaContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

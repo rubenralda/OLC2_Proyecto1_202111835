@@ -133,18 +133,16 @@ func (v *parser_visitor) VisitExpresion_atributos(ctx *parser.Expresion_atributo
 	return ctx.Atributos().Accept(v)
 }
 
+func (v *parser_visitor) VisitExpresion_llamada(ctx *parser.Expresion_llamadaContext) interface{} {
+	return ctx.Llamadas_funciones().Accept(v)
+}
+
 // METODOS PARA VALOR PRIMITIVO
 
 func (v *parser_visitor) VisitValor_primitivo(ctx *parser.Valor_primitivoContext) interface{} {
 	aa := arbol.Expresion{Valor1: ctx.Primitivos().Accept(v).(arbol.BaseNodo), Operacion: "primitivo"}
 	//fmt.Println(aa)
 	return aa
-}
-
-func (v *parser_visitor) VisitFuncion_print(ctx *parser.Funcion_printContext) interface{} {
-	aa := arbol.Imprimir{Valor: ctx.Expresion().Accept(v).(arbol.BaseNodo)}
-	//fmt.Println(aa)
-	return &aa
 }
 
 func (v *parser_visitor) VisitPrimitivo_int(ctx *parser.Primitivo_intContext) interface{} {
@@ -319,11 +317,11 @@ func (v *parser_visitor) VisitFor_in_statement(ctx *parser.For_in_statementConte
 	if ctx.Expresion() != nil {
 		expresion = ctx.Expresion().Accept(v).(arbol.BaseNodo)
 	}
-	rango_inicio := ""
-	rango_final := ""
+	var rango_inicio arbol.BaseNodo
+	var rango_final arbol.BaseNodo
 	if ctx.Rango() != nil {
-		rango_inicio = ctx.Rango().Int(0).GetText()
-		rango_final = ctx.Rango().Int(1).GetText()
+		rango_inicio = ctx.Rango().Expresion(0).Accept(v).(arbol.BaseNodo)
+		rango_final = ctx.Rango().Expresion(1).Accept(v).(arbol.BaseNodo)
 	}
 	return arbol.Loop_for_in{Expresion: expresion, Inicio: rango_inicio, Final: rango_final,
 		Sentencias: ctx.Code_block().Accept(v).([]arbol.BaseNodo), Id: ctx.Identificador().GetText()}
@@ -398,6 +396,12 @@ func (v *parser_visitor) VisitLlamadas_funciones(ctx *parser.Llamadas_funcionesC
 		return ctx.Funcion_removeLast().Accept(v).(arbol.BaseNodo)
 	} else if ctx.Funcion_removeat() != nil {
 		return ctx.Funcion_removeat().Accept(v).(arbol.BaseNodo)
+	} else if ctx.Funcion_float() != nil {
+		return ctx.Funcion_float().Accept(v).(arbol.BaseNodo)
+	} else if ctx.Funcion_int() != nil {
+		return ctx.Funcion_int().Accept(v).(arbol.BaseNodo)
+	} else if ctx.Funcion_string() != nil {
+		return ctx.Funcion_string().Accept(v).(arbol.BaseNodo)
 	}
 	return nil
 }
@@ -423,8 +427,27 @@ func (v *parser_visitor) VisitAtributos_vector_empty(ctx *parser.Atributos_vecto
 	return arbol.Vector_isempty{Id: ctx.Identificador().GetText()}
 }
 
+// METODOS PARA FUNCIONES EMBEBIDAS
+
+func (v *parser_visitor) VisitFuncion_print(ctx *parser.Funcion_printContext) interface{} {
+	lista_valores := ctx.Lista_expresiones().Accept(v).([]arbol.BaseNodo)
+	return arbol.Funcion_print{Lista_expresion: lista_valores}
+}
+
+func (v *parser_visitor) VisitFuncion_float(ctx *parser.Funcion_floatContext) interface{} {
+	return arbol.Funcion_float{Expresion: ctx.Expresion().Accept(v).(arbol.BaseNodo)}
+}
+
+func (v *parser_visitor) VisitFuncion_int(ctx *parser.Funcion_intContext) interface{} {
+	return arbol.Funcion_int{Expresion: ctx.Expresion().Accept(v).(arbol.BaseNodo)}
+}
+
+func (v *parser_visitor) VisitFuncion_string(ctx *parser.Funcion_stringContext) interface{} {
+	return arbol.Funcion_string{Expresion: ctx.Expresion().Accept(v).(arbol.BaseNodo)}
+}
+
 func main() {
-	fichero, err := antlr.NewFileStream("entrada.swift")
+	fichero, err := antlr.NewFileStream("Intermedias.swift")
 	if err != nil {
 		fmt.Println("No se pudo abrir el archivo")
 	}

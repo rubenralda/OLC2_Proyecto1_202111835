@@ -130,6 +130,15 @@ type T_swiftVisitor interface {
 	// Visit a parse tree produced by T_swiftParser#funcion_removeat.
 	VisitFuncion_removeat(ctx *Funcion_removeatContext) interface{}
 
+	// Visit a parse tree produced by T_swiftParser#funcion_int.
+	VisitFuncion_int(ctx *Funcion_intContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#funcion_float.
+	VisitFuncion_float(ctx *Funcion_floatContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#funcion_string.
+	VisitFuncion_string(ctx *Funcion_stringContext) interface{}
+
 	// Visit a parse tree produced by T_swiftParser#asignacion_normal.
 	VisitAsignacion_normal(ctx *Asignacion_normalContext) interface{}
 
@@ -147,6 +156,9 @@ type T_swiftVisitor interface {
 
 	// Visit a parse tree produced by T_swiftParser#asignacion_decremento_vector.
 	VisitAsignacion_decremento_vector(ctx *Asignacion_decremento_vectorContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#expresion_llamada.
+	VisitExpresion_llamada(ctx *Expresion_llamadaContext) interface{}
 
 	// Visit a parse tree produced by T_swiftParser#expresion_id.
 	VisitExpresion_id(ctx *Expresion_idContext) interface{}

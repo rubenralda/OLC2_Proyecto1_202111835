@@ -2,14 +2,13 @@ package arbol
 
 import (
 	"main/ambito"
-	"strconv"
 )
 
 type Loop_for_in struct {
 	Expresion  BaseNodo
 	Id         string
-	Inicio     string
-	Final      string
+	Inicio     BaseNodo
+	Final      BaseNodo
 	Sentencias []BaseNodo
 }
 
@@ -17,11 +16,23 @@ func (l Loop_for_in) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 	ambito_local := &ambito.Ambito{NombreAmbito: "Ciclo for", Padre: ambito_padre}
 	ambito_padre.AgregarHijo(ambito_local)
 	if l.Expresion == nil {
-		if l.Inicio <= l.Final {
-			inicio, _ := strconv.Atoi(l.Inicio)
-			final, _ := strconv.Atoi(l.Final)
-			for i := inicio; i <= final; i++ {
-				ambito_local.AgregarIde(ambito.Identificadores{Id: l.Id, Primitivo: "int", Tipo: "constante", Valor: i})
+		inicio := l.Inicio.Ejecutar(ambito_padre)
+		switch inicio.(type) {
+		case int: //no hace nada mas que confirmar el int
+		default:
+			panic("El rango no es entero")
+		}
+		final := l.Final.Ejecutar(ambito_padre)
+		switch final.(type) {
+		case int: //no hace nada mas que confirmar el int
+		default:
+			panic("El rango no es entero")
+		}
+		if inicio.(int) <= final.(int) {
+			for i := inicio.(int); i <= final.(int); i++ {
+				if l.Id != "_" {
+					ambito_local.AgregarIde(ambito.Identificadores{Id: l.Id, Primitivo: "int", Tipo: "constante", Valor: i})
+				}
 				for _, linea := range l.Sentencias {
 					ejecutada := linea.Ejecutar(ambito_local)
 					switch rr := ejecutada.(type) {
@@ -52,7 +63,9 @@ func (l Loop_for_in) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 	switch rr := resultado.(type) {
 	case string:
 		for _, char := range rr {
-			ambito_local.AgregarIde(ambito.Identificadores{Id: l.Id, Primitivo: "character", Tipo: "constante", Valor: char})
+			if l.Id != "_" {
+				ambito_local.AgregarIde(ambito.Identificadores{Id: l.Id, Primitivo: "character", Tipo: "constante", Valor: char})
+			}
 		CicloIntruccion:
 			for _, linea := range l.Sentencias {
 				ejecutada := linea.Ejecutar(ambito_local)

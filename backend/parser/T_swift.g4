@@ -95,6 +95,9 @@ llamadas_funciones
     | funcion_append
     | funcion_removeLast
     | funcion_removeat
+    | funcion_int
+    | funcion_float
+    | funcion_string
     ;
 
 // GRAMATICA PARA ATRIBUTOS
@@ -106,10 +109,10 @@ atributos
 
 // GRAMMAR OF A FOR_IN STATEMENT
 
-for_in_statement : 'for' Identificador 'in' (expresion|rango) code_block ; //cambiar pattern a ID y falta rango
+for_in_statement : 'for' Identificador 'in' (expresion|rango) code_block ; // poner que acepte '_'
 
 rango
-    : Int '...' Int
+    : expresion '...' expresion
     ;
 
 // GRAMMAR OF A WHILE STATEMENT
@@ -186,10 +189,10 @@ definicion_vector
 lista_expresiones : expresion (',' expresion)*
     ;
 
-// funcion print
+// GRAMATICA FUNCION PRINT
 
 funcion_print 
-    : 'print' '(' expresion ')'
+    : 'print' '(' lista_expresiones ')'
     ;
 
 // GRAMATICA FUNCION APPEND
@@ -210,6 +213,24 @@ funcion_removeat
     : Identificador '.' 'remove' '(' 'at' ':' expresion ')'
     ;
 
+// GRAMATICA FUNCION INT
+
+funcion_int
+    : 'Int' '(' expresion ')'
+    ;
+
+// GRAMATICA FUNCION FLOAT
+
+funcion_float
+    : 'Float' '(' expresion ')'
+    ;
+
+// GRAMATICA FUNCION STRING
+
+funcion_string
+    : 'String' '(' expresion ')'
+    ;
+
 // gramatica de asignacion
 
 asignacion
@@ -224,6 +245,7 @@ asignacion
 expresion //agregar llamada de una funcion, de struct, matriz y atributos
     : primitivos #valor_primitivo
     | atributos #expresion_atributos
+    | llamadas_funciones #expresion_llamada
     | Identificador '[' expresion ']' #expresion_vector
     | Identificador #expresion_id
     | '(' expresion ')' #expresion_paren
@@ -250,7 +272,7 @@ Int : [0-9]+
 Float : [0-9]+ ('.' [0-9]+)?
     ;
 
-Caracter : '"' Quoted_text_item '"';
+Caracter : '\'' Quoted_text_item '\'';
 
 String : '"' Quoted_text? '"'
     ;
