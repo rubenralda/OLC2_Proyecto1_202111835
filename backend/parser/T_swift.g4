@@ -54,7 +54,7 @@ instruccion
    | branch_statement ';'?
    | control_transfer_statement ';'?
    | asignacion ';'?
-   | llamadas_funciones
+   | llamadas_funciones ';'?
    ;
 
 // GRAMATICA PARA DECLARAR TIPOS DE VARIBLE
@@ -62,8 +62,8 @@ instruccion
 declaracion
    : constant_declaracion
    | variable_declaracion
-   //| matriz_declaracion
    | array_declaracion
+   //| matriz_declaracion
    ;
 
 // GRAMATICA PARA SENTENCIAS DE CICLOS
@@ -92,6 +92,16 @@ control_transfer_statement
 
 llamadas_funciones
     : funcion_print
+    | funcion_append
+    | funcion_removeLast
+    | funcion_removeat
+    ;
+
+// GRAMATICA PARA ATRIBUTOS
+
+atributos
+    : Identificador '.' 'IsEmpty' #atributos_vector_empty
+    | Identificador '.' 'count' #atributos_vector_count
     ;
 
 // GRAMMAR OF A FOR_IN STATEMENT
@@ -177,7 +187,28 @@ lista_expresiones : expresion (',' expresion)*
     ;
 
 // funcion print
-funcion_print : 'print' '(' expresion ')';
+
+funcion_print 
+    : 'print' '(' expresion ')'
+    ;
+
+// GRAMATICA FUNCION APPEND
+
+funcion_append
+    : Identificador '.' 'append' '(' expresion ')'
+    ;
+
+// GRAMATICA FUNCION REMOVELAST
+
+funcion_removeLast
+    : Identificador '.' 'removeLast' '(' ')'
+    ;
+
+// GRAMATICA FUNCION REMOVEAT
+
+funcion_removeat
+    : Identificador '.' 'remove' '(' 'at' ':' expresion ')'
+    ;
 
 // gramatica de asignacion
 
@@ -192,6 +223,7 @@ asignacion
 
 expresion //agregar llamada de una funcion, de struct, matriz y atributos
     : primitivos #valor_primitivo
+    | atributos #expresion_atributos
     | Identificador '[' expresion ']' #expresion_vector
     | Identificador #expresion_id
     | '(' expresion ')' #expresion_paren

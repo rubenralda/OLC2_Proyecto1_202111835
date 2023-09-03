@@ -129,6 +129,12 @@ func (v *parser_visitor) VisitExpresion_rela(ctx *parser.Expresion_relaContext) 
 	return aa
 }
 
+func (v *parser_visitor) VisitExpresion_atributos(ctx *parser.Expresion_atributosContext) interface{} {
+	return ctx.Atributos().Accept(v)
+}
+
+// METODOS PARA VALOR PRIMITIVO
+
 func (v *parser_visitor) VisitValor_primitivo(ctx *parser.Valor_primitivoContext) interface{} {
 	aa := arbol.Expresion{Valor1: ctx.Primitivos().Accept(v).(arbol.BaseNodo), Operacion: "primitivo"}
 	//fmt.Println(aa)
@@ -384,11 +390,41 @@ func (v *parser_visitor) VisitLista_expresiones(ctx *parser.Lista_expresionesCon
 // METODOS PARA LLAMADAS DE FUNCIONES
 
 func (v *parser_visitor) VisitLlamadas_funciones(ctx *parser.Llamadas_funcionesContext) interface{} {
-	return ctx.Funcion_print().Accept(v).(arbol.BaseNodo)
+	if ctx.Funcion_print() != nil {
+		return ctx.Funcion_print().Accept(v).(arbol.BaseNodo)
+	} else if ctx.Funcion_append() != nil {
+		return ctx.Funcion_append().Accept(v).(arbol.BaseNodo)
+	} else if ctx.Funcion_removeLast() != nil {
+		return ctx.Funcion_removeLast().Accept(v).(arbol.BaseNodo)
+	} else if ctx.Funcion_removeat() != nil {
+		return ctx.Funcion_removeat().Accept(v).(arbol.BaseNodo)
+	}
+	return nil
+}
+
+// METODOS DE LOS METODOS Y ATRIBUTOS DE UN VECTOR
+
+func (v *parser_visitor) VisitFuncion_append(ctx *parser.Funcion_appendContext) interface{} {
+	return arbol.Funcion_append{Id: ctx.Identificador().GetText(),
+		Expresion: ctx.Expresion().Accept(v).(arbol.BaseNodo)}
+}
+func (v *parser_visitor) VisitFuncion_removeLast(ctx *parser.Funcion_removeLastContext) interface{} {
+	return arbol.Funcion_removeLast{Id: ctx.Identificador().GetText()}
+}
+func (v *parser_visitor) VisitFuncion_removeat(ctx *parser.Funcion_removeatContext) interface{} {
+	return arbol.Funcion_removeat{Id: ctx.Identificador().GetText(),
+		Expresion: ctx.Expresion().Accept(v).(arbol.BaseNodo)}
+}
+
+func (v *parser_visitor) VisitAtributos_vector_count(ctx *parser.Atributos_vector_countContext) interface{} {
+	return arbol.Vector_count{Id: ctx.Identificador().GetText()}
+}
+func (v *parser_visitor) VisitAtributos_vector_empty(ctx *parser.Atributos_vector_emptyContext) interface{} {
+	return arbol.Vector_isempty{Id: ctx.Identificador().GetText()}
 }
 
 func main() {
-	fichero, err := antlr.NewFileStream("entrada.txt")
+	fichero, err := antlr.NewFileStream("entrada.swift")
 	if err != nil {
 		fmt.Println("No se pudo abrir el archivo")
 	}

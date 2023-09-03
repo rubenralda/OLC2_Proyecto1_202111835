@@ -52,6 +52,12 @@ type T_swiftVisitor interface {
 	// Visit a parse tree produced by T_swiftParser#llamadas_funciones.
 	VisitLlamadas_funciones(ctx *Llamadas_funcionesContext) interface{}
 
+	// Visit a parse tree produced by T_swiftParser#atributos_vector_empty.
+	VisitAtributos_vector_empty(ctx *Atributos_vector_emptyContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#atributos_vector_count.
+	VisitAtributos_vector_count(ctx *Atributos_vector_countContext) interface{}
+
 	// Visit a parse tree produced by T_swiftParser#for_in_statement.
 	VisitFor_in_statement(ctx *For_in_statementContext) interface{}
 
@@ -115,6 +121,15 @@ type T_swiftVisitor interface {
 	// Visit a parse tree produced by T_swiftParser#funcion_print.
 	VisitFuncion_print(ctx *Funcion_printContext) interface{}
 
+	// Visit a parse tree produced by T_swiftParser#funcion_append.
+	VisitFuncion_append(ctx *Funcion_appendContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#funcion_removeLast.
+	VisitFuncion_removeLast(ctx *Funcion_removeLastContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#funcion_removeat.
+	VisitFuncion_removeat(ctx *Funcion_removeatContext) interface{}
+
 	// Visit a parse tree produced by T_swiftParser#asignacion_normal.
 	VisitAsignacion_normal(ctx *Asignacion_normalContext) interface{}
 
@@ -138,6 +153,9 @@ type T_swiftVisitor interface {
 
 	// Visit a parse tree produced by T_swiftParser#valor_primitivo.
 	VisitValor_primitivo(ctx *Valor_primitivoContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#expresion_atributos.
+	VisitExpresion_atributos(ctx *Expresion_atributosContext) interface{}
 
 	// Visit a parse tree produced by T_swiftParser#expresion_unario.
 	VisitExpresion_unario(ctx *Expresion_unarioContext) interface{}

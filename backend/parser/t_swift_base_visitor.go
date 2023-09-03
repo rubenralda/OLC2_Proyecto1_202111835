@@ -67,6 +67,14 @@ func (v *BaseT_swiftVisitor) VisitLlamadas_funciones(ctx *Llamadas_funcionesCont
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseT_swiftVisitor) VisitAtributos_vector_empty(ctx *Atributos_vector_emptyContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitAtributos_vector_count(ctx *Atributos_vector_countContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseT_swiftVisitor) VisitFor_in_statement(ctx *For_in_statementContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -151,6 +159,18 @@ func (v *BaseT_swiftVisitor) VisitFuncion_print(ctx *Funcion_printContext) inter
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseT_swiftVisitor) VisitFuncion_append(ctx *Funcion_appendContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitFuncion_removeLast(ctx *Funcion_removeLastContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitFuncion_removeat(ctx *Funcion_removeatContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseT_swiftVisitor) VisitAsignacion_normal(ctx *Asignacion_normalContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -180,6 +200,10 @@ func (v *BaseT_swiftVisitor) VisitExpresion_id(ctx *Expresion_idContext) interfa
 }
 
 func (v *BaseT_swiftVisitor) VisitValor_primitivo(ctx *Valor_primitivoContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitExpresion_atributos(ctx *Expresion_atributosContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

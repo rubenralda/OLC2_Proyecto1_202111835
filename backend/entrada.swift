@@ -147,3 +147,15 @@ let val: Int = vec1[3] + num1 - copiaVec[0] // val = 40
 vec1[1] = vec1[0]; //[10,10,30,40,50]
 vec1[1] += vec1[0]; //[10,20,30,40,50]
 vec1[1] -= vec1[0] + 5; //[10,5,30,40,50]
+
+//imprime 0
+print(vec2.count)
+//inserta 100 al final
+vec1.append(100) //[10,5,30,40,50,100]
+//inserciones en vacíos
+vec2.append(1.0) // [1.0]
+vec3.append("cadena") // ["cadena"]
+//elimina la primera posición
+vec1.remove( at: 0); //[5,30,40,50,100]
+//elimina la última posición
+vec1.remove(at: vec1.count - 1); //[5,30,40,50]
