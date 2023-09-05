@@ -22,7 +22,7 @@ intruccion_global
     | asignacion ';'?
     | llamadas_funciones ';'?
     | function_declaracion
-     //| struct_declaracion
+    | struct_declaracion
     ;
 
 // GRAMATICA PARA UNA FUNCION
@@ -32,14 +32,25 @@ function_declaracion
     ;
 
 lista_parametros
-    : ',' (Identificador | '_')? ':' 'inout'? tipos lista_parametros
-    | (Identificador | '_')? ':' 'inout'? tipos
+    : ',' (Identificador)? ':' 'inout'? tipos lista_parametros
+    | (Identificador)? ':' 'inout'? tipos
     ;
 
 // GRAMATICA BLOQUE DE CODIGO
 
 code_block
     : '{' instrucciones '}'
+    ;
+
+// GRAMATICA PARA DECLARAR UN STRUCT
+
+struct_declaracion
+    : 'struct' Identificador '{' lista_atributos* '}'
+    ;
+
+lista_atributos 
+    : tipo = ('let'| 'var') Identificador (':' tipos)? ('=' expresion)? ';'? #declarar_atributo
+    | 'mutating'? function_declaracion #declarar_funcion_sc
     ;
 
 // GRAMATICA PARA INSTRUCCIONES EN UN BLOQUE DE FUNCION
@@ -172,6 +183,7 @@ tipos
     | 'Float'
     | 'Bool'
     | 'Character'
+    | Identificador
     ;
 
 //declaracin de vectores
@@ -247,6 +259,7 @@ expresion //agregar llamada de una funcion, de struct, matriz y atributos
     | atributos #expresion_atributos
     | llamadas_funciones #expresion_llamada
     | Identificador '[' expresion ']' #expresion_vector
+    | Identificador '(' l_duble ')' #expresion_struct_dupla
     | Identificador #expresion_id
     | '(' expresion ')' #expresion_paren
     | op='!' expresion #expresion_nega
@@ -257,12 +270,16 @@ expresion //agregar llamada de una funcion, de struct, matriz y atributos
     | expresion op=('&&'|'||') expresion #expresion_rela
     ;
 
+l_duble
+    : Identificador ':' expresion (',' Identificador ':' expresion)*;
+
 primitivos 
     : Caracter #primitivo_caracter 
     | Int #primitivo_int
     | Float #primitivo_float
     | String #primitivo_string
     | Bool #primitivo_bool
+    | 'nil' #primitivo_nulo
     ;
 
 
@@ -289,15 +306,5 @@ Bool : 'true'
 
 // gramatica para identificador
 Identificador
- : Identifier_head Identifier_characters?
+ : [a-zA-Z_][a-zA-Z0-9_]*
  ;
-
-fragment Identifier_head : [a-zA-Z]
- | '_'
- ;
-
-fragment Identifier_character : [0-9]
- | Identifier_head
- ;
-
-fragment Identifier_characters : Identifier_character+ ;

@@ -31,6 +31,18 @@ func (v *BaseT_swiftVisitor) VisitCode_block(ctx *Code_blockContext) interface{}
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseT_swiftVisitor) VisitStruct_declaracion(ctx *Struct_declaracionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitDeclarar_atributo(ctx *Declarar_atributoContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitDeclarar_funcion_sc(ctx *Declarar_funcion_scContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseT_swiftVisitor) VisitInstrucciones(ctx *InstruccionesContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -243,11 +255,19 @@ func (v *BaseT_swiftVisitor) VisitExpresion_compa(ctx *Expresion_compaContext) i
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseT_swiftVisitor) VisitExpresion_struct_dupla(ctx *Expresion_struct_duplaContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseT_swiftVisitor) VisitExpresion_vector(ctx *Expresion_vectorContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
 func (v *BaseT_swiftVisitor) VisitExpresion_nega(ctx *Expresion_negaContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitL_duble(ctx *L_dubleContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -268,5 +288,9 @@ func (v *BaseT_swiftVisitor) VisitPrimitivo_string(ctx *Primitivo_stringContext)
 }
 
 func (v *BaseT_swiftVisitor) VisitPrimitivo_bool(ctx *Primitivo_boolContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitPrimitivo_nulo(ctx *Primitivo_nuloContext) interface{} {
 	return v.VisitChildren(ctx)
 }

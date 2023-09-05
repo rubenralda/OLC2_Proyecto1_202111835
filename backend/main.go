@@ -44,6 +44,8 @@ func (v *parser_visitor) VisitIntruccion_global(ctx *parser.Intruccion_globalCon
 		return ctx.Asignacion().Accept(v).(arbol.BaseNodo)
 	} else if ctx.Function_declaracion() != nil {
 		return ctx.Function_declaracion().Accept(v).(arbol.BaseNodo)
+	} else if ctx.Struct_declaracion() != nil {
+		return ctx.Struct_declaracion().Accept(v).(arbol.BaseNodo)
 	}
 	return nil
 }
@@ -86,6 +88,8 @@ func (v *parser_visitor) VisitDeclaracion(ctx *parser.DeclaracionContext) interf
 	}
 	return nil
 }
+
+// METODOS PARA EXPRESION
 
 func (v *parser_visitor) VisitExpresion_id(ctx *parser.Expresion_idContext) interface{} {
 	ide := arbol.Id_expresion{Id: ctx.Identificador().GetText()}
@@ -137,6 +141,21 @@ func (v *parser_visitor) VisitExpresion_llamada(ctx *parser.Expresion_llamadaCon
 	return ctx.Llamadas_funciones().Accept(v)
 }
 
+func (v *parser_visitor) VisitExpresion_struct_dupla(ctx *parser.Expresion_struct_duplaContext) interface{} {
+	return arbol.Declarar_objeto{Id: ctx.Identificador().GetText(), Dupla: ctx.L_duble().Accept(v).([]arbol.Dupla_atributos)}
+}
+
+func (v *parser_visitor) VisitL_duble(ctx *parser.L_dubleContext) interface{} {
+	var atributos []arbol.Dupla_atributos
+	for indice, instruccion := range ctx.AllExpresion() {
+		expresion := instruccion.Accept(v).(arbol.BaseNodo)
+		atributo := arbol.Dupla_atributos{Id_atributo: ctx.Identificador(indice).GetText(),
+			Expresion: expresion}
+		atributos = append(atributos, atributo)
+	}
+	return atributos
+}
+
 // METODOS PARA VALOR PRIMITIVO
 
 func (v *parser_visitor) VisitValor_primitivo(ctx *parser.Valor_primitivoContext) interface{} {
@@ -146,33 +165,37 @@ func (v *parser_visitor) VisitValor_primitivo(ctx *parser.Valor_primitivoContext
 }
 
 func (v *parser_visitor) VisitPrimitivo_int(ctx *parser.Primitivo_intContext) interface{} {
-	aa := arbol.Primitivos{Tipo: "int", Valor: ctx.Int().GetText()}
+	aa := arbol.Primitivos{Tipo: "Int", Valor: ctx.Int().GetText()}
 	//fmt.Println(aa)
 	return &aa
 }
 
 func (v *parser_visitor) VisitPrimitivo_float(ctx *parser.Primitivo_floatContext) interface{} {
-	aa := arbol.Primitivos{Tipo: "float", Valor: ctx.Float().GetText()}
+	aa := arbol.Primitivos{Tipo: "Float", Valor: ctx.Float().GetText()}
 	//fmt.Println(aa)
 	return &aa
 }
 
 func (v *parser_visitor) VisitPrimitivo_string(ctx *parser.Primitivo_stringContext) interface{} {
-	aa := arbol.Primitivos{Tipo: "string", Valor: ctx.String_().GetText()}
+	aa := arbol.Primitivos{Tipo: "String", Valor: ctx.String_().GetText()}
 	//fmt.Println(aa)
 	return &aa
 }
 
 func (v *parser_visitor) VisitPrimitivo_bool(ctx *parser.Primitivo_boolContext) interface{} {
-	aa := arbol.Primitivos{Tipo: "bool", Valor: ctx.Bool().GetText()}
+	aa := arbol.Primitivos{Tipo: "Bool", Valor: ctx.Bool().GetText()}
 	//fmt.Println(aa)
 	return &aa
 }
 
 func (v *parser_visitor) VisitPrimitivo_caracter(ctx *parser.Primitivo_caracterContext) interface{} {
-	aa := arbol.Primitivos{Tipo: "caracter", Valor: ctx.Caracter().GetText()}
+	aa := arbol.Primitivos{Tipo: "Caracter", Valor: ctx.Caracter().GetText()}
 	//fmt.Println(aa)
 	return &aa
+}
+
+func (v *parser_visitor) VisitPrimitivo_nulo(ctx *parser.Primitivo_nuloContext) interface{} {
+	return arbol.Primitivos{Tipo: "nulo", Valor: ctx.GetText()}
 }
 
 // metodos de la gramatica declaracion
@@ -446,8 +469,37 @@ func (v *parser_visitor) VisitFuncion_string(ctx *parser.Funcion_stringContext) 
 	return arbol.Funcion_string{Expresion: ctx.Expresion().Accept(v).(arbol.BaseNodo)}
 }
 
+// METODOS PARA DECLARAR STRUCTS
+
+func (v *parser_visitor) VisitStruct_declaracion(ctx *parser.Struct_declaracionContext) interface{} {
+	var atributos []arbol.BaseNodo
+	for _, item := range ctx.AllLista_atributos() {
+		atributos = append(atributos, item.Accept(v).(arbol.BaseNodo))
+	}
+	return arbol.Declarar_struct{Id: ctx.Identificador().GetText(), Atributos: atributos}
+}
+
+func (v *parser_visitor) VisitDeclarar_atributo(ctx *parser.Declarar_atributoContext) interface{} {
+	tipo := ""
+	if ctx.GetTipo().GetText() == "let" {
+		tipo = "constante"
+	} else if ctx.GetTipo().GetText() == "var" {
+		tipo = "variable"
+	}
+	primitivo := ""
+	if ctx.Tipos() != nil {
+		primitivo = ctx.Tipos().GetText()
+	}
+	var expresion arbol.BaseNodo
+	if ctx.Expresion() != nil {
+		expresion = ctx.Expresion().Accept(v).(arbol.BaseNodo)
+	}
+	return arbol.Declaracion_atributo{Id: ctx.Identificador().GetText(), Primitivo: primitivo,
+		Expresion: expresion, Tipo: tipo}
+}
+
 func main() {
-	fichero, err := antlr.NewFileStream("Intermedias.swift")
+	fichero, err := antlr.NewFileStream("entrada.swift")
 	if err != nil {
 		fmt.Println("No se pudo abrir el archivo")
 	}

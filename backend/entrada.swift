@@ -159,3 +159,19 @@ vec3.append("cadena") // ["cadena"]
 vec1.remove( at: 0); //[5,30,40,50,100]
 //elimina la última posición
 vec1.remove(at: vec1.count - 1); //[5,30,40,50]
+
+struct StructArr {
+    var datos: Float
+}
+
+struct CentroTuristico {
+    var nombre: String
+}
+
+struct Carro {
+    var placa: String
+    let color: String = "amarillo"
+    var tipo: String
+}
+
+var avioneta = Carro( placa: "78496", tipo: "hola")

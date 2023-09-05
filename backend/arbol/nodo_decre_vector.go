@@ -28,16 +28,16 @@ func (i Decremento_vector) Ejecutar(ambito *ambito.Ambito) interface{} {
 		resultado := i.Expresion.Ejecutar(ambito)
 		switch rr := resultado.(type) {
 		case int:
-			if encontrado.Primitivo == "int" {
+			if encontrado.Primitivo == "Int" {
 				encontrado.Lista_vector[indice] = encontrado.Lista_vector[indice].(int) - rr
 				return nil
 			}
-			if encontrado.Primitivo == "float" {
+			if encontrado.Primitivo == "Float" {
 				encontrado.Lista_vector[indice] = encontrado.Lista_vector[indice].(float64) - float64(rr)
 				return nil
 			}
 		case float64:
-			if encontrado.Primitivo == "float" {
+			if encontrado.Primitivo == "Float" {
 				encontrado.Lista_vector[indice] = encontrado.Lista_vector[indice].(float64) - rr
 				return nil
 			}

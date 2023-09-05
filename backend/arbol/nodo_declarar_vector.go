@@ -2,7 +2,6 @@ package arbol
 
 import (
 	"main/ambito"
-	"strings"
 )
 
 type Declarar_vector struct {
@@ -13,7 +12,6 @@ type Declarar_vector struct {
 }
 
 func (d Declarar_vector) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
-	d.Tipo = strings.ToLower(d.Tipo) // puede no funcionar, probar despues
 	if ambito_padre.BuscarID(d.ID) != nil {
 		panic("Error el ID ya existe: " + d.ID)
 	}
@@ -36,9 +34,9 @@ func (d Declarar_vector) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 		resultado := expresion.Ejecutar(ambito_padre)
 		switch rr := resultado.(type) {
 		case int:
-			if d.Tipo == "int" {
+			if d.Tipo == "Int" {
 				lista_valores = append(lista_valores, rr)
-			} else if d.Tipo == "float" {
+			} else if d.Tipo == "Float" {
 				lista_valores = append(lista_valores, float64(rr))
 			} else {
 				panic("Error el valor no coincide con el tipo " + d.ID)
@@ -63,6 +61,12 @@ func (d Declarar_vector) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 			}
 		case bool:
 			if d.Tipo == "Bool" {
+				lista_valores = append(lista_valores, rr)
+			} else {
+				panic("Error el valor no coincide con el tipo " + d.ID)
+			}
+		case ambito.Objeto_struct:
+			if d.Tipo == "" || d.Tipo == rr.Ambito_struct.NombreAmbito {
 				lista_valores = append(lista_valores, rr)
 			} else {
 				panic("Error el valor no coincide con el tipo " + d.ID)

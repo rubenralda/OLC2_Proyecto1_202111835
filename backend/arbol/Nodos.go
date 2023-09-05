@@ -16,10 +16,10 @@ type Primitivos struct {
 
 func (p Primitivos) Ejecutar(ambito *ambito.Ambito) interface{} {
 	switch p.Tipo {
-	case "int":
+	case "Int":
 		num, _ := strconv.Atoi(p.Valor)
 		return num
-	case "bool":
+	case "Bool":
 		if p.Valor == "true" {
 			return true
 		} else if p.Valor == "false" {
@@ -27,13 +27,15 @@ func (p Primitivos) Ejecutar(ambito *ambito.Ambito) interface{} {
 		} else {
 			return nil
 		}
-	case "string":
+	case "String":
 		return p.Valor[1 : len(p.Valor)-1]
-	case "float":
+	case "Float":
 		num, _ := strconv.ParseFloat(p.Valor, 64)
 		return num
-	case "caracter":
+	case "Caracter":
 		return []rune(p.Valor)[1] //convertir a un array de bytes para operar si es necesario
+	case "nulo":
+		return nil
 	default:
 		panic("Tipo desconocido")
 	}
@@ -48,8 +50,11 @@ func (i Id_expresion) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 	if id_buscado == nil {
 		panic("Error el identificador no existe: " + i.Id)
 	}
-	if id_buscado.Tipo == "vector" { //agregar funciones y structs
-		panic("El Id no corresponde a una variable o constante " + i.Id)
+	if id_buscado.Tipo == "vector" { //agregar funciones y objetos
+		panic("El Id no corresponde a una variable, constante o struct" + i.Id)
+	}
+	if id_buscado.Tipo == "objeto" {
+		return id_buscado.Objeto
 	}
 	return id_buscado.Valor
 }

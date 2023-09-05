@@ -2,7 +2,6 @@ package arbol
 
 import (
 	"main/ambito"
-	"strings"
 )
 
 // nodo declarar variable
@@ -19,7 +18,7 @@ func (d Declarar_variable) Ejecutar(ambito_local *ambito.Ambito) interface{} {
 	}
 	if d.Expresion == nil {
 		if d.Tipo != "" {
-			ambito_local.AgregarIde(ambito.Identificadores{Id: d.Id, Valor: nil, Tipo: "variable", Primitivo: strings.ToLower(d.Tipo)})
+			ambito_local.AgregarIde(ambito.Identificadores{Id: d.Id, Valor: nil, Tipo: "variable", Primitivo: d.Tipo})
 			return nil
 		} else {
 			panic("Error no tiene tipo")
@@ -29,33 +28,39 @@ func (d Declarar_variable) Ejecutar(ambito_local *ambito.Ambito) interface{} {
 	switch rr := resultado.(type) {
 	case int:
 		if d.Tipo == "" || d.Tipo == "Int" {
-			ambito_local.AgregarIde(ambito.Identificadores{Id: d.Id, Valor: rr, Tipo: "variable", Primitivo: "int"})
+			ambito_local.AgregarIde(ambito.Identificadores{Id: d.Id, Valor: rr, Tipo: "variable", Primitivo: "Int"})
 		} else if d.Tipo == "Float" {
-			ambito_local.AgregarIde(ambito.Identificadores{Id: d.Id, Valor: float64(rr), Tipo: "variable", Primitivo: "float"})
+			ambito_local.AgregarIde(ambito.Identificadores{Id: d.Id, Valor: float64(rr), Tipo: "variable", Primitivo: "Float"})
 		} else {
 			panic("Error el valor no coincide con el tipo " + d.Id)
 		}
 	case float64:
 		if d.Tipo == "" || d.Tipo == "Float" {
-			ambito_local.AgregarIde(ambito.Identificadores{Id: d.Id, Valor: rr, Tipo: "variable", Primitivo: "float"})
+			ambito_local.AgregarIde(ambito.Identificadores{Id: d.Id, Valor: rr, Tipo: "variable", Primitivo: "Float"})
 		} else {
 			panic("Error el valor no coincide con el tipo " + d.Id)
 		}
 	case string:
 		if d.Tipo == "" || d.Tipo == "String" {
-			ambito_local.AgregarIde(ambito.Identificadores{Id: d.Id, Valor: rr, Tipo: "variable", Primitivo: "string"})
+			ambito_local.AgregarIde(ambito.Identificadores{Id: d.Id, Valor: rr, Tipo: "variable", Primitivo: "String"})
 		} else {
 			panic("Error el valor no coincide con el tipo " + d.Id)
 		}
 	case rune:
 		if d.Tipo == "" || d.Tipo == "Character" {
-			ambito_local.AgregarIde(ambito.Identificadores{Id: d.Id, Valor: rr, Tipo: "variable", Primitivo: "character"})
+			ambito_local.AgregarIde(ambito.Identificadores{Id: d.Id, Valor: rr, Tipo: "variable", Primitivo: "Character"})
 		} else {
 			panic("Error el valor no coincide con el tipo " + d.Id)
 		}
 	case bool:
 		if d.Tipo == "" || d.Tipo == "Bool" {
-			ambito_local.AgregarIde(ambito.Identificadores{Id: d.Id, Valor: rr, Tipo: "variable", Primitivo: "bool"})
+			ambito_local.AgregarIde(ambito.Identificadores{Id: d.Id, Valor: rr, Tipo: "variable", Primitivo: "Bool"})
+		} else {
+			panic("Error el valor no coincide con el tipo " + d.Id)
+		}
+	case ambito.Objeto_struct:
+		if d.Tipo == "" || d.Tipo == rr.Ambito_struct.NombreAmbito {
+			ambito_local.AgregarIde(ambito.Identificadores{Id: d.Id, Valor: rr, Tipo: "objeto", Primitivo: rr.Ambito_struct.NombreAmbito})
 		} else {
 			panic("Error el valor no coincide con el tipo " + d.Id)
 		}

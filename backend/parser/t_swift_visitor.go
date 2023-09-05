@@ -25,6 +25,15 @@ type T_swiftVisitor interface {
 	// Visit a parse tree produced by T_swiftParser#code_block.
 	VisitCode_block(ctx *Code_blockContext) interface{}
 
+	// Visit a parse tree produced by T_swiftParser#struct_declaracion.
+	VisitStruct_declaracion(ctx *Struct_declaracionContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#declarar_atributo.
+	VisitDeclarar_atributo(ctx *Declarar_atributoContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#declarar_funcion_sc.
+	VisitDeclarar_funcion_sc(ctx *Declarar_funcion_scContext) interface{}
+
 	// Visit a parse tree produced by T_swiftParser#instrucciones.
 	VisitInstrucciones(ctx *InstruccionesContext) interface{}
 
@@ -184,11 +193,17 @@ type T_swiftVisitor interface {
 	// Visit a parse tree produced by T_swiftParser#expresion_compa.
 	VisitExpresion_compa(ctx *Expresion_compaContext) interface{}
 
+	// Visit a parse tree produced by T_swiftParser#expresion_struct_dupla.
+	VisitExpresion_struct_dupla(ctx *Expresion_struct_duplaContext) interface{}
+
 	// Visit a parse tree produced by T_swiftParser#expresion_vector.
 	VisitExpresion_vector(ctx *Expresion_vectorContext) interface{}
 
 	// Visit a parse tree produced by T_swiftParser#expresion_nega.
 	VisitExpresion_nega(ctx *Expresion_negaContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#l_duble.
+	VisitL_duble(ctx *L_dubleContext) interface{}
 
 	// Visit a parse tree produced by T_swiftParser#primitivo_caracter.
 	VisitPrimitivo_caracter(ctx *Primitivo_caracterContext) interface{}
@@ -204,4 +219,7 @@ type T_swiftVisitor interface {
 
 	// Visit a parse tree produced by T_swiftParser#primitivo_bool.
 	VisitPrimitivo_bool(ctx *Primitivo_boolContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#primitivo_nulo.
+	VisitPrimitivo_nulo(ctx *Primitivo_nuloContext) interface{}
 }
