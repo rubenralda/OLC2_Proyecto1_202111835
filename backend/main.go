@@ -46,6 +46,8 @@ func (v *parser_visitor) VisitIntruccion_global(ctx *parser.Intruccion_globalCon
 		return ctx.Function_declaracion().Accept(v).(arbol.BaseNodo)
 	} else if ctx.Struct_declaracion() != nil {
 		return ctx.Struct_declaracion().Accept(v).(arbol.BaseNodo)
+	} else if ctx.Asignar_atributos() != nil {
+		return ctx.Asignar_atributos().Accept(v).(arbol.BaseNodo)
 	}
 	return nil
 }
@@ -74,6 +76,8 @@ func (v *parser_visitor) VisitInstruccion(ctx *parser.InstruccionContext) interf
 		return ctx.Asignacion().Accept(v).(arbol.BaseNodo)
 	} else if ctx.Control_transfer_statement() != nil {
 		return ctx.Control_transfer_statement().Accept(v).(arbol.BaseNodo)
+	} else if ctx.Asignar_atributos() != nil {
+		return ctx.Asignar_atributos().Accept(v).(arbol.BaseNodo)
 	}
 	return nil
 }
@@ -498,6 +502,26 @@ func (v *parser_visitor) VisitDeclarar_atributo(ctx *parser.Declarar_atributoCon
 		Expresion: expresion, Tipo: tipo}
 }
 
+// METODO PARA ATRIBUTOS GENERALES
+
+func (v *parser_visitor) VisitAtributos_generales(ctx *parser.Atributos_generalesContext) interface{} {
+	id_objeto := ctx.Identificador(0).GetText()
+	var atributos []string
+	for _, atributo := range ctx.AllIdentificador()[1:] {
+		atributos = append(atributos, atributo.GetText())
+	}
+	return arbol.Atributo_general{ID_inicial: id_objeto, Lista_atributos: atributos}
+}
+
+func (v *parser_visitor) VisitAsignar_atributos(ctx *parser.Asignar_atributosContext) interface{} {
+	id_objeto := ctx.Identificador(0).GetText()
+	var atributos []string
+	for _, atributo := range ctx.AllIdentificador()[1:] {
+		atributos = append(atributos, atributo.GetText())
+	}
+	return arbol.Asignar_atributos{ID_inicial: id_objeto, Lista_atributos: atributos,
+		Expresion: ctx.Expresion().Accept(v).(arbol.BaseNodo)}
+}
 func main() {
 	fichero, err := antlr.NewFileStream("entrada.swift")
 	if err != nil {

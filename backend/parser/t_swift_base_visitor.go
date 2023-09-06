@@ -87,6 +87,14 @@ func (v *BaseT_swiftVisitor) VisitAtributos_vector_count(ctx *Atributos_vector_c
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseT_swiftVisitor) VisitAtributos_generales(ctx *Atributos_generalesContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitAsignar_atributos(ctx *Asignar_atributosContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseT_swiftVisitor) VisitFor_in_statement(ctx *For_in_statementContext) interface{} {
 	return v.VisitChildren(ctx)
 }

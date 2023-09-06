@@ -50,8 +50,9 @@ func (a Asignacion_variable) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 				return nil
 			}
 		default:
-			panic("Tipo no reconocido")
+			panic("Tipo no permitido " + a.Id)
 		}
+		panic("Los tipos no coinciden " + a.Id)
 	}
 	panic("Error el ID no existe " + a.Id)
 }

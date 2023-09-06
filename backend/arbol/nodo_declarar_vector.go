@@ -5,9 +5,9 @@ import (
 )
 
 type Declarar_vector struct {
-	Tipo            string
+	Tipo            string // String, Int, Bool, Float, char, (Nombre_struct)
 	ID              string
-	Lista_expresion []BaseNodo
+	Lista_expresion []BaseNodo // 10, 20.5, "hola", true, objeto_strcut
 	ID_otro_vector  string
 }
 
@@ -66,14 +66,14 @@ func (d Declarar_vector) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 				panic("Error el valor no coincide con el tipo " + d.ID)
 			}
 		case ambito.Objeto_struct:
-			if d.Tipo == "" || d.Tipo == rr.Ambito_struct.NombreAmbito {
+			if d.Tipo == rr.Ambito_struct.NombreAmbito {
 				lista_valores = append(lista_valores, rr)
 			} else {
 				panic("Error el valor no coincide con el tipo " + d.ID)
 			}
 		case nil: //cambiar por el valor de un struc llamada o algo asi
 		default:
-			panic("Tipo no reconocido")
+			panic("Tipo no permitido " + d.ID)
 		}
 	}
 	ambito_padre.AgregarIde(ambito.Identificadores{Id: d.ID, Primitivo: d.Tipo, Tipo: "vector", Lista_vector: lista_valores})

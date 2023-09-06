@@ -6,11 +6,11 @@ type Objeto_struct struct {
 
 type Identificadores struct {
 	Id           string
-	Primitivo    string        // String, Int, Bool, Float ...
-	Valor        interface{}   // 10, 20.5, "hola", true, objeto
-	Tipo         string        //variable, funcion, constante, struct, vector u objeto
-	Objeto       Objeto_struct // el objeto de tipo struct
-	Lista_vector []interface{} //[1,2,3] ...
+	Primitivo    string        // String, Int, Bool, Float, char, (Nombre_struct)
+	Valor        interface{}   // 10, 20.5, "hola", true, objeto_strcut
+	Tipo         string        //variable, constante, vector, funcion, struct y matriz
+	Objeto       Objeto_struct // el objeto para el tipo struct
+	Lista_vector []interface{} // array de datos para el tipo vector
 }
 
 type Ambito struct {

@@ -23,6 +23,7 @@ intruccion_global
     | llamadas_funciones ';'?
     | function_declaracion
     | struct_declaracion
+    | asignar_atributos ';'?
     ;
 
 // GRAMATICA PARA UNA FUNCION
@@ -66,6 +67,7 @@ instruccion
    | control_transfer_statement ';'?
    | asignacion ';'?
    | llamadas_funciones ';'?
+   | asignar_atributos ';'?
    ;
 
 // GRAMATICA PARA DECLARAR TIPOS DE VARIBLE
@@ -113,9 +115,16 @@ llamadas_funciones
 
 // GRAMATICA PARA ATRIBUTOS
 
-atributos
+atributos // hay que arreglar los atributos 
     : Identificador '.' 'IsEmpty' #atributos_vector_empty
     | Identificador '.' 'count' #atributos_vector_count
+    | Identificador ('.' Identificador)+ #atributos_generales
+    ;
+
+// GRAMATICA PARA ASIGNAR ATRIBUTOS
+
+asignar_atributos
+    : Identificador ('.' Identificador)+ '=' expresion
     ;
 
 // GRAMMAR OF A FOR_IN STATEMENT

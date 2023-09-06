@@ -6,8 +6,8 @@ import "main/ambito"
 
 type Declarar_constante struct {
 	Id        string
-	Tipo      string
-	Expresion BaseNodo
+	Tipo      string   // String, Int, Bool, Float, char, (Nombre_struct)
+	Expresion BaseNodo // 10, 20.5, "hola", true, objeto_strcut
 }
 
 func (d Declarar_constante) Ejecutar(ambito_local *ambito.Ambito) interface{} {
@@ -50,13 +50,13 @@ func (d Declarar_constante) Ejecutar(ambito_local *ambito.Ambito) interface{} {
 		}
 	case ambito.Objeto_struct:
 		if d.Tipo == "" || d.Tipo == rr.Ambito_struct.NombreAmbito {
-			ambito_local.AgregarIde(ambito.Identificadores{Id: d.Id, Valor: rr, Tipo: "objeto", Primitivo: rr.Ambito_struct.NombreAmbito})
+			ambito_local.AgregarIde(ambito.Identificadores{Id: d.Id, Valor: rr, Tipo: "constante", Primitivo: rr.Ambito_struct.NombreAmbito})
 		} else {
 			panic("Error el valor no coincide con el tipo " + d.Id)
 		}
 	case nil: //para una llamada o mejor un tipo de struct
 	default:
-		panic("Tipo no reconocido")
+		panic("Tipo no permitido " + d.Id)
 	}
 	return nil
 }

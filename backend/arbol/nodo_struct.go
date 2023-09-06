@@ -26,9 +26,9 @@ func (d Declarar_struct) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 
 type Declaracion_atributo struct {
 	Id        string
-	Primitivo string // String, Int
-	Expresion BaseNodo
-	Tipo      string // let o var
+	Primitivo string   // String, Int, Bool, Float, char, (Nombre_struct)
+	Expresion BaseNodo // 10, 20.5, "hola", true, objeto_strcut
+	Tipo      string   // constante o variable
 }
 
 func (d Declaracion_atributo) Ejecutar(ambito_local *ambito.Ambito) interface{} {
@@ -37,7 +37,7 @@ func (d Declaracion_atributo) Ejecutar(ambito_local *ambito.Ambito) interface{} 
 			ambito_local.AgregarIde(ambito.Identificadores{Id: d.Id, Valor: nil, Tipo: d.Tipo, Primitivo: d.Primitivo})
 			return nil
 		} else {
-			panic("Error no tiene tipo")
+			panic("Error no tiene tipo " + d.Id)
 		}
 	}
 	resultado := d.Expresion.Ejecutar(ambito_local)
@@ -74,9 +74,15 @@ func (d Declaracion_atributo) Ejecutar(ambito_local *ambito.Ambito) interface{} 
 		} else {
 			panic("Error el valor no coincide con el tipo " + d.Id)
 		}
+	case ambito.Objeto_struct:
+		if d.Primitivo == "" || d.Primitivo == rr.Ambito_struct.NombreAmbito {
+			ambito_local.AgregarIde(ambito.Identificadores{Id: d.Id, Valor: rr, Tipo: d.Tipo, Primitivo: rr.Ambito_struct.NombreAmbito})
+		} else {
+			panic("Error el valor no coincide con el tipo " + d.Id)
+		}
 	case nil: //cambiar por el valor de un struc llamada o algo asi
 	default:
-		panic("Tipo no reconocido")
+		panic("Tipo no permitido " + d.Id)
 	}
 	return nil
 }

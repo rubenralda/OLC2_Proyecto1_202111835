@@ -67,6 +67,12 @@ type T_swiftVisitor interface {
 	// Visit a parse tree produced by T_swiftParser#atributos_vector_count.
 	VisitAtributos_vector_count(ctx *Atributos_vector_countContext) interface{}
 
+	// Visit a parse tree produced by T_swiftParser#atributos_generales.
+	VisitAtributos_generales(ctx *Atributos_generalesContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#asignar_atributos.
+	VisitAsignar_atributos(ctx *Asignar_atributosContext) interface{}
+
 	// Visit a parse tree produced by T_swiftParser#for_in_statement.
 	VisitFor_in_statement(ctx *For_in_statementContext) interface{}
 

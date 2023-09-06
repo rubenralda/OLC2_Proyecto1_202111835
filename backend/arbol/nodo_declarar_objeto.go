@@ -1,6 +1,8 @@
 package arbol
 
-import "main/ambito"
+import (
+	"main/ambito"
+)
 
 type Declarar_objeto struct {
 	Id    string
@@ -80,14 +82,14 @@ func (d Declarar_objeto) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 				panic("Error el atributo no coincide con el tipo " + atributo_struct.Id)
 			}
 		case ambito.Objeto_struct:
-			if atributo_struct.Primitivo == "objeto" {
+			if atributo_struct.Primitivo == rr.Ambito_struct.NombreAmbito {
 				atributo_struct.Valor = rr
 				ambito_objeto_struct.AgregarIde(atributo_struct)
 			} else {
 				panic("Error el valor no coincide con el tipo " + atributo_struct.Id)
 			}
 		default:
-			panic("Tipo no reconocido")
+			panic("Tipo no permitido " + d.Id)
 		}
 		indice_dupla++
 	}
