@@ -24,7 +24,7 @@ func (l Loop_while) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 					} else if rr.Sentencia_continue {
 						break CicloIntruccion // termina este for de sentencias para que valide nuevamente y ejecute
 					} else { //es una sentencia return
-						return rr.Retorno // retornar el objeto return
+						return rr // retornar el objeto return
 					}
 				case Sentencia_return:
 					return rr //asciendo el retorno

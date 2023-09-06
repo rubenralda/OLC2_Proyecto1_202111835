@@ -33,8 +33,11 @@ function_declaracion
     ;
 
 lista_parametros
-    : ',' (Identificador)? ':' 'inout'? tipos lista_parametros
-    | (Identificador)? ':' 'inout'? tipos
+    : declaracion_parametro (',' declaracion_parametro)*
+    ;
+
+declaracion_parametro
+    : (Identificador)? Identificador ':' refencia = 'inout'? tipos
     ;
 
 // GRAMATICA BLOQUE DE CODIGO
@@ -111,6 +114,21 @@ llamadas_funciones
     | funcion_int
     | funcion_float
     | funcion_string
+    | llamada_normal
+    ;
+
+// GRAMATICA PARA LLAMADA DE FUNCIONES
+
+llamada_normal
+    : Identificador '(' lista_argumentos? ')'
+    ;
+
+lista_argumentos
+    : declaracion_argumento (',' declaracion_argumento)*
+    ;
+
+declaracion_argumento
+    : (Identificador ':')? r='&'? expresion
     ;
 
 // GRAMATICA PARA ATRIBUTOS
@@ -266,8 +284,8 @@ asignacion
 expresion //agregar llamada de una funcion, de struct, matriz y atributos
     : primitivos #valor_primitivo
     | atributos #expresion_atributos
-    | llamadas_funciones #expresion_llamada
     | Identificador '[' expresion ']' #expresion_vector
+    | llamadas_funciones #expresion_llamada
     | Identificador '(' l_duble ')' #expresion_struct_dupla
     | Identificador #expresion_id
     | '(' expresion ')' #expresion_paren

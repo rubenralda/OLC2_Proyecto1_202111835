@@ -217,3 +217,38 @@ var nums2 = StructArr(datos: Float("23.43"))
 p1.numeros = nums2
 
 print("Persona nombre: ", p1.nombre, ", edad: ", p1.edad, ", carroTipo: ", p1.carro.tipo, ", nuevos numeros: ", p1.numeros.datos)
+
+struct Persona {
+    var name: String
+    var age: Int
+}
+var personas : [Persona] = []
+// se agregan valores al arra
+personas.append(Persona(name: "Celeste", age: 23))
+personas.append(Persona(name: "Roel", age: 32))
+personas.append(Persona(name: "Flor", age: 17))
+
+var mmm = personas[1]
+
+print(mmm.name)
+
+func func1 () -> Int {
+    return 1;
+}
+func fn2() -> String {
+    return "cadena";
+}
+
+print(fn2())
+
+// función suma
+// Nombre externos: num1, num2
+// Nombres internos: x, y
+func suma( num1 x : Int, num2 y: Int) -> Int {
+    return x + y
+}
+
+var numero1 = 1
+var numero2 = 1
+//llamada con nombres externos
+print(suma(num1: numero1, num2: numero2)) //imprime 2

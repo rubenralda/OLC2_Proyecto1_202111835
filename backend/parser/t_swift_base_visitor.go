@@ -27,6 +27,10 @@ func (v *BaseT_swiftVisitor) VisitLista_parametros(ctx *Lista_parametrosContext)
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseT_swiftVisitor) VisitDeclaracion_parametro(ctx *Declaracion_parametroContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseT_swiftVisitor) VisitCode_block(ctx *Code_blockContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -76,6 +80,18 @@ func (v *BaseT_swiftVisitor) VisitControl_transfer_statement(ctx *Control_transf
 }
 
 func (v *BaseT_swiftVisitor) VisitLlamadas_funciones(ctx *Llamadas_funcionesContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitLlamada_normal(ctx *Llamada_normalContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitLista_argumentos(ctx *Lista_argumentosContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitDeclaracion_argumento(ctx *Declaracion_argumentoContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

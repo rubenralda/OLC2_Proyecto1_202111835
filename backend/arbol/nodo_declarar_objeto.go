@@ -15,7 +15,7 @@ func (d Declarar_objeto) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 		panic("El struct no existe")
 	}
 	if encontrado.Tipo != "struct" {
-		panic("El id no pertenece a un struct")
+		panic("El id no pertenece a un struct " + d.Id)
 	}
 	indice_dupla := 0
 	largo := len(d.Dupla)
@@ -30,7 +30,7 @@ func (d Declarar_objeto) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 			ambito_objeto_struct.AgregarIde(atributo_struct)
 			continue
 		}
-		if atributo_struct.Id != d.Dupla[indice_dupla].Id_atributo { // si no es el atributo salta al siguiente
+		if atributo_struct.Id != d.Dupla[indice_dupla].Id_externo { // si no es el atributo salta al siguiente
 			if atributo_struct.Valor == nil {
 				panic("Atributo sin inicializar " + atributo_struct.Id)
 			}
@@ -97,6 +97,7 @@ func (d Declarar_objeto) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 }
 
 type Dupla_atributos struct {
-	Id_atributo string
-	Expresion   BaseNodo
+	Id_externo string
+	Referencia bool // no se usa pero esta para convertir de Lista_argumentos
+	Expresion  BaseNodo
 }

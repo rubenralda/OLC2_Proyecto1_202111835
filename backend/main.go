@@ -102,7 +102,7 @@ func (v *parser_visitor) VisitExpresion_id(ctx *parser.Expresion_idContext) inte
 
 func (v *parser_visitor) VisitExpresion_vector(ctx *parser.Expresion_vectorContext) interface{} {
 	ide := arbol.Id_vector{Id: ctx.Identificador().GetText(), Indice: ctx.Expresion().Accept(v).(arbol.BaseNodo)}
-	return arbol.Expresion{Valor1: ide, Operacion: "identificador"}
+	return arbol.Expresion{Valor1: ide, Operacion: "vector"}
 }
 
 func (v *parser_visitor) VisitExpresion_arit(ctx *parser.Expresion_aritContext) interface{} {
@@ -138,22 +138,23 @@ func (v *parser_visitor) VisitExpresion_rela(ctx *parser.Expresion_relaContext) 
 }
 
 func (v *parser_visitor) VisitExpresion_atributos(ctx *parser.Expresion_atributosContext) interface{} {
-	return ctx.Atributos().Accept(v)
+	return arbol.Expresion{Valor1: ctx.Atributos().Accept(v).(arbol.BaseNodo), Operacion: "atributos"}
 }
 
 func (v *parser_visitor) VisitExpresion_llamada(ctx *parser.Expresion_llamadaContext) interface{} {
-	return ctx.Llamadas_funciones().Accept(v)
+	return arbol.Expresion{Valor1: ctx.Llamadas_funciones().Accept(v).(arbol.BaseNodo), Operacion: "llamada"}
 }
 
 func (v *parser_visitor) VisitExpresion_struct_dupla(ctx *parser.Expresion_struct_duplaContext) interface{} {
-	return arbol.Declarar_objeto{Id: ctx.Identificador().GetText(), Dupla: ctx.L_duble().Accept(v).([]arbol.Dupla_atributos)}
+	dd := arbol.Declarar_objeto{Id: ctx.Identificador().GetText(), Dupla: ctx.L_duble().Accept(v).([]arbol.Dupla_atributos)}
+	return arbol.Expresion{Valor1: dd, Operacion: "objeto"}
 }
 
 func (v *parser_visitor) VisitL_duble(ctx *parser.L_dubleContext) interface{} {
 	var atributos []arbol.Dupla_atributos
 	for indice, instruccion := range ctx.AllExpresion() {
 		expresion := instruccion.Accept(v).(arbol.BaseNodo)
-		atributo := arbol.Dupla_atributos{Id_atributo: ctx.Identificador(indice).GetText(),
+		atributo := arbol.Dupla_atributos{Id_externo: ctx.Identificador(indice).GetText(),
 			Expresion: expresion}
 		atributos = append(atributos, atributo)
 	}
@@ -429,6 +430,8 @@ func (v *parser_visitor) VisitLlamadas_funciones(ctx *parser.Llamadas_funcionesC
 		return ctx.Funcion_int().Accept(v).(arbol.BaseNodo)
 	} else if ctx.Funcion_string() != nil {
 		return ctx.Funcion_string().Accept(v).(arbol.BaseNodo)
+	} else if ctx.Llamada_normal() != nil {
+		return ctx.Llamada_normal().Accept(v).(arbol.BaseNodo)
 	}
 	return nil
 }
@@ -522,8 +525,83 @@ func (v *parser_visitor) VisitAsignar_atributos(ctx *parser.Asignar_atributosCon
 	return arbol.Asignar_atributos{ID_inicial: id_objeto, Lista_atributos: atributos,
 		Expresion: ctx.Expresion().Accept(v).(arbol.BaseNodo)}
 }
+
+// DECLARACION DE FUNCIONES
+
+func (v *parser_visitor) VisitFunction_declaracion(ctx *parser.Function_declaracionContext) interface{} {
+	var lista []arbol.Lista_parametros
+	if ctx.Lista_parametros() != nil {
+		lista = ctx.Lista_parametros().Accept(v).([]arbol.Lista_parametros)
+	}
+	tipos := ""
+	if ctx.Tipos() != nil {
+		tipos = ctx.Tipos().GetText()
+	}
+	return arbol.Declarar_funcion{Id: ctx.Identificador().GetText(), Lista_parametros: lista,
+		Tipo_retorno: tipos, Sentencias: ctx.Code_block().Accept(v).([]arbol.BaseNodo)}
+}
+
+func (v *parser_visitor) VisitLista_parametros(ctx *parser.Lista_parametrosContext) interface{} {
+	var lista []arbol.Lista_parametros
+	for _, item := range ctx.AllDeclaracion_parametro() {
+		lista = append(lista, item.Accept(v).(arbol.Lista_parametros))
+	}
+	return lista
+}
+
+func (v *parser_visitor) VisitDeclaracion_parametro(ctx *parser.Declaracion_parametroContext) interface{} {
+	externo := ""
+	if ctx.Identificador(0) != nil {
+		externo = ctx.Identificador(0).GetText()
+	}
+	interno := ctx.Identificador(1).GetText()
+	referencia := false
+	if ctx.GetRefencia() != nil {
+		referencia = true
+	}
+	return arbol.Lista_parametros{Id_interno: interno, Id_externo: externo, Referencia: referencia,
+		Primitivo: ctx.Tipos().GetText()}
+}
+
+// METODOS LLAMADA FUNCION
+func (v *parser_visitor) VisitLlamada_normal(ctx *parser.Llamada_normalContext) interface{} {
+	var lista []arbol.Lista_argumentos
+	if ctx.Lista_argumentos() != nil {
+		lista = ctx.Lista_argumentos().Accept(v).([]arbol.Lista_argumentos)
+	}
+	var dupla []arbol.Dupla_atributos
+	for _, declarar := range lista {
+		ejecutar := arbol.Dupla_atributos(declarar)
+		dupla = append(dupla, ejecutar)
+	}
+	declara_objeto := arbol.Declarar_objeto{Id: ctx.Identificador().GetText(), Dupla: dupla}
+	return arbol.Llamada_funcion{Id: ctx.Identificador().GetText(), Lista_argumentos: lista,
+		Declarar_objeto_amb: declara_objeto}
+}
+
+func (v *parser_visitor) VisitLista_argumentos(ctx *parser.Lista_argumentosContext) interface{} {
+	var lista []arbol.Lista_argumentos
+	for _, item := range ctx.AllDeclaracion_argumento() {
+		lista = append(lista, item.Accept(v).(arbol.Lista_argumentos))
+	}
+	return lista
+}
+
+func (v *parser_visitor) VisitDeclaracion_argumento(ctx *parser.Declaracion_argumentoContext) interface{} {
+	id_externo := ""
+	if ctx.Identificador() != nil {
+		id_externo = ctx.Identificador().GetText()
+	}
+	referencia := false
+	if ctx.GetR() != nil {
+		referencia = true
+	}
+	return arbol.Lista_argumentos{Id_externo: id_externo, Referencia: referencia,
+		Expresion: ctx.Expresion().Accept(v).(arbol.BaseNodo)}
+}
+
 func main() {
-	fichero, err := antlr.NewFileStream("entrada.swift")
+	fichero, err := antlr.NewFileStream("Recursivas.swift")
 	if err != nil {
 		fmt.Println("No se pudo abrir el archivo")
 	}

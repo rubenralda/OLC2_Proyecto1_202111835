@@ -22,6 +22,9 @@ type T_swiftVisitor interface {
 	// Visit a parse tree produced by T_swiftParser#lista_parametros.
 	VisitLista_parametros(ctx *Lista_parametrosContext) interface{}
 
+	// Visit a parse tree produced by T_swiftParser#declaracion_parametro.
+	VisitDeclaracion_parametro(ctx *Declaracion_parametroContext) interface{}
+
 	// Visit a parse tree produced by T_swiftParser#code_block.
 	VisitCode_block(ctx *Code_blockContext) interface{}
 
@@ -60,6 +63,15 @@ type T_swiftVisitor interface {
 
 	// Visit a parse tree produced by T_swiftParser#llamadas_funciones.
 	VisitLlamadas_funciones(ctx *Llamadas_funcionesContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#llamada_normal.
+	VisitLlamada_normal(ctx *Llamada_normalContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#lista_argumentos.
+	VisitLista_argumentos(ctx *Lista_argumentosContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#declaracion_argumento.
+	VisitDeclaracion_argumento(ctx *Declaracion_argumentoContext) interface{}
 
 	// Visit a parse tree produced by T_swiftParser#atributos_vector_empty.
 	VisitAtributos_vector_empty(ctx *Atributos_vector_emptyContext) interface{}

@@ -405,6 +405,14 @@ func (e Expresion) Ejecutar(ambito *ambito.Ambito) interface{} {
 		return e.Valor1.Ejecutar(ambito)
 	case "identificador":
 		return e.Valor1.Ejecutar(ambito)
+	case "vector":
+		return e.Valor1.Ejecutar(ambito)
+	case "atributos":
+		return e.Valor1.Ejecutar(ambito)
+	case "llamada":
+		return e.Valor1.Ejecutar(ambito)
+	case "objeto":
+		return e.Valor1.Ejecutar(ambito)
 	default:
 		return nil
 	}
