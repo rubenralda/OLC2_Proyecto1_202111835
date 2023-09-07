@@ -1,0 +1,4 @@
+/.vscode
+/backend/parser/.antlr
+/backend/parser/reporte/.antlr
+/backend/parser/reporte/TestRig

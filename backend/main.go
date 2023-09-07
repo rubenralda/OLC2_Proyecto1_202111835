@@ -538,6 +538,26 @@ func (v *parser_visitor) VisitAsignar_atributos_normal(ctx *parser.Asignar_atrib
 		Expresion: ctx.Expresion().Accept(v).(arbol.BaseNodo)}
 }
 
+func (v *parser_visitor) VisitIncre_atributos_normal(ctx *parser.Incre_atributos_normalContext) interface{} {
+	id_objeto := ctx.Identificador(0).GetText()
+	var atributos []string
+	for _, atributo := range ctx.AllIdentificador()[1:] {
+		atributos = append(atributos, atributo.GetText())
+	}
+	return arbol.Incremento_atributo{ID_inicial: id_objeto, Lista_atributos: atributos,
+		Expresion: ctx.Expresion().Accept(v).(arbol.BaseNodo)}
+}
+
+func (v *parser_visitor) VisitDecre_atributos_normal(ctx *parser.Decre_atributos_normalContext) interface{} {
+	id_objeto := ctx.Identificador(0).GetText()
+	var atributos []string
+	for _, atributo := range ctx.AllIdentificador()[1:] {
+		atributos = append(atributos, atributo.GetText())
+	}
+	return arbol.Decremento_atributo{ID_inicial: id_objeto, Lista_atributos: atributos,
+		Expresion: ctx.Expresion().Accept(v).(arbol.BaseNodo)}
+}
+
 /*func (v *parser_visitor) VisitAsignar_self(ctx *parser.Asignar_selfContext) interface{} {
 	id_objeto := "self"
 	var atributos []string
