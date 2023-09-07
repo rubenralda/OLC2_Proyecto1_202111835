@@ -2,9 +2,13 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
+	"log"
 	"main/ambito"
 	"main/arbol"
 	"main/parser"
+	"os"
+	"os/exec"
 
 	"github.com/antlr4-go/antlr/v4"
 	"github.com/gofiber/fiber/v2"
@@ -394,7 +398,7 @@ func (v *parser_visitor) VisitGuard_statement(ctx *parser.Guard_statementContext
 
 // METODOS DECLARACION DE VECTOR
 
-func (v *parser_visitor) VisitArray_declaracion(ctx *parser.Array_declaracionContext) interface{} {
+func (v *parser_visitor) VisitArray_comun(ctx *parser.Array_comunContext) interface{} {
 	var lista_valores []arbol.BaseNodo
 	otro_id := ""
 	if ctx.Definicion_vector().Lista_expresiones() != nil {
@@ -403,6 +407,13 @@ func (v *parser_visitor) VisitArray_declaracion(ctx *parser.Array_declaracionCon
 	if ctx.Definicion_vector().Identificador() != nil {
 		otro_id = ctx.Definicion_vector().Identificador().GetText()
 	}
+	return arbol.Declarar_vector{Tipo: ctx.Tipos().GetText(), ID: ctx.Identificador().GetText(),
+		Lista_expresion: lista_valores, ID_otro_vector: otro_id}
+}
+
+func (v *parser_visitor) VisitArray_vacio(ctx *parser.Array_vacioContext) interface{} {
+	var lista_valores []arbol.BaseNodo
+	otro_id := ""
 	return arbol.Declarar_vector{Tipo: ctx.Tipos().GetText(), ID: ctx.Identificador().GetText(),
 		Lista_expresion: lista_valores, ID_otro_vector: otro_id}
 }
@@ -710,9 +721,42 @@ func handleVisitor(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(response)
 }
 
+func reporte(c *fiber.Ctx) error {
+	var message Message
+	if err := c.BodyParser(&message); err != nil {
+		return err
+	}
+	code := message.Codigo
+	if err := ioutil.WriteFile("./parser/reporte/entrada.swift", []byte(code), 0644); err != nil {
+		log.Fatal(err)
+	}
+	// Comando de generación que deseas ejecutar
+	comando := "go generate ./..."
+
+	// Crear un objeto Cmd
+	cmd := exec.Command("bash", "-c", comando)
+
+	// Configurar la salida estándar para ver los resultados
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	// Ejecutar el comando
+	err := cmd.Run()
+	if err != nil {
+		panic(err)
+	}
+	response := Resp{
+		Salida:  "",
+		Err:     false,
+		Message: "Ejecución realizada con éxito",
+	}
+	return c.Status(fiber.StatusOK).JSON(response)
+}
+
 func main() {
 	app := fiber.New()
 	app.Use(cors.New())
 	app.Post("/ejecutar", handleVisitor)
+	app.Post("/reporte", reporte)
 	app.Listen(":3000")
 }

@@ -54,7 +54,7 @@ public class T_swiftLexer extends Lexer {
 		return new String[] {
 			null, "';'", "'func'", "'('", "')'", "'->'", "','", "':'", "'inout'", 
 			"'{'", "'}'", "'struct'", "'let'", "'var'", "'='", "'mutating'", "'&'", 
-			"'.'", "'IsEmpty'", "'count'", "'+='", "'-='", "'for'", "'in'", "'...'", 
+			"'.'", "'isEmpty'", "'count'", "'+='", "'-='", "'for'", "'in'", "'...'", 
 			"'while'", "'if'", "'else'", "'guard'", "'continue'", "'break'", "'return'", 
 			"'switch'", "'case'", "'default'", "'?'", "'String'", "'Int'", "'Float'", 
 			"'Bool'", "'Character'", "'['", "']'", "'print'", "'append'", "'removeLast'", 
@@ -213,7 +213,7 @@ public class T_swiftLexer extends Lexer {
 		"\u00c4\7w\2\2\u00c4\u00c5\7v\2\2\u00c5\u00c6\7c\2\2\u00c6\u00c7\7v\2\2"+
 		"\u00c7\u00c8\7k\2\2\u00c8\u00c9\7p\2\2\u00c9\u00ca\7i\2\2\u00ca \3\2\2"+
 		"\2\u00cb\u00cc\7(\2\2\u00cc\"\3\2\2\2\u00cd\u00ce\7\60\2\2\u00ce$\3\2"+
-		"\2\2\u00cf\u00d0\7K\2\2\u00d0\u00d1\7u\2\2\u00d1\u00d2\7G\2\2\u00d2\u00d3"+
+		"\2\2\u00cf\u00d0\7k\2\2\u00d0\u00d1\7u\2\2\u00d1\u00d2\7G\2\2\u00d2\u00d3"+
 		"\7o\2\2\u00d3\u00d4\7r\2\2\u00d4\u00d5\7v\2\2\u00d5\u00d6\7{\2\2\u00d6"+
 		"&\3\2\2\2\u00d7\u00d8\7e\2\2\u00d8\u00d9\7q\2\2\u00d9\u00da\7w\2\2\u00da"+
 		"\u00db\7p\2\2\u00db\u00dc\7v\2\2\u00dc(\3\2\2\2\u00dd\u00de\7-\2\2\u00de"+

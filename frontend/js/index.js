@@ -17,7 +17,7 @@ let errores = null
 
 document.addEventListener("DOMContentLoaded", (e) => {
     e.preventDefault;
-    if ( localStorage.getItem("texto") != null) {
+    if (localStorage.getItem("texto") != null) {
         codigo.value = localStorage.getItem("texto")
         let dispararEvento = new Event("keyup")
         codigo.dispatchEvent(dispararEvento)
@@ -76,7 +76,7 @@ async function eventbtnEjecutar() {
     console.log(respuesta)
     if (respuesta.Err) {
         alert("Ocurrio un error")
-        errores = respuesta.Reporte_error
+        //errores = respuesta.Reporte_error
         return
     }
     consola.value = respuesta.Salida
@@ -86,7 +86,7 @@ async function eventbtnEjecutar() {
 
 btnArbol.addEventListener("click", obtenerArbol);
 async function obtenerArbol() {
-    const ruta = `http://localhost:3000/ast`;
+    const ruta = `http://localhost:3000/reporte`;
     let bodyJson = {
         codigo : codigo.value
     }
@@ -101,10 +101,12 @@ async function obtenerArbol() {
     .then((data) => {
         return data
     })
-    localStorage.setItem("reporte", respuesta.arbol)
-    //window.location.href = "./html/reporte.html";
-    window.open(`./html/reporte.html`, "_blank");
     console.log(respuesta)
+    if (respuesta.Err) {
+        alert("Ocurrio un error")
+        //errores = respuesta.Reporte_error
+        return
+    }
 }
 
 btnTabla.addEventListener("click", obtenerTabla);
@@ -130,6 +132,7 @@ inputFile.addEventListener('change', () => {
     reader.onload = () => {
       const fileContent = reader.result;
       codigo.value = fileContent
+      localStorage.setItem("texto", fileContent)
       let dispararEvento = new Event("keyup")
       codigo.dispatchEvent(dispararEvento)
     };

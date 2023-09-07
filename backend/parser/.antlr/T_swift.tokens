@@ -86,7 +86,7 @@ Identificador=71
 'mutating'=15
 '&'=16
 '.'=17
-'IsEmpty'=18
+'isEmpty'=18
 'count'=19
 '+='=20
 '-='=21

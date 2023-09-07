@@ -191,7 +191,11 @@ func (v *BaseT_swiftVisitor) VisitTipos(ctx *TiposContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseT_swiftVisitor) VisitArray_declaracion(ctx *Array_declaracionContext) interface{} {
+func (v *BaseT_swiftVisitor) VisitArray_comun(ctx *Array_comunContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitArray_vacio(ctx *Array_vacioContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

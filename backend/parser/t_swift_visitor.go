@@ -145,8 +145,11 @@ type T_swiftVisitor interface {
 	// Visit a parse tree produced by T_swiftParser#tipos.
 	VisitTipos(ctx *TiposContext) interface{}
 
-	// Visit a parse tree produced by T_swiftParser#array_declaracion.
-	VisitArray_declaracion(ctx *Array_declaracionContext) interface{}
+	// Visit a parse tree produced by T_swiftParser#array_comun.
+	VisitArray_comun(ctx *Array_comunContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#array_vacio.
+	VisitArray_vacio(ctx *Array_vacioContext) interface{}
 
 	// Visit a parse tree produced by T_swiftParser#definicion_vector.
 	VisitDefinicion_vector(ctx *Definicion_vectorContext) interface{}

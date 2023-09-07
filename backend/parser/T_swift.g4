@@ -141,10 +141,9 @@ llamada_metodos
 // GRAMATICA PARA ATRIBUTOS
 
 atributos // hay que arreglar los atributos 
-    : Identificador '.' 'IsEmpty' #atributos_vector_empty
+    : Identificador '.' 'isEmpty' #atributos_vector_empty
     | Identificador '.' 'count' #atributos_vector_count
     | Identificador ('.' Identificador)+ #atributos_generales
-    //| 'self' ('.' Identificador)+ #atributos_self
     ;
 
 // GRAMATICA PARA ASIGNAR ATRIBUTOS
@@ -226,7 +225,8 @@ tipos
 //declaracin de vectores
 
 array_declaracion
-    : 'var' Identificador ':' '[' tipos ']' definicion_vector
+    : 'var' Identificador ':' '[' tipos ']' definicion_vector #array_comun
+    | 'var' Identificador '=' '[' tipos ']' '(' ')' #array_vacio
     ;
 
 definicion_vector
