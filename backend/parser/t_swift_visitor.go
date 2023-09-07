@@ -73,6 +73,9 @@ type T_swiftVisitor interface {
 	// Visit a parse tree produced by T_swiftParser#declaracion_argumento.
 	VisitDeclaracion_argumento(ctx *Declaracion_argumentoContext) interface{}
 
+	// Visit a parse tree produced by T_swiftParser#llamada_metodos.
+	VisitLlamada_metodos(ctx *Llamada_metodosContext) interface{}
+
 	// Visit a parse tree produced by T_swiftParser#atributos_vector_empty.
 	VisitAtributos_vector_empty(ctx *Atributos_vector_emptyContext) interface{}
 
@@ -82,8 +85,14 @@ type T_swiftVisitor interface {
 	// Visit a parse tree produced by T_swiftParser#atributos_generales.
 	VisitAtributos_generales(ctx *Atributos_generalesContext) interface{}
 
-	// Visit a parse tree produced by T_swiftParser#asignar_atributos.
-	VisitAsignar_atributos(ctx *Asignar_atributosContext) interface{}
+	// Visit a parse tree produced by T_swiftParser#asignar_atributos_normal.
+	VisitAsignar_atributos_normal(ctx *Asignar_atributos_normalContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#incre_atributos_normal.
+	VisitIncre_atributos_normal(ctx *Incre_atributos_normalContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#decre_atributos_normal.
+	VisitDecre_atributos_normal(ctx *Decre_atributos_normalContext) interface{}
 
 	// Visit a parse tree produced by T_swiftParser#for_in_statement.
 	VisitFor_in_statement(ctx *For_in_statementContext) interface{}

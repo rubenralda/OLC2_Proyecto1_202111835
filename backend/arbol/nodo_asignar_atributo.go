@@ -13,6 +13,12 @@ func (a Asignar_atributos) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 	if encontrado == nil {
 		panic("El ID " + a.ID_inicial + " no existe")
 	}
+	if encontrado.Id == "self" {
+		if !encontrado.Referencia {
+			panic("La funcion es inmutable " + encontrado.Puntero_valor.Id)
+		}
+		encontrado = encontrado.Puntero_valor
+	}
 	switch encontrado.Valor.(type) {
 	case ambito.Objeto_struct: // si es struct
 		siguiente := encontrado                           //actual struct

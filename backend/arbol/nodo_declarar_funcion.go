@@ -7,6 +7,7 @@ type Ejecutar_funcion struct {
 	Tipo_retorno     string
 	Sentencias       []BaseNodo
 	Lista_parametros []Lista_parametros
+	Mutable          bool
 }
 
 func (e Ejecutar_funcion) Ejecutar(ambito_padre *ambito.Ambito, Lista_argumentos []Lista_argumentos) interface{} {
@@ -16,6 +17,7 @@ func (e Ejecutar_funcion) Ejecutar(ambito_padre *ambito.Ambito, Lista_argumentos
 		panic("La cantidad de argumentos no coincide")
 	}
 	for indice, parametro := range e.Lista_parametros { // viene la misma cantidad de argumentos
+		nombre_final := parametro.Id_interno
 		if parametro.Referencia != Lista_argumentos[indice].Referencia {
 			panic("Discrepancia con los parametros por referencia o valor")
 		}
@@ -26,12 +28,12 @@ func (e Ejecutar_funcion) Ejecutar(ambito_padre *ambito.Ambito, Lista_argumentos
 				if encontrado == nil {
 					panic("El id no existe " + id_referencia)
 				}
+				ambito_local.AgregarIde(ambito.Identificadores{Id: nombre_final, Puntero_valor: encontrado, Tipo: "variable", Primitivo: encontrado.Primitivo, Referencia: true})
 				continue
 			} else {
-				panic("Error desconocido " + parametro.Id_interno)
+				panic("La referencia debe ser por variables " + parametro.Id_interno)
 			}
 		}
-		nombre_final := parametro.Id_interno
 		if parametro.Id_externo == "_" {
 			if Lista_argumentos[indice].Id_externo != "" {
 				panic("No lleva parametro externo " + Lista_argumentos[indice].Id_externo)
@@ -142,11 +144,16 @@ type Declarar_funcion struct {
 	Tipo_retorno     string
 	Sentencias       []BaseNodo
 	Lista_parametros []Lista_parametros
+	Mutable          bool
 }
 
 func (d Declarar_funcion) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 	funcion := Ejecutar_funcion(d)
-	ambito_padre.AgregarIde(ambito.Identificadores{Id: d.Id, Primitivo: d.Tipo_retorno, Funcion: funcion, Tipo: "funcion"})
+	mutable := false
+	if d.Mutable {
+		mutable = true
+	}
+	ambito_padre.AgregarIde(ambito.Identificadores{Id: d.Id, Primitivo: d.Tipo_retorno, Funcion: funcion, Tipo: "funcion", Referencia: mutable})
 	return nil
 }
 

@@ -7,6 +7,8 @@ import (
 	"main/parser"
 
 	"github.com/antlr4-go/antlr/v4"
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 type parser_visitor struct {
@@ -432,6 +434,8 @@ func (v *parser_visitor) VisitLlamadas_funciones(ctx *parser.Llamadas_funcionesC
 		return ctx.Funcion_string().Accept(v).(arbol.BaseNodo)
 	} else if ctx.Llamada_normal() != nil {
 		return ctx.Llamada_normal().Accept(v).(arbol.BaseNodo)
+	} else if ctx.Llamada_metodos() != nil {
+		return ctx.Llamada_metodos().Accept(v).(arbol.BaseNodo)
 	}
 	return nil
 }
@@ -505,6 +509,14 @@ func (v *parser_visitor) VisitDeclarar_atributo(ctx *parser.Declarar_atributoCon
 		Expresion: expresion, Tipo: tipo}
 }
 
+func (v *parser_visitor) VisitDeclarar_funcion_sc(ctx *parser.Declarar_funcion_scContext) interface{} {
+	funcion := ctx.Function_declaracion().Accept(v).(arbol.Declarar_funcion)
+	if ctx.GetM() != nil {
+		funcion.Mutable = true
+	}
+	return funcion
+}
+
 // METODO PARA ATRIBUTOS GENERALES
 
 func (v *parser_visitor) VisitAtributos_generales(ctx *parser.Atributos_generalesContext) interface{} {
@@ -516,7 +528,7 @@ func (v *parser_visitor) VisitAtributos_generales(ctx *parser.Atributos_generale
 	return arbol.Atributo_general{ID_inicial: id_objeto, Lista_atributos: atributos}
 }
 
-func (v *parser_visitor) VisitAsignar_atributos(ctx *parser.Asignar_atributosContext) interface{} {
+func (v *parser_visitor) VisitAsignar_atributos_normal(ctx *parser.Asignar_atributos_normalContext) interface{} {
 	id_objeto := ctx.Identificador(0).GetText()
 	var atributos []string
 	for _, atributo := range ctx.AllIdentificador()[1:] {
@@ -525,6 +537,16 @@ func (v *parser_visitor) VisitAsignar_atributos(ctx *parser.Asignar_atributosCon
 	return arbol.Asignar_atributos{ID_inicial: id_objeto, Lista_atributos: atributos,
 		Expresion: ctx.Expresion().Accept(v).(arbol.BaseNodo)}
 }
+
+/*func (v *parser_visitor) VisitAsignar_self(ctx *parser.Asignar_selfContext) interface{} {
+	id_objeto := "self"
+	var atributos []string
+	for _, atributo := range ctx.AllIdentificador() {
+		atributos = append(atributos, atributo.GetText())
+	}
+	return arbol.Asignar_atributos{ID_inicial: id_objeto, Lista_atributos: atributos,
+		Expresion: ctx.Expresion().Accept(v).(arbol.BaseNodo)}
+}*/
 
 // DECLARACION DE FUNCIONES
 
@@ -538,7 +560,7 @@ func (v *parser_visitor) VisitFunction_declaracion(ctx *parser.Function_declarac
 		tipos = ctx.Tipos().GetText()
 	}
 	return arbol.Declarar_funcion{Id: ctx.Identificador().GetText(), Lista_parametros: lista,
-		Tipo_retorno: tipos, Sentencias: ctx.Code_block().Accept(v).([]arbol.BaseNodo)}
+		Tipo_retorno: tipos, Sentencias: ctx.Code_block().Accept(v).([]arbol.BaseNodo), Mutable: false}
 }
 
 func (v *parser_visitor) VisitLista_parametros(ctx *parser.Lista_parametrosContext) interface{} {
@@ -551,10 +573,13 @@ func (v *parser_visitor) VisitLista_parametros(ctx *parser.Lista_parametrosConte
 
 func (v *parser_visitor) VisitDeclaracion_parametro(ctx *parser.Declaracion_parametroContext) interface{} {
 	externo := ""
-	if ctx.Identificador(0) != nil {
+	interno := ""
+	if len(ctx.AllIdentificador()) > 1 {
 		externo = ctx.Identificador(0).GetText()
+		interno = ctx.Identificador(1).GetText()
+	} else {
+		interno = ctx.Identificador(0).GetText()
 	}
-	interno := ctx.Identificador(1).GetText()
 	referencia := false
 	if ctx.GetRefencia() != nil {
 		referencia = true
@@ -600,12 +625,40 @@ func (v *parser_visitor) VisitDeclaracion_argumento(ctx *parser.Declaracion_argu
 		Expresion: ctx.Expresion().Accept(v).(arbol.BaseNodo)}
 }
 
-func main() {
-	fichero, err := antlr.NewFileStream("Recursivas.swift")
+func (v *parser_visitor) VisitLlamada_metodos(ctx *parser.Llamada_metodosContext) interface{} {
+	var lista []arbol.Lista_argumentos
+	if ctx.Lista_argumentos() != nil {
+		lista = ctx.Lista_argumentos().Accept(v).([]arbol.Lista_argumentos)
+	}
+	return arbol.Llamada_metodo{Id_objeto: ctx.Identificador(0).GetText(),
+		Id_metodo:        ctx.Identificador(1).GetText(),
+		Lista_argumentos: lista}
+}
+
+type Resp struct {
+	Salida        string
+	Err           bool
+	Reporte_error string
+	Message       string
+}
+
+type Message struct {
+	Codigo string `json:"Codigo"`
+}
+
+func handleVisitor(c *fiber.Ctx) error {
+
+	/*fichero, err := antlr.NewFileStream("Struct2.swift")
 	if err != nil {
 		fmt.Println("No se pudo abrir el archivo")
+	}*/
+	var message Message
+	if err := c.BodyParser(&message); err != nil {
+		return err
 	}
-	lexer := parser.NewT_swiftLexer(fichero)
+	code := message.Codigo
+	input := antlr.NewInputStream(code)
+	lexer := parser.NewT_swiftLexer(input)
 	tokens := antlr.NewCommonTokenStream(lexer, 0)
 	p := parser.NewT_swiftParser(tokens)
 	p.BuildParseTrees = true
@@ -627,6 +680,19 @@ func main() {
 	for _, local := range ambito_global.Locales {
 		fmt.Println(local)
 	}
-	fmt.Println(ambito_global.Locales)
+	//fmt.Println(ambito_global.Locales)
+	response := Resp{
+		Salida:  arbol.Salid_programa,
+		Err:     false,
+		Message: "<3 Ejecución realizada con éxito <3",
+	}
+	arbol.Salid_programa = ""
+	return c.Status(fiber.StatusOK).JSON(response)
+}
 
+func main() {
+	app := fiber.New()
+	app.Use(cors.New())
+	app.Post("/ejecutar", handleVisitor)
+	app.Listen(":3000")
 }

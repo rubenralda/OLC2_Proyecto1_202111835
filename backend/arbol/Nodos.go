@@ -50,11 +50,14 @@ func (i Id_expresion) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 	if id_buscado == nil {
 		panic("Error el identificador no existe: " + i.Id)
 	}
-	if id_buscado.Tipo == "vector" { //agregar funciones y objetos
+	if id_buscado.Tipo == "vector" {
 		return id_buscado.Lista_vector
 	}
 	if id_buscado.Tipo == "struct" {
 		return id_buscado.Objeto
+	}
+	if id_buscado.Referencia {
+		return id_buscado.Puntero_valor.Valor
 	}
 	return id_buscado.Valor
 }

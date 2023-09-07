@@ -10,12 +10,13 @@
   
 #codigo {
     line-height: 21px;
-    overflow-y: hidden;
+    overflow: auto;
     padding: 0;
     border: 0;
     background: #282a3a;
     color: #FFF;
     min-width: 500px;
+    width: 100%;
     outline: none;
     resize: none;
 }
@@ -47,12 +48,13 @@
   
 #textConsola {
     line-height: 21px;
-    overflow-y: hidden;
+    overflow-y: auto;
     padding: 0;
     border: 0;
     background: #282a3a;
     color: #FFF;
     min-width: 500px;
+    width: 100%;
     outline: none;
     resize: none;
 }

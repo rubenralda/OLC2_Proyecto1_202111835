@@ -6,6 +6,8 @@ import (
 	"strconv"
 )
 
+var Salid_programa string
+
 type Funcion_print struct {
 	Lista_expresion []BaseNodo
 }
@@ -33,6 +35,7 @@ func (i Funcion_print) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 	}
 	fmt.Println(salida)
 	salida += "\n"
+	Salid_programa += salida
 	return nil
 }
 

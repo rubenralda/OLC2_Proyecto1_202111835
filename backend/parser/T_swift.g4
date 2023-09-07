@@ -54,7 +54,7 @@ struct_declaracion
 
 lista_atributos 
     : tipo = ('let'| 'var') Identificador (':' tipos)? ('=' expresion)? ';'? #declarar_atributo
-    | 'mutating'? function_declaracion #declarar_funcion_sc
+    | m='mutating'? function_declaracion #declarar_funcion_sc
     ;
 
 // GRAMATICA PARA INSTRUCCIONES EN UN BLOQUE DE FUNCION
@@ -115,6 +115,7 @@ llamadas_funciones
     | funcion_float
     | funcion_string
     | llamada_normal
+    | llamada_metodos
     ;
 
 // GRAMATICA PARA LLAMADA DE FUNCIONES
@@ -131,18 +132,27 @@ declaracion_argumento
     : (Identificador ':')? r='&'? expresion
     ;
 
+// GRAMATICA PARA LLAMADA DE METODOS
+
+llamada_metodos
+    : Identificador '.' Identificador '(' lista_argumentos? ')'
+    ;
+
 // GRAMATICA PARA ATRIBUTOS
 
 atributos // hay que arreglar los atributos 
     : Identificador '.' 'IsEmpty' #atributos_vector_empty
     | Identificador '.' 'count' #atributos_vector_count
     | Identificador ('.' Identificador)+ #atributos_generales
+    //| 'self' ('.' Identificador)+ #atributos_self
     ;
 
 // GRAMATICA PARA ASIGNAR ATRIBUTOS
 
 asignar_atributos
-    : Identificador ('.' Identificador)+ '=' expresion
+    : Identificador ('.' Identificador)+ '=' expresion #asignar_atributos_normal
+    | Identificador ('.' Identificador)+ '+=' expresion #incre_atributos_normal
+    | Identificador ('.' Identificador)+ '-=' expresion #decre_atributos_normal
     ;
 
 // GRAMMAR OF A FOR_IN STATEMENT

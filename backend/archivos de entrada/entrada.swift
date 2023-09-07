@@ -1,4 +1,4 @@
-
+/*
 // constantes
 
 // declaración de constantes
@@ -248,7 +248,71 @@ func suma( num1 x : Int, num2 y: Int) -> Int {
     return x + y
 }
 
+//funcion resta
+// Nombres externos: ninguno
+// Nombres internos: x, y
+func resta(_ x : Int, _ y: Int) -> Int {
+    return x - y
+}
+//función mul
+// Nombres externos: x, y
+// Nombres internos: x, y
+func mul(x: Int, y: Int) -> Int {
+    return x * y
+}
+
+//funciones por referencia
+// duplica el valor ingresado
+func duplicar(_ x: inout Int){
+    x += x
+}
+
 var numero1 = 1
 var numero2 = 1
 //llamada con nombres externos
 print(suma(num1: numero1, num2: numero2)) //imprime 2
+
+//llamada sin nombres externos
+print(resta(numero1, numero2)) //imprime 0
+//llamada con nombres externos e internos idénticos
+print(mul(x: numero1, y: numero2)) //imprime 1
+
+// llamada por referencia sin nombre externo
+duplicar(&numero1)
+print("numero2:", numero1) //numero tendrá el valor de 2
+
+
+// duplica los valores de un array
+*/
+func duplicarA (_ array: inout [Int] ) {
+    var i = 0
+    while (i < array.count ) {
+        array[i] += array[i]
+        i += 1
+    }
+}
+
+
+var array : [Int] = [1,2,3,4,5,6]
+//duplicarA(&array)
+for i in array {
+    print(i)
+}
+/*Salida:
+2
+3
+6
+8
+10
+12
+*/
+
+struct CentroTuristico {
+    var nombre: String = "casa"
+}
+
+var obj1 = CentroTuristico(nombre: "bobo")
+var obj2 = CentroTuristico()
+
+print(obj1.nombre)
+print(obj2.nombre)

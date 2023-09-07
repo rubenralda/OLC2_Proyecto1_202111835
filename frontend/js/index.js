@@ -10,7 +10,7 @@ const inputFile = document.createElement('input');
 const btnErrores = document.getElementById('reporteErrores');
 //const listArchivos = document.getElementById("listDeArchivos");
 inputFile.type = 'file';
-inputFile.accept = '.tw';
+inputFile.accept = '.swift';
 inputFile.style.display = 'none';
 document.body.appendChild(inputFile);
 let errores = null
@@ -60,7 +60,7 @@ btnEjecutar.addEventListener("click", eventbtnEjecutar);
 async function eventbtnEjecutar() {
     const ruta = `http://localhost:3000/ejecutar`;
     let bodyJson = {
-        codigo : codigo.value
+        Codigo : codigo.value
     }
     const respuesta = await fetch(ruta,{
         method: 'POST', // or 'PUT'
@@ -74,12 +74,12 @@ async function eventbtnEjecutar() {
         return data
     })
     console.log(respuesta)
-    if (respuesta.error != null) {
+    if (respuesta.Err) {
         alert("Ocurrio un error")
-        errores = respuesta.error
+        errores = respuesta.Reporte_error
         return
     }
-    consola.value = respuesta.salida
+    consola.value = respuesta.Salida
     let dispararEvento = new Event("keyup")
     consola.dispatchEvent(dispararEvento)
 }

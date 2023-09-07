@@ -25,7 +25,9 @@ func (d Declarar_objeto) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 		atributo_struct := *atributo_struct_p
 		if indice_dupla >= largo { // como no hay mas atributos por inicializar comprueba si el resto esta inicizalido
 			if atributo_struct.Valor == nil {
-				panic("Atributo sin inicializar " + atributo_struct.Id)
+				if atributo_struct.Tipo != "funcion" {
+					panic("Atributo sin inicializar " + atributo_struct.Id)
+				}
 			}
 			ambito_objeto_struct.AgregarIde(atributo_struct)
 			continue

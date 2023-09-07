@@ -24,40 +24,72 @@ func (a Asignacion_vector) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 		}
 		if indice < 0 || indice >= len(encontrado.Lista_vector) {
 			panic("El indice no existe")
+		} else if encontrado.Referencia {
+			if indice < 0 || indice >= len(encontrado.Puntero_valor.Lista_vector) {
+				panic("El indice no existe")
+			}
 		}
 		resultado := a.Expresion.Ejecutar(ambito_padre)
 		switch rr := resultado.(type) {
 		case int:
 			if encontrado.Primitivo == "Int" {
+				if encontrado.Referencia {
+					encontrado.Puntero_valor.Lista_vector[indice] = rr
+					return nil
+				}
 				encontrado.Lista_vector[indice] = rr
 				return nil
 			}
 			if encontrado.Primitivo == "Float" {
+				if encontrado.Referencia {
+					encontrado.Puntero_valor.Lista_vector[indice] = float64(rr)
+					return nil
+				}
 				encontrado.Lista_vector[indice] = float64(rr)
 				return nil
 			}
 		case float64:
 			if encontrado.Primitivo == "Float" {
+				if encontrado.Referencia {
+					encontrado.Puntero_valor.Lista_vector[indice] = rr
+					return nil
+				}
 				encontrado.Lista_vector[indice] = rr
 				return nil
 			}
 		case string:
 			if encontrado.Primitivo == "String" {
+				if encontrado.Referencia {
+					encontrado.Puntero_valor.Lista_vector[indice] = rr
+					return nil
+				}
 				encontrado.Lista_vector[indice] = rr
 				return nil
 			}
 		case bool:
 			if encontrado.Primitivo == "Bool" {
+				if encontrado.Referencia {
+					encontrado.Puntero_valor.Lista_vector[indice] = rr
+					return nil
+				}
 				encontrado.Lista_vector[indice] = rr
 				return nil
 			}
 		case rune:
 			if encontrado.Primitivo == "Character" {
+				if encontrado.Referencia {
+					encontrado.Puntero_valor.Lista_vector[indice] = rr
+					return nil
+				}
 				encontrado.Lista_vector[indice] = rr
 				return nil
 			}
 		case ambito.Objeto_struct:
 			if encontrado.Primitivo == rr.Ambito_struct.NombreAmbito {
+				if encontrado.Referencia {
+					encontrado.Puntero_valor.Lista_vector[indice] = rr
+					return nil
+				}
 				encontrado.Lista_vector[indice] = rr
 				return nil
 			}

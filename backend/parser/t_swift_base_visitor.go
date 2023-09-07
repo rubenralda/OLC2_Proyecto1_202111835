@@ -95,6 +95,10 @@ func (v *BaseT_swiftVisitor) VisitDeclaracion_argumento(ctx *Declaracion_argumen
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseT_swiftVisitor) VisitLlamada_metodos(ctx *Llamada_metodosContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseT_swiftVisitor) VisitAtributos_vector_empty(ctx *Atributos_vector_emptyContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -107,7 +111,15 @@ func (v *BaseT_swiftVisitor) VisitAtributos_generales(ctx *Atributos_generalesCo
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseT_swiftVisitor) VisitAsignar_atributos(ctx *Asignar_atributosContext) interface{} {
+func (v *BaseT_swiftVisitor) VisitAsignar_atributos_normal(ctx *Asignar_atributos_normalContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitIncre_atributos_normal(ctx *Incre_atributos_normalContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitDecre_atributos_normal(ctx *Decre_atributos_normalContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

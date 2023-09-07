@@ -12,9 +12,9 @@ type Identificadores struct {
 	Objeto       Objeto_struct // el objeto para el tipo struct
 	Lista_vector []interface{} // array de datos para el tipo vector
 	// parte de funciones
-	Funcion       interface{} // En realidad es arbol.Ejecutar_funcion pero recursividad indirecta de modulos
-	Referencia    bool
-	Puntero_valor *Identificadores
+	Funcion       interface{}      // En realidad es arbol.Ejecutar_funcion pero recursividad indirecta de modulos
+	Referencia    bool             // true si es por referencia, tambien mutable o inmutable
+	Puntero_valor *Identificadores // tiene un objeto identificadores que puede modificar
 }
 
 type Ambito struct {
