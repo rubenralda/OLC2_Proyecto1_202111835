@@ -60,7 +60,8 @@ func (d Declarar_variable) Ejecutar(ambito_local *ambito.Ambito) interface{} {
 		}
 	case ambito.Objeto_struct:
 		if d.Tipo == "" || d.Tipo == rr.Ambito_struct.NombreAmbito {
-			ambito_local.AgregarIde(ambito.Identificadores{Id: d.Id, Valor: rr, Tipo: "variable", Primitivo: rr.Ambito_struct.NombreAmbito})
+			valor := Copiar_objeto_struct(rr)
+			ambito_local.AgregarIde(ambito.Identificadores{Id: d.Id, Valor: valor, Tipo: "variable", Primitivo: rr.Ambito_struct.NombreAmbito})
 		} else {
 			panic("Error el valor no coincide con el tipo " + d.Id)
 		}
@@ -69,4 +70,18 @@ func (d Declarar_variable) Ejecutar(ambito_local *ambito.Ambito) interface{} {
 		panic("Tipo no permitido " + d.Id)
 	}
 	return nil
+}
+
+func Copiar_objeto_struct(original ambito.Objeto_struct) ambito.Objeto_struct {
+	copia_hijos := make([]*ambito.Identificadores, len(original.Ambito_struct.Locales))
+	for i, val := range original.Ambito_struct.Locales {
+		// Crear una nueva variable para el puntero y copiar el valor apuntado
+		copia_hijos[i] = &ambito.Identificadores{}
+		*copia_hijos[i] = *val
+	}
+	copia_ambito := ambito.Ambito{}
+	copia_ambito = *original.Ambito_struct
+	valor := ambito.Objeto_struct{Ambito_struct: &copia_ambito}
+	valor.Ambito_struct.Locales = copia_hijos
+	return valor
 }

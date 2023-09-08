@@ -85,6 +85,12 @@ type T_swiftVisitor interface {
 	// Visit a parse tree produced by T_swiftParser#atributos_generales.
 	VisitAtributos_generales(ctx *Atributos_generalesContext) interface{}
 
+	// Visit a parse tree produced by T_swiftParser#ide_atributo_simple.
+	VisitIde_atributo_simple(ctx *Ide_atributo_simpleContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#ide_atributo_vector.
+	VisitIde_atributo_vector(ctx *Ide_atributo_vectorContext) interface{}
+
 	// Visit a parse tree produced by T_swiftParser#asignar_atributos_normal.
 	VisitAsignar_atributos_normal(ctx *Asignar_atributos_normalContext) interface{}
 

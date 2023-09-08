@@ -111,6 +111,14 @@ func (v *BaseT_swiftVisitor) VisitAtributos_generales(ctx *Atributos_generalesCo
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseT_swiftVisitor) VisitIde_atributo_simple(ctx *Ide_atributo_simpleContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitIde_atributo_vector(ctx *Ide_atributo_vectorContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseT_swiftVisitor) VisitAsignar_atributos_normal(ctx *Asignar_atributos_normalContext) interface{} {
 	return v.VisitChildren(ctx)
 }

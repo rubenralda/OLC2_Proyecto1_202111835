@@ -67,7 +67,8 @@ func (d Declarar_vector) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 			}
 		case ambito.Objeto_struct:
 			if d.Tipo == rr.Ambito_struct.NombreAmbito {
-				lista_valores = append(lista_valores, rr)
+				valor := Copiar_objeto_struct(rr)
+				lista_valores = append(lista_valores, valor)
 			} else {
 				panic("Error el valor no coincide con el tipo " + d.ID)
 			}

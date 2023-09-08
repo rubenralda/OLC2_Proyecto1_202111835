@@ -50,7 +50,8 @@ func (d Declarar_constante) Ejecutar(ambito_local *ambito.Ambito) interface{} {
 		}
 	case ambito.Objeto_struct:
 		if d.Tipo == "" || d.Tipo == rr.Ambito_struct.NombreAmbito {
-			ambito_local.AgregarIde(ambito.Identificadores{Id: d.Id, Valor: rr, Tipo: "constante", Primitivo: rr.Ambito_struct.NombreAmbito})
+			valor := Copiar_objeto_struct(rr)
+			ambito_local.AgregarIde(ambito.Identificadores{Id: d.Id, Valor: valor, Tipo: "constante", Primitivo: rr.Ambito_struct.NombreAmbito})
 		} else {
 			panic("Error el valor no coincide con el tipo " + d.Id)
 		}

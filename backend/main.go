@@ -531,39 +531,47 @@ func (v *parser_visitor) VisitDeclarar_funcion_sc(ctx *parser.Declarar_funcion_s
 // METODO PARA ATRIBUTOS GENERALES
 
 func (v *parser_visitor) VisitAtributos_generales(ctx *parser.Atributos_generalesContext) interface{} {
-	id_objeto := ctx.Identificador(0).GetText()
-	var atributos []string
-	for _, atributo := range ctx.AllIdentificador()[1:] {
-		atributos = append(atributos, atributo.GetText())
+	id_objeto := ctx.Ide_atributo(0).Accept(v).(arbol.Atributo_ide)
+	var atributos []arbol.Atributo_ide
+	for _, atributo := range ctx.AllIde_atributo()[1:] {
+		atributos = append(atributos, atributo.Accept(v).(arbol.Atributo_ide))
 	}
-	return arbol.Atributo_general{ID_inicial: id_objeto, Lista_atributos: atributos}
+	return arbol.Atributo_general{ID_inicial: id_objeto,
+		Lista_atributos: atributos}
+}
+
+func (v *parser_visitor) VisitIde_atributo_simple(ctx *parser.Ide_atributo_simpleContext) interface{} {
+	return arbol.Atributo_ide{ID: ctx.Identificador().GetText(), Vector: false}
+}
+func (v *parser_visitor) VisitIde_atributo_vector(ctx *parser.Ide_atributo_vectorContext) interface{} {
+	return arbol.Atributo_ide{ID: ctx.Identificador().GetText(), Vector: true, Indice: ctx.Expresion().Accept(v).(arbol.BaseNodo)}
 }
 
 func (v *parser_visitor) VisitAsignar_atributos_normal(ctx *parser.Asignar_atributos_normalContext) interface{} {
-	id_objeto := ctx.Identificador(0).GetText()
-	var atributos []string
-	for _, atributo := range ctx.AllIdentificador()[1:] {
-		atributos = append(atributos, atributo.GetText())
+	id_objeto := ctx.Ide_atributo(0).Accept(v).(arbol.Atributo_ide)
+	var atributos []arbol.Atributo_ide
+	for _, atributo := range ctx.AllIde_atributo()[1:] {
+		atributos = append(atributos, atributo.Accept(v).(arbol.Atributo_ide))
 	}
 	return arbol.Asignar_atributos{ID_inicial: id_objeto, Lista_atributos: atributos,
 		Expresion: ctx.Expresion().Accept(v).(arbol.BaseNodo)}
 }
 
 func (v *parser_visitor) VisitIncre_atributos_normal(ctx *parser.Incre_atributos_normalContext) interface{} {
-	id_objeto := ctx.Identificador(0).GetText()
-	var atributos []string
-	for _, atributo := range ctx.AllIdentificador()[1:] {
-		atributos = append(atributos, atributo.GetText())
+	id_objeto := ctx.Ide_atributo(0).Accept(v).(arbol.Atributo_ide)
+	var atributos []arbol.Atributo_ide
+	for _, atributo := range ctx.AllIde_atributo()[1:] {
+		atributos = append(atributos, atributo.Accept(v).(arbol.Atributo_ide))
 	}
 	return arbol.Incremento_atributo{ID_inicial: id_objeto, Lista_atributos: atributos,
 		Expresion: ctx.Expresion().Accept(v).(arbol.BaseNodo)}
 }
 
 func (v *parser_visitor) VisitDecre_atributos_normal(ctx *parser.Decre_atributos_normalContext) interface{} {
-	id_objeto := ctx.Identificador(0).GetText()
-	var atributos []string
-	for _, atributo := range ctx.AllIdentificador()[1:] {
-		atributos = append(atributos, atributo.GetText())
+	id_objeto := ctx.Ide_atributo(0).Accept(v).(arbol.Atributo_ide)
+	var atributos []arbol.Atributo_ide
+	for _, atributo := range ctx.AllIde_atributo()[1:] {
+		atributos = append(atributos, atributo.Accept(v).(arbol.Atributo_ide))
 	}
 	return arbol.Decremento_atributo{ID_inicial: id_objeto, Lista_atributos: atributos,
 		Expresion: ctx.Expresion().Accept(v).(arbol.BaseNodo)}

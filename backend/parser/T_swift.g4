@@ -143,15 +143,19 @@ llamada_metodos
 atributos // hay que arreglar los atributos 
     : Identificador '.' 'isEmpty' #atributos_vector_empty
     | Identificador '.' 'count' #atributos_vector_count
-    | Identificador ('.' Identificador)+ #atributos_generales
+    | ide_atributo ('.' ide_atributo)+ #atributos_generales
     ;
 
+ide_atributo
+    : Identificador #ide_atributo_simple
+    | Identificador '[' expresion ']' #ide_atributo_vector
+    ;
 // GRAMATICA PARA ASIGNAR ATRIBUTOS
 
 asignar_atributos
-    : Identificador ('.' Identificador)+ '=' expresion #asignar_atributos_normal
-    | Identificador ('.' Identificador)+ '+=' expresion #incre_atributos_normal
-    | Identificador ('.' Identificador)+ '-=' expresion #decre_atributos_normal
+    : ide_atributo ('.' ide_atributo)+ '=' expresion #asignar_atributos_normal
+    | ide_atributo ('.' ide_atributo)+ '+=' expresion #incre_atributos_normal
+    | ide_atributo ('.' ide_atributo)+ '-=' expresion #decre_atributos_normal
     ;
 
 // GRAMMAR OF A FOR_IN STATEMENT

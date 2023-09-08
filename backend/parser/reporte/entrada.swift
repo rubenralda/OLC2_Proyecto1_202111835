@@ -1,74 +1,85 @@
-struct StructArr {
-    var datos: Float
+print("----------------------")
+print("----ARCHIVO BASICO----")
+print("----------------------")
+
+var bol = false
+var bol2 = !bol
+var cad1 = "imprimir"
+var cad2 = "cadena valida"
+
+var val1 = 7 - (5 + 10 * (2 + 4 * (5 + 2 * 3)) - 8 * 3 * 3) + 50 * (6 * 2)
+var val2 = (2 * 2 * 2 * 2) - 9 - (8 - 6 + (3 * 3 - 6 * 5 - 7 - (9 + 7 * 7 * 7) + 10) - 5) + 8 - (6 - 5 * (2 * 3))
+var val3 = val1 + ((2 + val2 * 3) + 1 - ((2 * 2 * 2) - 2) * 2) - 2
+
+print("El valor de val1 es:", val1)
+print("El valor de val2 es:", val2)
+print("El valor de val3 es:", val3)
+print("El resultado de la operación es:", val3)
+print("El valor de bol es:", bol)
+print("El valor de cad1 es:", cad1)
+print("El valor de cad2 es:", cad2)
+print("El valor de bol2:", bol2)
+
+var a = 100
+var b = 100
+var c = 7
+var f = true
+var j: Float = 10.0
+var k: Float = 10.0
+
+print("")
+print("")
+
+if a > b || b < c {
+    print(">>>>>> Esto no debería de imprimirse")
+} else {
+    print(">>>>>> Esto debería de imprimirse")
 }
 
-struct CentroTuristico {
-    var nombre: String
+if (a == b && j == k) || 14 != c {
+    print(">>>>>> Esto debería de imprimirse")
+} else {
+    print(">>>>>> Esto no debería de imprimirse")
 }
 
-struct Carro {
-    var placa: String
-    var color: String
-    var tipo: String
+var val = 5
+var resp = 5
+var valorVerdadero = 100
+
+if (valorVerdadero == (50 + 50 + (val - val))) && (!(!true)) {
+    print(">>>>>> En este lugar debería de entrar :)")
+    valorVerdadero = 50
+} else if (f || (valorVerdadero > 50)) && ((resp != 100) && !(f)) {
+    print(">>>>>> Aca no debería de entrar :ccc")
+    valorVerdadero = 70
+} else {
+    print(">>>>>> Aca no debería de entrar :cccc")
 }
 
-struct Personaje {
-    var nombre: String
-    var edad: Int
-    var descripcion: String
-    var carro: Carro
-    var numeros: StructArr
+var x1 = 15
+
+if x1 % 2 == 0 {
+    print(">>>>> numeroPar ingreso a if verdadero,", x1, "es par")
+} else {
+    print(">>>>> numeroPar ingreso a if falso,", x1, "no es par")
 }
-
-func nuevoCentro(nombre: String) -> CentroTuristico {
-    return CentroTuristico(nombre: nombre)
-}
-
-print("*******************STRUCTS")
-
-let centro1 = nuevoCentro(nombre: "Volcan de pacaya")
-let centro2 = nuevoCentro(nombre: "Rio dulce")
-let centro3 = nuevoCentro(nombre: "Laguna Luchoa")
-let centro4 = nuevoCentro(nombre: "Playa Blanca")
-let centro5 = nuevoCentro(nombre: "Antigua Guatemala")
-let centro6 = nuevoCentro(nombre: "Lago de Atitlan")
-
-print("El nombre del Centro turistico 1 es: ", centro1.nombre)
-print("El nombre del Centro turistico 2 es: ", centro2.nombre)
-print("El nombre del Centro turistico 3 es: ", centro3.nombre)
-print("El nombre del Centro turistico 4 es: ", centro4.nombre)
-print("El nombre del Centro turistico 5 es: ", centro5.nombre)
-print("El nombre del Centro turistico 6 es: ", centro6.nombre)
-
-print("*******************CREANDO STRUCTS COMPUESTO")
-
-let newCarro = Carro(placa: "090PLO", color: "gris", tipo: "mecanico")
-var nums = StructArr(datos: 0.0)
-
-var p1 = Personaje(
-    nombre: "Jose",
-    edad: 18,
-    descripcion: "No hace nada",
-    carro: newCarro,
-    numeros: nums
-)
-
-print("Persona nombre: ", p1.nombre, ", edad: ", p1.edad, ", carroTipo: ", p1.carro.tipo, ", numeros: ", p1.numeros.datos)
-
-var nums2 = StructArr(datos: Float("23.43"))
-p1.numeros = nums2
-
-print("Persona nombre: ", p1.nombre, ", edad: ", p1.edad, ", carroTipo: ", p1.carro.tipo, ", nuevos numeros: ", p1.numeros.datos)
 
 /*
-*******************STRUCTS
-El nombre del Centro turistico 1 es: Volcan de pacaya
-El nombre del Centro turistico 2 es: Rio dulce
-El nombre del Centro turistico 3 es: Laguna Luchoa
-El nombre del Centro turistico 4 es: Playa Blanca
-El nombre del Centro turistico 5 es: Antigua Guatemala
-El nombre del Centro turistico 6 es: Lago de Atitlan
-*******************CREANDO STRUCTS COMPUESTO
-Persona nombre: Jose, edad: 18, carroTipo: mecanico, numeros: 0.0
-Persona nombre: Jose, edad: 18, carroTipo: mecanico, nuevos numeros: 23.43
+----------------------
+----ARCHIVO BASICO----
+----------------------
+El valor de val1 es: 214
+El valor de val2 es: 412
+El valor de val3 es: 1439
+El resultado de la operación es: 1439
+El valor de bol es: false
+El valor de cad1 es: imprimir
+El valor de cad2 es: cadena valida
+El valor de bol2: true
+
+
+>> Esto debería de imprimirse
+>> Esto debería de imprimirse
+>> En este lugar debería de entrar :)
+>>> numeroPar ingreso a if falso, 15 no es par
 */
