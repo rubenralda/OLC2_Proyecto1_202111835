@@ -30,6 +30,9 @@ func (v Vector_count) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 		if encontrado.Tipo != "vector" {
 			panic("El Id no pertenece a un vector")
 		}
+		if encontrado.Referencia {
+			return len(encontrado.Puntero_valor.Lista_vector)
+		}
 		return len(encontrado.Lista_vector)
 	}
 	panic("Error el ID no existe " + v.Id)

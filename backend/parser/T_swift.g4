@@ -37,7 +37,8 @@ lista_parametros
     ;
 
 declaracion_parametro
-    : (Identificador)? Identificador ':' refencia = 'inout'? tipos
+    : (Identificador)? Identificador ':' refencia = 'inout'? tipos #declaracion_parametro_simple
+    | (Identificador)? Identificador ':' refencia = 'inout'? '[' tipos ']' #declaracion_parametro_vector
     ;
 
 // GRAMATICA BLOQUE DE CODIGO
@@ -79,7 +80,7 @@ declaracion
    : constant_declaracion
    | variable_declaracion
    | array_declaracion
-   //| matriz_declaracion
+   | matriz_declaracion
    ;
 
 // GRAMATICA PARA SENTENCIAS DE CICLOS
@@ -156,6 +157,33 @@ asignar_atributos
     : ide_atributo ('.' ide_atributo)+ '=' expresion #asignar_atributos_normal
     | ide_atributo ('.' ide_atributo)+ '+=' expresion #incre_atributos_normal
     | ide_atributo ('.' ide_atributo)+ '-=' expresion #decre_atributos_normal
+    ;
+
+// GRAMATICA PARA DECLARAR MATRICES
+
+matriz_declaracion
+    : 'var' Identificador ( ':' tipo_matriz )? '=' definicion_matriz
+    ;
+
+tipo_matriz
+    : '[' tipo_matriz ']'
+    | '[' tipos ']'
+    ;
+
+definicion_matriz
+    : lista_valores_matriz
+    | simple_matriz
+    ;
+
+lista_valores_matriz: '[' elementos_matriz ']';
+
+elementos_matriz: elemento_matriz (',' elemento_matriz)*;
+
+elemento_matriz: lista_valores_matriz | expresion;
+
+simple_matriz
+    : tipo_matriz '(' 'repeating' ':' simple_matriz ',' 'count' ':' Int ')'
+    | tipo_matriz '(' 'repeating' ':' expresion ',' 'count' ':' Int ')'
     ;
 
 // GRAMMAR OF A FOR_IN STATEMENT

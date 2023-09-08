@@ -95,6 +95,8 @@ func (v *parser_visitor) VisitDeclaracion(ctx *parser.DeclaracionContext) interf
 		return ctx.Constant_declaracion().Accept(v).(arbol.BaseNodo)
 	} else if ctx.Array_declaracion() != nil {
 		return ctx.Array_declaracion().Accept(v).(arbol.BaseNodo)
+	} else if ctx.Matriz_declaracion() != nil {
+		return ctx.Matriz_declaracion().Accept(v).(arbol.BaseNodo)
 	}
 	return nil
 }
@@ -610,7 +612,7 @@ func (v *parser_visitor) VisitLista_parametros(ctx *parser.Lista_parametrosConte
 	return lista
 }
 
-func (v *parser_visitor) VisitDeclaracion_parametro(ctx *parser.Declaracion_parametroContext) interface{} {
+func (v *parser_visitor) VisitDeclaracion_parametro_simple(ctx *parser.Declaracion_parametro_simpleContext) interface{} {
 	externo := ""
 	interno := ""
 	if len(ctx.AllIdentificador()) > 1 {
@@ -624,7 +626,23 @@ func (v *parser_visitor) VisitDeclaracion_parametro(ctx *parser.Declaracion_para
 		referencia = true
 	}
 	return arbol.Lista_parametros{Id_interno: interno, Id_externo: externo, Referencia: referencia,
-		Primitivo: ctx.Tipos().GetText()}
+		Primitivo: ctx.Tipos().GetText(), Vector: false}
+}
+func (v *parser_visitor) VisitDeclaracion_parametro_vector(ctx *parser.Declaracion_parametro_vectorContext) interface{} {
+	externo := ""
+	interno := ""
+	if len(ctx.AllIdentificador()) > 1 {
+		externo = ctx.Identificador(0).GetText()
+		interno = ctx.Identificador(1).GetText()
+	} else {
+		interno = ctx.Identificador(0).GetText()
+	}
+	referencia := false
+	if ctx.GetRefencia() != nil {
+		referencia = true
+	}
+	return arbol.Lista_parametros{Id_interno: interno, Id_externo: externo, Referencia: referencia,
+		Primitivo: ctx.Tipos().GetText(), Vector: true}
 }
 
 // METODOS LLAMADA FUNCION
@@ -673,6 +691,56 @@ func (v *parser_visitor) VisitLlamada_metodos(ctx *parser.Llamada_metodosContext
 		Id_metodo:        ctx.Identificador(1).GetText(),
 		Lista_argumentos: lista}
 }
+
+// METODOS PARA LA CREACION DE MATRICES
+
+func (v *parser_visitor) VisitMatriz_declaracion(ctx *parser.Matriz_declaracionContext) interface{} {
+	var tipo arbol.Tipo_matriz
+	if ctx.Tipo_matriz() != nil {
+		tipo = ctx.Tipo_matriz().Accept(v).(arbol.Tipo_matriz)
+	}
+	return arbol.Declarar_matriz{Id: ctx.Identificador().GetText(),
+		Matriz:         ctx.Definicion_matriz().Accept(v).([]interface{}),
+		Tipo_matriz_ex: tipo}
+}
+
+func (v *parser_visitor) VisitTipo_matriz(ctx *parser.Tipo_matrizContext) interface{} {
+	if ctx.Tipos() != nil {
+		return arbol.Tipo_matriz{Dimension: 1, Primitivo: ctx.Tipos().GetText()}
+	} else {
+		tipo := ctx.Tipo_matriz().Accept(v).(arbol.Tipo_matriz)
+		tipo.Dimension++
+		return tipo
+	}
+}
+func (v *parser_visitor) VisitDefinicion_matriz(ctx *parser.Definicion_matrizContext) interface{} {
+	if ctx.Lista_valores_matriz() != nil {
+		return ctx.Lista_valores_matriz().Accept(v)
+	}
+	return nil
+}
+
+func (v *parser_visitor) VisitLista_valores_matriz(ctx *parser.Lista_valores_matrizContext) interface{} {
+	return ctx.Elementos_matriz().Accept(v)
+}
+
+func (v *parser_visitor) VisitElemento_matriz(ctx *parser.Elemento_matrizContext) interface{} {
+	if ctx.Expresion() != nil {
+		return ctx.Expresion().Accept(v)
+	} else if ctx.Lista_valores_matriz() != nil {
+		return ctx.Lista_valores_matriz().Accept(v)
+	}
+	return nil
+}
+func (v *parser_visitor) VisitElementos_matriz(ctx *parser.Elementos_matrizContext) interface{} {
+	var lista1 []interface{}
+	for _, elementCtx := range ctx.AllElemento_matriz() {
+		lista1 = append(lista1, elementCtx.Accept(v))
+	}
+	return lista1
+}
+
+// EJECUCION DEL MAIN Y LA API
 
 type Resp struct {
 	Salida        string

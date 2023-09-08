@@ -1,6 +1,9 @@
 package arbol
 
-import "main/ambito"
+import (
+	"fmt"
+	"main/ambito"
+)
 
 type Ejecutar_funcion struct {
 	Id               string
@@ -28,7 +31,26 @@ func (e Ejecutar_funcion) Ejecutar(ambito_padre *ambito.Ambito, Lista_argumentos
 				if encontrado == nil {
 					panic("El id no existe " + id_referencia)
 				}
-				ambito_local.AgregarIde(ambito.Identificadores{Id: nombre_final, Puntero_valor: encontrado, Tipo: "variable", Primitivo: encontrado.Primitivo, Referencia: true})
+				valor_puntero := encontrado
+				if encontrado.Referencia {
+					valor_puntero = encontrado.Puntero_valor
+				}
+				// verificar si son del mismo tipo y si son vectores
+				if encontrado.Primitivo != parametro.Primitivo {
+					panic("El argumento no es del mismo tipo " + encontrado.Id)
+				}
+				if parametro.Vector { // si el parametro es vector, comprobar y validar que el argumento sea vector
+					if encontrado.Tipo != "vector" {
+						panic("El argumento no es un vector " + encontrado.Id)
+					}
+					ambito_local.AgregarIde(ambito.Identificadores{Id: nombre_final, Puntero_valor: valor_puntero,
+						Tipo: "vector", Primitivo: encontrado.Primitivo,
+						Referencia: true})
+					continue
+				}
+				ambito_local.AgregarIde(ambito.Identificadores{Id: nombre_final, Puntero_valor: valor_puntero,
+					Tipo: "variable", Primitivo: encontrado.Primitivo,
+					Referencia: true})
 				continue
 			} else {
 				panic("La referencia debe ser por variables " + parametro.Id_interno)
@@ -79,12 +101,21 @@ func (e Ejecutar_funcion) Ejecutar(ambito_padre *ambito.Ambito, Lista_argumentos
 			}
 		case ambito.Objeto_struct:
 			if parametro.Primitivo == rr.Ambito_struct.NombreAmbito {
-				ambito_local.AgregarIde(ambito.Identificadores{Id: nombre_final, Valor: rr, Tipo: "constante", Primitivo: rr.Ambito_struct.NombreAmbito})
+				valor := Copiar_objeto_struct(rr)
+				ambito_local.AgregarIde(ambito.Identificadores{Id: nombre_final, Valor: valor, Tipo: "constante", Primitivo: rr.Ambito_struct.NombreAmbito})
 			} else {
 				panic("Error el valor no coincide con el tipo " + nombre_final)
 			}
-		case nil: //para una llamada o mejor un tipo de struct
+		case []interface{}:
+			if parametro.Vector { // si el parametro es vector si no error porque el valor es de vector
+				ambito_local.AgregarIde(ambito.Identificadores{Id: nombre_final, Lista_vector: rr,
+					Tipo: "vector", Primitivo: parametro.Primitivo,
+					Referencia: false})
+			} else {
+				panic("El parametro no es de tipo vector " + parametro.Id_externo)
+			}
 		default:
+			fmt.Println(rr)
 			panic("Tipo no permitido " + nombre_final)
 		}
 	}
@@ -162,4 +193,5 @@ type Lista_parametros struct {
 	Id_externo string
 	Referencia bool
 	Primitivo  string // String, Int, Bool, Float, char, (Nombre_struct)
+	Vector     bool   //true si es vector
 }

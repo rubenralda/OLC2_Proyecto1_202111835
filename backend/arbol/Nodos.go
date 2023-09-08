@@ -85,9 +85,11 @@ func (i Id_vector) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 	}
 	if indice >= 0 && indice < len(id_buscado.Lista_vector) {
 		return id_buscado.Lista_vector[indice]
-	} else {
-		panic("El indice no existe")
+	} else if id_buscado.Referencia {
+		if indice >= 0 && indice < len(id_buscado.Puntero_valor.Lista_vector) {
+			return id_buscado.Puntero_valor.Lista_vector[indice]
+		}
 		//return nil // esto para errores
 	}
-
+	panic("El indice no existe")
 }

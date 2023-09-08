@@ -1,4 +1,17 @@
-grammar T_swift;
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="svg-container">
+      <!-- Aquí se insertará el SVG -->
+    </div>
+    <script>
+      // Hacer una solicitud a la API JSON
+      gramatica = `grammar T_swift;
 
 // Tokens a ignorar
 WS : [ \n\r\t\u000B\u000C\u0000]+				-> channel(HIDDEN) ;
@@ -175,15 +188,11 @@ definicion_matriz
     | simple_matriz
     ;
 
-lista_valores_matriz
-    : '[' lista_valores_matriz2 ']'
-    ;
+lista_valores_matriz: '[' elementos_matriz ']';
 
-lista_valores_matriz2
-    : lista_valores_matriz2 ',' lista_valores_matriz #matriz_n_dimen
-    | lista_valores_matriz #matriz_segunda_dimen
-    | lista_expresiones #matriz_primera_dimen
-    ;
+elementos_matriz: elemento_matriz (',' elemento_matriz)*;
+
+elemento_matriz: lista_valores_matriz | expresion;
 
 simple_matriz
     : tipo_matriz '(' 'repeating' ':' simple_matriz ',' 'count' ':' Int ')'
@@ -380,4 +389,35 @@ Bool : 'true'
 // gramatica para identificador
 Identificador
  : [a-zA-Z_][a-zA-Z0-9_]*
- ;
+ ;`;
+      let bodyJson = {
+        grammar: gramatica,
+        lexgrammar: "",
+        input: localStorage.getItem("texto"),
+        start: "inicio",
+      };
+      fetch("http://lab.antlr.org/parse/", {
+        method: "POST", // or 'PUT'
+        body: JSON.stringify(bodyJson), // data can be `string` or {object}!
+        headers: {
+          "Content-Type": "application/json",
+          "User-Agent" : "PostmanRuntime/7.32.3"
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          let svgtree = data.result.svgtree;
+          if (svgtree != null) {
+            console.log(svgtree);
+            let b64_svgtree = btoa(unescape(encodeURIComponent(svgtree)));
+            $("#svg-container").html(
+              "<img src='data:image/svg+xml;base64," + b64_svgtree + "'></img>"
+            );
+          }
+        })
+        .catch((error) => {
+          console.error("Error al obtener el SVG:", error);
+        });
+    </script>
+  </body>
+</html>

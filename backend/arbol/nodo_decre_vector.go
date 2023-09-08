@@ -22,12 +22,12 @@ func (i Decremento_vector) Ejecutar(ambito *ambito.Ambito) interface{} {
 		if encontrado.Tipo != "vector" {
 			panic("El Id no pertenece a un vector")
 		}
-		if indice < 0 || indice >= len(encontrado.Lista_vector) {
-			panic("El indice no existe")
-		} else if encontrado.Referencia {
-			if indice < 0 || indice >= len(encontrado.Puntero_valor.Lista_vector) {
+		if encontrado.Referencia {
+			if indice < 0 || indice > len(encontrado.Puntero_valor.Lista_vector)-1 {
 				panic("El indice no existe")
 			}
+		} else if indice < 0 || indice > len(encontrado.Lista_vector)-1 {
+			panic("El indice no existe")
 		}
 		resultado := i.Expresion.Ejecutar(ambito)
 		switch rr := resultado.(type) {

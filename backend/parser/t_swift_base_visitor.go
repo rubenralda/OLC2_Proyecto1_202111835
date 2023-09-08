@@ -27,7 +27,11 @@ func (v *BaseT_swiftVisitor) VisitLista_parametros(ctx *Lista_parametrosContext)
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseT_swiftVisitor) VisitDeclaracion_parametro(ctx *Declaracion_parametroContext) interface{} {
+func (v *BaseT_swiftVisitor) VisitDeclaracion_parametro_simple(ctx *Declaracion_parametro_simpleContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitDeclaracion_parametro_vector(ctx *Declaracion_parametro_vectorContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -128,6 +132,34 @@ func (v *BaseT_swiftVisitor) VisitIncre_atributos_normal(ctx *Incre_atributos_no
 }
 
 func (v *BaseT_swiftVisitor) VisitDecre_atributos_normal(ctx *Decre_atributos_normalContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitMatriz_declaracion(ctx *Matriz_declaracionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitTipo_matriz(ctx *Tipo_matrizContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitDefinicion_matriz(ctx *Definicion_matrizContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitLista_valores_matriz(ctx *Lista_valores_matrizContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitElementos_matriz(ctx *Elementos_matrizContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitElemento_matriz(ctx *Elemento_matrizContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitSimple_matriz(ctx *Simple_matrizContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

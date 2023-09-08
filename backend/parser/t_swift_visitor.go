@@ -22,8 +22,11 @@ type T_swiftVisitor interface {
 	// Visit a parse tree produced by T_swiftParser#lista_parametros.
 	VisitLista_parametros(ctx *Lista_parametrosContext) interface{}
 
-	// Visit a parse tree produced by T_swiftParser#declaracion_parametro.
-	VisitDeclaracion_parametro(ctx *Declaracion_parametroContext) interface{}
+	// Visit a parse tree produced by T_swiftParser#declaracion_parametro_simple.
+	VisitDeclaracion_parametro_simple(ctx *Declaracion_parametro_simpleContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#declaracion_parametro_vector.
+	VisitDeclaracion_parametro_vector(ctx *Declaracion_parametro_vectorContext) interface{}
 
 	// Visit a parse tree produced by T_swiftParser#code_block.
 	VisitCode_block(ctx *Code_blockContext) interface{}
@@ -99,6 +102,27 @@ type T_swiftVisitor interface {
 
 	// Visit a parse tree produced by T_swiftParser#decre_atributos_normal.
 	VisitDecre_atributos_normal(ctx *Decre_atributos_normalContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#matriz_declaracion.
+	VisitMatriz_declaracion(ctx *Matriz_declaracionContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#tipo_matriz.
+	VisitTipo_matriz(ctx *Tipo_matrizContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#definicion_matriz.
+	VisitDefinicion_matriz(ctx *Definicion_matrizContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#lista_valores_matriz.
+	VisitLista_valores_matriz(ctx *Lista_valores_matrizContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#elementos_matriz.
+	VisitElementos_matriz(ctx *Elementos_matrizContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#elemento_matriz.
+	VisitElemento_matriz(ctx *Elemento_matrizContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#simple_matriz.
+	VisitSimple_matriz(ctx *Simple_matrizContext) interface{}
 
 	// Visit a parse tree produced by T_swiftParser#for_in_statement.
 	VisitFor_in_statement(ctx *For_in_statementContext) interface{}
