@@ -48,6 +48,15 @@ func (e Ejecutar_funcion) Ejecutar(ambito_padre *ambito.Ambito, Lista_argumentos
 						Referencia: true})
 					continue
 				}
+				if parametro.Matriz { // si el parametro es matriz, comprobar y validar que el argumento sea matriz
+					if encontrado.Tipo != "matriz" {
+						panic("El argumento no es una matriz " + encontrado.Id)
+					}
+					ambito_local.AgregarIde(ambito.Identificadores{Id: nombre_final, Puntero_valor: valor_puntero,
+						Tipo: "matriz", Primitivo: encontrado.Primitivo,
+						Referencia: true})
+					continue
+				}
 				ambito_local.AgregarIde(ambito.Identificadores{Id: nombre_final, Puntero_valor: valor_puntero,
 					Tipo: "variable", Primitivo: encontrado.Primitivo,
 					Referencia: true})
@@ -111,6 +120,15 @@ func (e Ejecutar_funcion) Ejecutar(ambito_padre *ambito.Ambito, Lista_argumentos
 				ambito_local.AgregarIde(ambito.Identificadores{Id: nombre_final, Lista_vector: rr,
 					Tipo: "vector", Primitivo: parametro.Primitivo,
 					Referencia: false})
+			} else if parametro.Matriz { // si el parametro es matriz, comprobar y validar que el argumento sea matriz
+				switch rr[0].(type) {
+				case []interface{}:
+					ambito_local.AgregarIde(ambito.Identificadores{Id: nombre_final, Lista_vector: rr,
+						Tipo: "matriz", Primitivo: parametro.Primitivo,
+						Referencia: false})
+				default:
+					panic("El argumento no es de tipo matriz")
+				}
 			} else {
 				panic("El parametro no es de tipo vector " + parametro.Id_externo)
 			}
@@ -194,4 +212,5 @@ type Lista_parametros struct {
 	Referencia bool
 	Primitivo  string // String, Int, Bool, Float, char, (Nombre_struct)
 	Vector     bool   //true si es vector
+	Matriz     bool
 }

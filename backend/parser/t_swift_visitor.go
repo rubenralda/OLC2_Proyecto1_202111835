@@ -229,20 +229,11 @@ type T_swiftVisitor interface {
 	// Visit a parse tree produced by T_swiftParser#expresion_llamada.
 	VisitExpresion_llamada(ctx *Expresion_llamadaContext) interface{}
 
-	// Visit a parse tree produced by T_swiftParser#expresion_id.
-	VisitExpresion_id(ctx *Expresion_idContext) interface{}
-
 	// Visit a parse tree produced by T_swiftParser#valor_primitivo.
 	VisitValor_primitivo(ctx *Valor_primitivoContext) interface{}
 
 	// Visit a parse tree produced by T_swiftParser#expresion_atributos.
 	VisitExpresion_atributos(ctx *Expresion_atributosContext) interface{}
-
-	// Visit a parse tree produced by T_swiftParser#expresion_unario.
-	VisitExpresion_unario(ctx *Expresion_unarioContext) interface{}
-
-	// Visit a parse tree produced by T_swiftParser#expresion_paren.
-	VisitExpresion_paren(ctx *Expresion_parenContext) interface{}
 
 	// Visit a parse tree produced by T_swiftParser#expresion_rela.
 	VisitExpresion_rela(ctx *Expresion_relaContext) interface{}
@@ -261,6 +252,18 @@ type T_swiftVisitor interface {
 
 	// Visit a parse tree produced by T_swiftParser#expresion_nega.
 	VisitExpresion_nega(ctx *Expresion_negaContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#expresion_id.
+	VisitExpresion_id(ctx *Expresion_idContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#expresion_unario.
+	VisitExpresion_unario(ctx *Expresion_unarioContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#expresion_paren.
+	VisitExpresion_paren(ctx *Expresion_parenContext) interface{}
+
+	// Visit a parse tree produced by T_swiftParser#expresion_matriz.
+	VisitExpresion_matriz(ctx *Expresion_matrizContext) interface{}
 
 	// Visit a parse tree produced by T_swiftParser#l_duble.
 	VisitL_duble(ctx *L_dubleContext) interface{}

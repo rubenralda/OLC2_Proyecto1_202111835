@@ -413,6 +413,8 @@ func (e Expresion) Ejecutar(ambito *ambito.Ambito) interface{} {
 		return e.Valor1.Ejecutar(ambito)
 	case "objeto":
 		return e.Valor1.Ejecutar(ambito)
+	case "matriz":
+		return e.Valor1.Ejecutar(ambito)
 	default:
 		return nil
 	}

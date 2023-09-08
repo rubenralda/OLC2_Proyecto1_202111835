@@ -12,7 +12,7 @@ struct Transporte {
         self.velocidad = 0
     }
     mutating func acelerar(){
-        self.velocidad = self.velocidad +  50 
+        self.velocidad += 50 
     }
     func mostrarVelocidad(){
         print("Velocidad: ", self.velocidad)
@@ -39,14 +39,14 @@ transmetro.mostrarVelocidad()
 transmetro.frenar()
 transmetro.mostrarVelocidad()
 
-var verduras : [Verdura] = []
+var verduras = [Verdura]()
 
 verduras.append(Verdura(nombre: "Coliflor", precio: 15))
 verduras.append(Verdura(nombre: "Cebolla", precio: 5))
 verduras.append(Verdura(nombre: "VerduraGenerica", precio: 12))
 
-//print(verduras[2].nombre)
-//print(verduras[2].precio)
+print(verduras[2].nombre)
+print(verduras[2].precio)
 
 /*
 Pasajeros:  36

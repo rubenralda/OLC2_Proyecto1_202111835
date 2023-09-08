@@ -75,6 +75,8 @@ func (i Funcion_float) Ejecutar(ambito_padre *ambito.Ambito) interface{} {
 			//return nil
 		}
 		return numero
+	case int:
+		return float64(rr)
 	default:
 		panic("No se puede convertir a valor numerico")
 		//return nil

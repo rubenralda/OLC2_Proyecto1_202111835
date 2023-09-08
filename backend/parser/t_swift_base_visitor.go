@@ -303,23 +303,11 @@ func (v *BaseT_swiftVisitor) VisitExpresion_llamada(ctx *Expresion_llamadaContex
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseT_swiftVisitor) VisitExpresion_id(ctx *Expresion_idContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
 func (v *BaseT_swiftVisitor) VisitValor_primitivo(ctx *Valor_primitivoContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
 func (v *BaseT_swiftVisitor) VisitExpresion_atributos(ctx *Expresion_atributosContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseT_swiftVisitor) VisitExpresion_unario(ctx *Expresion_unarioContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseT_swiftVisitor) VisitExpresion_paren(ctx *Expresion_parenContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -344,6 +332,22 @@ func (v *BaseT_swiftVisitor) VisitExpresion_vector(ctx *Expresion_vectorContext)
 }
 
 func (v *BaseT_swiftVisitor) VisitExpresion_nega(ctx *Expresion_negaContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitExpresion_id(ctx *Expresion_idContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitExpresion_unario(ctx *Expresion_unarioContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitExpresion_paren(ctx *Expresion_parenContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseT_swiftVisitor) VisitExpresion_matriz(ctx *Expresion_matrizContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

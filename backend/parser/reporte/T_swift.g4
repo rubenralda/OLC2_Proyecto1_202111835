@@ -38,7 +38,7 @@ lista_parametros
 
 declaracion_parametro
     : (Identificador)? Identificador ':' refencia = 'inout'? tipos #declaracion_parametro_simple
-    | (Identificador)? Identificador ':' refencia = 'inout'? '[' tipos ']' #declaracion_parametro_vector
+    | (Identificador)? Identificador ':' refencia = 'inout'? tipo_matriz #declaracion_parametro_vector
     ;
 
 // GRAMATICA BLOQUE DE CODIGO
@@ -175,15 +175,11 @@ definicion_matriz
     | simple_matriz
     ;
 
-lista_valores_matriz
-    : '[' lista_valores_matriz2 ']'
-    ;
+lista_valores_matriz: '[' elementos_matriz ']';
 
-lista_valores_matriz2
-    : lista_valores_matriz2 ',' lista_valores_matriz #matriz_n_dimen
-    | lista_valores_matriz #matriz_segunda_dimen
-    | lista_expresiones #matriz_primera_dimen
-    ;
+elementos_matriz: elemento_matriz (',' elemento_matriz)*;
+
+elemento_matriz: lista_valores_matriz | expresion;
 
 simple_matriz
     : tipo_matriz '(' 'repeating' ':' simple_matriz ',' 'count' ':' Int ')'
@@ -331,6 +327,7 @@ expresion //agregar llamada de una funcion, de struct, matriz y atributos
     : primitivos #valor_primitivo
     | atributos #expresion_atributos
     | Identificador '[' expresion ']' #expresion_vector
+    | Identificador '[' expresion ']' ('[' expresion ']')+ #expresion_matriz
     | llamadas_funciones #expresion_llamada
     | Identificador '(' l_duble ')' #expresion_struct_dupla
     | Identificador #expresion_id

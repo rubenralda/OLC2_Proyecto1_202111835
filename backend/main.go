@@ -9,6 +9,7 @@ import (
 	"main/parser"
 	"os"
 	"os/exec"
+	"strings"
 
 	"github.com/antlr4-go/antlr/v4"
 	"github.com/gofiber/fiber/v2"
@@ -111,6 +112,15 @@ func (v *parser_visitor) VisitExpresion_id(ctx *parser.Expresion_idContext) inte
 func (v *parser_visitor) VisitExpresion_vector(ctx *parser.Expresion_vectorContext) interface{} {
 	ide := arbol.Id_vector{Id: ctx.Identificador().GetText(), Indice: ctx.Expresion().Accept(v).(arbol.BaseNodo)}
 	return arbol.Expresion{Valor1: ide, Operacion: "vector"}
+}
+
+func (v *parser_visitor) VisitExpresion_matriz(ctx *parser.Expresion_matrizContext) interface{} {
+	var indices []arbol.BaseNodo
+	for _, expresion := range ctx.AllExpresion() {
+		indices = append(indices, expresion.Accept(v).(arbol.BaseNodo))
+	}
+	ide := arbol.Id_matriz{Id: ctx.Identificador().GetText(), Indices: indices}
+	return arbol.Expresion{Valor1: ide, Operacion: "matriz"}
 }
 
 func (v *parser_visitor) VisitExpresion_arit(ctx *parser.Expresion_aritContext) interface{} {
@@ -641,8 +651,13 @@ func (v *parser_visitor) VisitDeclaracion_parametro_vector(ctx *parser.Declaraci
 	if ctx.GetRefencia() != nil {
 		referencia = true
 	}
+	tipos := ctx.Tipo_matriz().Accept(v).(arbol.Tipo_matriz)
+	if tipos.Dimension > 1 {
+		return arbol.Lista_parametros{Id_interno: interno, Id_externo: externo, Referencia: referencia,
+			Primitivo: tipos.Primitivo, Vector: false, Matriz: true}
+	}
 	return arbol.Lista_parametros{Id_interno: interno, Id_externo: externo, Referencia: referencia,
-		Primitivo: ctx.Tipos().GetText(), Vector: true}
+		Primitivo: tipos.Primitivo, Vector: true, Matriz: false}
 }
 
 // METODOS LLAMADA FUNCION
@@ -788,6 +803,11 @@ func handleVisitor(c *fiber.Ctx) error {
 		fmt.Println(local)
 	}
 	//fmt.Println(ambito_global.Locales)
+	arbol.Salid_programa = strings.ReplaceAll(arbol.Salid_programa, "\\n", "\n")
+	arbol.Salid_programa = strings.ReplaceAll(arbol.Salid_programa, "\\\\", "\\")
+	arbol.Salid_programa = strings.ReplaceAll(arbol.Salid_programa, "\\\"", "\"")
+	arbol.Salid_programa = strings.ReplaceAll(arbol.Salid_programa, "\\r", "\r")
+	arbol.Salid_programa = strings.ReplaceAll(arbol.Salid_programa, "\\t", "\t")
 	response := Resp{
 		Salida:  arbol.Salid_programa,
 		Err:     false,
